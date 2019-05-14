@@ -15,7 +15,7 @@ Hardware full-duplex SPI with DMA, multiple clock speeds available (SPI2), selec
 
  Verified flash memory chips :
  
-  - AT26DF041, SST25LF040A, EN25F80, W25Q80, W25Q64 (chips of the same series but of a different size will also work).
+  - AT26DF041, SST25LF040A, EN25F80, W25Q80, W25Q64, W25X80 (chips of the same series but of a different size will also work).
     Any other chips need to be added to files "flashchips.c" and "chip_drv.c".
 
 
