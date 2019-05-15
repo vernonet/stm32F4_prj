@@ -172,9 +172,10 @@ int main(void)
 		 PowerControl(ARM_POWER_FULL);
 		//if (flschip){
 		 if ((flschip) && !(set_spi_speed())) {
-		 //boot_sec[20] = (flschip->total_size*1024/STORAGE_BLK_SIZ) >> 8;            //NumberOfSectors16
-		 boot_sec[33] = ((flschip->total_size*1024/STORAGE_BLK_SIZ) >>  8) & 0xFF;    //NumberOfSectors32
-     boot_sec[34] = ((flschip->total_size*1024/STORAGE_BLK_SIZ) >> 16) & 0xFF;	  //NumberOfSectors32		 
+		 //boot_sec[20] = (flschip->total_size*1024/STORAGE_BLK_SIZ) >> 8;              //NumberOfSectors16
+		 boot_sec[32] = ((flschip->total_size*1024/STORAGE_BLK_SIZ) & 0xFF) + FAT_FILE_DATA_BLK; //NumberOfSectors32 
+		 boot_sec[33] = ((flschip->total_size*1024/STORAGE_BLK_SIZ) >>  8) & 0xFF;      //NumberOfSectors32
+     boot_sec[34] = ((flschip->total_size*1024/STORAGE_BLK_SIZ) >> 16) & 0xFF;	    //NumberOfSectors32		 
 		 while (1){
 			if (blink-- == 0) {BSP_LED_Toggle(LED4); blink = 40;}
 		  HAL_Delay(10);

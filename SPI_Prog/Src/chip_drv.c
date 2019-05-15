@@ -1389,7 +1389,10 @@ int32_t spi_erase_bulk (uint8_t cmd) {
         while ((buf[0] & 0x1U) == 0x1U);
   }
  }
-	 if (isErased()) printf ("\n Flash not erased!!!\n");
+	 if (isErased()){ 
+	   printf ("\n Flash not erased!!!\n");
+		 return ARM_DRIVER_ERROR;
+	 }
 	   else printf ("\n Flash erased!!!, all 0xFF\n");
    BSP_LED_Off(LED3);
    return status;
