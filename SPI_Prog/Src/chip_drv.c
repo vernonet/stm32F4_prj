@@ -716,7 +716,7 @@ static int32_t Uninitialize (void) {
 		if (status) return status;
 		}
 	 
-	 printf (" addr -> 0x%05x   cnt -> 0x%03x", addr, cnt);
+	 printf ("\n pd_addr -> 0x%05x   cnt -> 0x%03x", addr, cnt);
 	 
 	 sts = flschip->write(addr, data, cnt);
 	 if (sts < 0) {

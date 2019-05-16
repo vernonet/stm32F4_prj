@@ -74,6 +74,7 @@
 #define SPI_BLOCK_ERASE_D8      (0xD8U)
 #define SPI_BLOCK_ERASE_60      (0x60U)
 #define SPI_BLOCK_ERASE_C7      (0xC7U)
+#define SPI_BLOCK_ERASE_D7      (0xD7U)
 
 
 
@@ -308,6 +309,31 @@
 #define MACRONIX_MX25L6495F	0x9517
 
 
+
+/*
+ * Programmable Micro Corp is listed in JEP106W in bank 2, so it should
+ * have a 0x7F continuation code prefix.
+ * Apparently PMC was renamed to "Chingis Technology Corporation" http://www.chingistek.com which is now a
+ * subsidiary of ISSI. They continue to use the PMC manufacturer ID (instead of ISSI's) nevertheless, even for
+ * new chips with IS* model numbers.
+ */
+#define PMC_ID			    0x7F	/* PMC */
+#define PMC_ID_NOPREFIX	0x9D	/* PMC, missing 0x7F prefix */
+#define PMC_PM25LD256C	0x2F
+#define PMC_PM25LD512		0x9d20	/* Same as Pm25LD512C, but the latter has more locking options. */
+#define PMC_PM25LD010		0x9d21	/* Same as Pm25LD010C, but the latter has more locking options. */
+#define PMC_PM25LD020		0x9d22	/* Same as Pm25LD020C, but the latter has more locking options. */
+#define PMC_PM25LQ020		0x42
+#define PMC_PM25LQ040		0x43
+#define PMC_PM25LQ080		0x44
+#define PMC_PM25LQ016		0x45
+#define PMC_PM25LQ032C		0x46
+#define PMC_PM25LV512		0x7B	/* Same as Pm25LV512A */
+#define PMC_PM25LV010		0x7C	/* Same as Pm25LV010A, but the former does not support RDID but RES3 only. */
+#define PMC_PM25LV020		0x7D
+#define PMC_PM25LV040		0x7E	/* Same as PM25LD040(C), but the latter supports more features. */
+#define PMC_PM25LV080B		0x13
+#define PMC_PM25LV016B		0x14
 
 /* 
  * The Sanyo chip found so far uses SPI, first byte is manufacture code,

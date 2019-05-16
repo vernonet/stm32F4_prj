@@ -4427,6 +4427,318 @@ const struct flashchip flashchips[] = {
 //		.voltage	= {2700, 3600},
 //	},
 
+{
+		.vendor		= "PMC",
+		.name		= "Pm25LD010(C)",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= PMC_ID,
+		.model_id	= PMC_PM25LD010,
+		.total_size	= 128,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {4 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_D7,
+			}, {
+				.eraseblocks = { {32 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {128 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {128 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp2_srwd,
+		.unlock		= spi_disable_blockprotect, /* FIXME: C version supports "Safe Guard" */
+		.write		= spi_chip_write_256,
+		.read		  = spi_chip_read, /* Fast read (0x0B), dual I/O supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600}, /* 2.3-3.6V for Pm25LD010 */
+	},
+
+	{
+		.vendor		= "PMC",
+		.name		= "Pm25LD020(C)",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= PMC_ID,
+		.model_id	= PMC_PM25LD020,
+		.total_size	= 256,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {4 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_D7,
+			}, {
+				.eraseblocks = { {64 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {256 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {256 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp2_srwd,
+		.unlock		= spi_disable_blockprotect, /* FIXME: C version supports "Safe Guard" */
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B), dual I/O supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600}, /* 2.3-3.6V for Pm25LD020 */
+	},
+
+	{
+		.vendor		= "PMC",
+		.name		= "Pm25LD040(C)",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= PMC_ID,
+		.model_id	= PMC_PM25LV040,
+		.total_size	= 512,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {4 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_D7,
+			}, {
+				.eraseblocks = { {64 * 1024, 8} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp2_srwd,
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B), dual I/O supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600}, /* 2.3-3.6V for Pm25LD040 */
+	},
+
+//	{
+//		.vendor		= "PMC",
+//		.name		= "Pm25LQ020",
+//		.bustype	= BUS_SPI,
+//		.manufacture_id	= PMC_ID,
+//		.model_id	= PMC_PM25LQ020,
+//		.total_size	= 256,
+//		.page_size	= 256,
+//		/* OTP: 256B total; read 0x4B, write 0xB1 */
+//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+//		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+//		.block_erasers	=
+//		{
+//			{
+//				.eraseblocks = { {4 * 1024, 64} },
+//				.block_erase = spi_block_erase_20,
+//			}, {
+//				.eraseblocks = { {4 * 1024, 64} },
+//				.block_erase = spi_block_erase_d7,
+//			}, {
+//				.eraseblocks = { {64 * 1024, 4} },
+//				.block_erase = spi_block_erase_d8,
+//			}, {
+//				.eraseblocks = { {256 * 1024, 1} },
+//				.block_erase = spi_block_erase_60,
+//			}, {
+//				.eraseblocks = { {256 * 1024, 1} },
+//				.block_erase = spi_block_erase_c7,
+//			}
+//		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6 is quad enable */
+//		.unlock		= spi_disable_blockprotect_bp3_srwd,
+//		.write		= spi_chip_write_256,
+//		.read		= spi_chip_read,
+//		.voltage	= {2300, 3600},
+//	},
+
+//	{
+//		.vendor		= "PMC",
+//		.name		= "Pm25LQ040",
+//		.bustype	= BUS_SPI,
+//		.manufacture_id	= PMC_ID,
+//		.model_id	= PMC_PM25LQ040,
+//		.total_size	= 512,
+//		.page_size	= 256,
+//		/* OTP: 256B total; read 0x4B, write 0xB1 */
+//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+//		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+//		.block_erasers	=
+//		{
+//			{
+//				.eraseblocks = { {4 * 1024, 128} },
+//				.block_erase = spi_block_erase_20,
+//			}, {
+//				.eraseblocks = { {4 * 1024, 128} },
+//				.block_erase = spi_block_erase_d7,
+//			}, {
+//				.eraseblocks = { {64 * 1024, 8} },
+//				.block_erase = spi_block_erase_d8,
+//			}, {
+//				.eraseblocks = { {512 * 1024, 1} },
+//				.block_erase = spi_block_erase_60,
+//			}, {
+//				.eraseblocks = { {512 * 1024, 1} },
+//				.block_erase = spi_block_erase_c7,
+//			}
+//		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6 is quad enable */
+//		.unlock		= spi_disable_blockprotect_bp3_srwd,
+//		.write		= spi_chip_write_256,
+//		.read		= spi_chip_read, /* Fast read (0x0B) and multi I/O supported */
+//		.voltage	= {2300, 3600},
+//	},
+
+//	{
+//		.vendor		= "PMC",
+//		.name		= "Pm25LQ080",
+//		.bustype	= BUS_SPI,
+//		.manufacture_id	= PMC_ID,
+//		.model_id	= PMC_PM25LQ080,
+//		.total_size	= 1024,
+//		.page_size	= 256,
+//		/* OTP: 64B total; read 0x4B, write 0xB1 */
+//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+//		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+//		.block_erasers	=
+//		{
+//			{
+//				.eraseblocks = { {4 * 1024, 256} },
+//				.block_erase = spi_block_erase_20,
+//			}, {
+//				.eraseblocks = { {4 * 1024, 256} },
+//				.block_erase = spi_block_erase_d7,
+//			}, {
+//				.eraseblocks = { {64 * 1024, 16} },
+//				.block_erase = spi_block_erase_d8,
+//			}, {
+//				.eraseblocks = { {1024 * 1024, 1} },
+//				.block_erase = spi_block_erase_60,
+//			}, {
+//				.eraseblocks = { {1024 * 1024, 1} },
+//				.block_erase = spi_block_erase_c7,
+//			}
+//		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6 is quad enable */
+//		.unlock		= spi_disable_blockprotect_bp3_srwd,
+//		.write		= spi_chip_write_256,
+//		.read		= spi_chip_read, /* Fast read (0x0B) and multi I/O supported */
+//		.voltage	= {2300, 3600},
+//	},
+
+//	{
+//		.vendor		= "PMC",
+//		.name		= "Pm25LQ016",
+//		.bustype	= BUS_SPI,
+//		.manufacture_id	= PMC_ID,
+//		.model_id	= PMC_PM25LQ016,
+//		.total_size	= 2048,
+//		.page_size	= 256,
+//		/* OTP: 256B total; read 0x4B, write 0xB1 */
+//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+//		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+//		.block_erasers	=
+//		{
+//			{
+//				.eraseblocks = { {4 * 1024, 512} },
+//				.block_erase = spi_block_erase_20,
+//			}, {
+//				.eraseblocks = { {4 * 1024, 512} },
+//				.block_erase = spi_block_erase_d7,
+//			}, {
+//				.eraseblocks = { {64 * 1024, 32} },
+//				.block_erase = spi_block_erase_d8,
+//			}, {
+//				.eraseblocks = { {2048 * 1024, 1} },
+//				.block_erase = spi_block_erase_60,
+//			}, {
+//				.eraseblocks = { {2048 * 1024, 1} },
+//				.block_erase = spi_block_erase_c7,
+//			}
+//		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6 is quad enable */
+//		.unlock		= spi_disable_blockprotect_bp3_srwd,
+//		.write		= spi_chip_write_256,
+//		.read		= spi_chip_read, /* Fast read (0x0B) and multi I/O supported */
+//		.voltage	= {2300, 3600},
+//	},
+
+//	{
+//		.vendor		= "PMC",
+//		.name		= "Pm25LQ032C",
+//		.bustype	= BUS_SPI,
+//		.manufacture_id	= PMC_ID,
+//		.model_id	= PMC_PM25LQ032C,
+//		.total_size	= 4096,
+//		.page_size	= 256,
+//		/* OTP: 64B total; read 0x4B, write 0xB1 */
+//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+//		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+//		.block_erasers	=
+//		{
+//			{
+//				.eraseblocks = { {4 * 1024, 1024} },
+//				.block_erase = spi_block_erase_20,
+//			}, {
+//				.eraseblocks = { {4 * 1024, 1024} },
+//				.block_erase = spi_block_erase_d7,
+//			}, {
+//				.eraseblocks = { {64 * 1024, 64} },
+//				.block_erase = spi_block_erase_d8,
+//			}, {
+//				.eraseblocks = { {4096 * 1024, 1} },
+//				.block_erase = spi_block_erase_60,
+//			}, {
+//				.eraseblocks = { {4096 * 1024, 1} },
+//				.block_erase = spi_block_erase_c7,
+//			}
+//		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6 is quad enable */
+//		.unlock		= spi_disable_blockprotect_bp3_srwd,
+//		.write		= spi_chip_write_256,
+//		.read		= spi_chip_read, /* Fast read (0x0B) and multi I/O supported */
+//		.voltage	= {2700, 3600},
+//	},
+
 //	{
 //		.vendor		= "PMC",
 //		.name		= "Pm25LV010",
@@ -5581,33 +5893,34 @@ const struct flashchip flashchips[] = {
 		.voltage	= {2700, 3600},
 	},
 	
-//	{
-//		.vendor		= "ST",
-//		.name		= "M25P05-A",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ST_ID,
-//		.model_id	= ST_M25P05A,
-//		.total_size	= 64,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
-////		.probe		= probe_spi_rdid,
-////		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {32 * 1024, 2} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+	{
+		.vendor		= "ST",
+		.name		= "M25P05-A",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25P05A,
+		.total_size	= 64,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_UNBOUND_READ | FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {32 * 1024, 2} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		  = spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
 //	/* The ST M25P05 is a bit of a problem. It has the same ID as the
 //	 * ST M25P05-A in RES mode, but supports only 128 byte writes instead
@@ -5642,35 +5955,36 @@ const struct flashchip flashchips[] = {
 //		.voltage	= {2700, 3600},
 //	},
 
-//	{
-//		.vendor		= "ST",
-//		.name		= "M25P10-A",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ST_ID,
-//		.model_id	= ST_M25P10A,
-//		.total_size	= 128,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_OK_PREU,
+	{
+		.vendor		= "ST",
+		.name		= "M25P10-A",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25P10A,
+		.total_size	= 128,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_UNBOUND_READ | FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREU,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {32 * 1024, 4} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {128 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {32 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {128 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		  = spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	/* The ST M25P10 has the same problem as the M25P05. */
+	/* The ST M25P10 has the same problem as the M25P05. */
 //	{
 //		.vendor		= "ST",
 //		.name		= "M25P10",
@@ -5681,8 +5995,8 @@ const struct flashchip flashchips[] = {
 //		.page_size	= 256,
 //		.feature_bits	= FEATURE_UNBOUND_READ,
 //		.tested		= TEST_UNTESTED,
-//		.probe		= probe_spi_res1,
-//		.probe_timing	= TIMING_ZERO,
+////		.probe		= probe_spi_res1,
+////		.probe_timing	= TIMING_ZERO,
 //		.block_erasers	=
 //		{
 //			{
@@ -5699,61 +6013,63 @@ const struct flashchip flashchips[] = {
 //		.voltage	= {2700, 3600},
 //	},
 
-//	{
-//		.vendor		= "ST",
-//		.name		= "M25P20",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ST_ID,
-//		.model_id	= ST_M25P20,
-//		.total_size	= 256,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "ST",
+		.name		= "M25P20",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25P20,
+		.total_size	= 256,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_UNBOUND_READ | FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {64 * 1024, 4} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {256 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {256 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		  = spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "ST", /* Numonyx */
-//		.name		= "M25P40",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ST_ID,
-//		.model_id	= ST_M25P40,
-//		.total_size	= 512,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "ST", /* Numonyx */
+		.name		= "M25P40",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25P40,
+		.total_size	= 512,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_UNBOUND_READ | FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREWU,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {64 * 1024, 8} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {512 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 8} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		  = spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
 //	{
 //		.vendor		= "ST",

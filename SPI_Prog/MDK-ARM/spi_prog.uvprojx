@@ -48,7 +48,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>Bootloader\</OutputDirectory>
+          <OutputDirectory>.\binary\</OutputDirectory>
           <OutputName>spi_prog_Flash</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -759,7 +759,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>Bootloader\</OutputDirectory>
+          <OutputDirectory>.\binary\</OutputDirectory>
           <OutputName>spi_prog_Flash_clang</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -1470,7 +1470,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>Bootloader\</OutputDirectory>
+          <OutputDirectory>.\binary\</OutputDirectory>
           <OutputName>spi_prog_RAM</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -2181,7 +2181,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>Bootloader\</OutputDirectory>
+          <OutputDirectory>.\binary\</OutputDirectory>
           <OutputName>spi_prog_RAM_clang</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -5094,7 +5094,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>3</Optim>
+            <Optim>2</Optim>
             <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
