@@ -1095,6 +1095,66 @@ const struct flashchip flashchips[] = {
 //		.voltage	= {2700, 3600},
 //	},
 
+//{
+//		.vendor		= "Atmel",
+//		.name		= "AT25F512",
+//		.bustype	= BUS_SPI,
+//		.manufacture_id	= ATMEL_ID,
+//		.model_id	= ATMEL_AT25F512,
+//		.total_size	= 64,
+//		.page_size	= 256,
+//		.feature_bits	= FEATURE_WRSR_WREN,
+//		.tested		= TEST_OK_PREW,
+////		.probe		= probe_spi_at25f,
+////		.probe_timing	= TIMING_ZERO,
+//		.block_erasers	=
+//		{
+//			{
+//				.eraseblocks = { {32 * 1024, 2} },
+//				.block_erase = SPI_BLOCK_ERASE_52,
+//			}, {
+//				.eraseblocks = { {64 * 1024, 1} },
+//				.block_erase = SPI_BLOCK_ERASE_62,
+//			}
+//		},
+////		.printlock	= spi_prettyprint_status_register_at25f,
+////		.unlock		= spi_disable_blockprotect_at25f,
+//		.write		= spi_chip_write_256,
+//		.read		= spi_chip_read,
+//		.voltage	= {2700, 3600},
+//	},
+
+	{
+		.vendor		= "Atmel",
+		.name		= "AT25F512A",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ATMEL_ID,
+		.model_id	= ATMEL_AT25F512A,
+		.total_size	= 64,
+		.page_size	= 128,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_at25f,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {32 * 1024, 2} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_62,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_at25f512a,
+		/* FIXME: It is not correct to use this one, because the BP1 bit is N/A. */
+		.unlock		= spi_disable_blockprotect_at25f512a,
+		.write		= spi_chip_write_256,
+		.read		  = spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
 //	{
 //		.vendor		= "Atmel",
 //		.name		= "AT25F512B",
@@ -1104,7 +1164,7 @@ const struct flashchip flashchips[] = {
 //		.total_size	= 64,
 //		.page_size	= 256,
 //		/* OTP: 128B total, 64B pre-programmed; read 0x77; write 0x9B */
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ | FEATURE_OTP,
+//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
 //		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
@@ -1112,23 +1172,26 @@ const struct flashchip flashchips[] = {
 //		{
 //			{
 //				.eraseblocks = { {4 * 1024, 16} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
+//				.block_erase = spi_block_erase_20,
 //			}, {
 //				.eraseblocks = { {32 * 1024, 2} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
+//				.block_erase = spi_block_erase_52,
 //			}, {
 //				.eraseblocks = { {32 * 1024, 2} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
+//				.block_erase = spi_block_erase_d8,
 //			}, {
 //				.eraseblocks = { {64 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
+//				.block_erase = spi_block_erase_60,
 //			}, {
 //				.eraseblocks = { {64 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
+//				.block_erase = spi_block_erase_c7,
+//			}, {
+//				.eraseblocks = { {64 * 1024, 1} },
+//				.block_erase = spi_block_erase_62,
 //			}
 //		},
-//		.printlock	= spi_prettyprint_status_register_at25f,
-//		.unlock		= spi_disable_blockprotect_at25f,
+//		.printlock	= spi_prettyprint_status_register_at25f512b,
+//		.unlock		= spi_disable_blockprotect_at25f512b,
 //		.write		= spi_chip_write_256,
 //		.read		= spi_chip_read,
 //		.voltage	= {2700, 3600},
@@ -5517,7 +5580,7 @@ const struct flashchip flashchips[] = {
 		.erase    = spi_erase_bulk,
 		.voltage	= {2700, 3600},
 	},
-//	
+	
 //	{
 //		.vendor		= "ST",
 //		.name		= "M25P05-A",
@@ -5528,8 +5591,8 @@ const struct flashchip flashchips[] = {
 //		.page_size	= 256,
 //		.feature_bits	= FEATURE_UNBOUND_READ,
 //		.tested		= TEST_UNTESTED,
-//		.probe		= probe_spi_rdid,
-//		.probe_timing	= TIMING_ZERO,
+////		.probe		= probe_spi_rdid,
+////		.probe_timing	= TIMING_ZERO,
 //		.block_erasers	=
 //		{
 //			{

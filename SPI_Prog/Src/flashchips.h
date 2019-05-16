@@ -70,6 +70,7 @@
 #define SPI_BLOCK_ERASE_50      (0x50U)
 #define SPI_BLOCK_ERASE_20      (0x20U)
 #define SPI_BLOCK_ERASE_52      (0x52U)
+#define SPI_BLOCK_ERASE_62      (0x62U)
 #define SPI_BLOCK_ERASE_D8      (0xD8U)
 #define SPI_BLOCK_ERASE_60      (0x60U)
 #define SPI_BLOCK_ERASE_C7      (0xC7U)
@@ -129,7 +130,7 @@
 #define AMIC_A25LQ032		0x4016	/* Same as A25LQ32A, but the latter supports SFDP */
 #define AMIC_A25LQ64		0x4017
 
-#define ATMEL_ID		0x1F	/* Atmel (now used by Adesto) */
+#define ATMEL_ID		      0x1F	/* Atmel (now used by Adesto) */
 #define ATMEL_AT25DF021		0x4300
 #define ATMEL_AT25DF041A	0x4401
 #define ATMEL_AT25DF081		0x4502	/* EDI 0x00. AT25DL081 has same ID + EDI 0x0100 */
@@ -142,7 +143,7 @@
 #define ATMEL_AT25DQ161		0x8600	/* EDI 0x0100 */
 #define ATMEL_AT25DQ321		0x8700	/* EDI 0x0100 */
 #define ATMEL_AT25F512		0x60	/* Needs AT25F_RDID. ID from PCN and actual HW. Seems to be a relabeled AT25F1024. */
-#define ATMEL_AT25F512A		0x65	/* Needs AT25F_RDID */
+#define ATMEL_AT25F512A		0x6565	/* Needs AT25F_RDID */
 #define ATMEL_AT25F512B		0x6500
 #define ATMEL_AT25F1024		0x60	/* Needs AT25F_RDID */
 #define ATMEL_AT25F2048		0x63	/* Needs AT25F_RDID */

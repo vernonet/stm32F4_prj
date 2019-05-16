@@ -353,7 +353,7 @@ static int32_t WriteStatusReg (uint8_t sr) {
 }
  
 /* Read JEDEC ID */
- int32_t ReadJedecId ( JEDEC_ID* jdc_id) {
+ int32_t ReadJedecId (uint8_t cmd, JEDEC_ID* jdc_id) {
   int32_t status; /* driver execution status */
   uint8_t buf[8];
 
@@ -363,7 +363,7 @@ static int32_t WriteStatusReg (uint8_t sr) {
   if (status == ARM_DRIVER_OK) {
     /* Set command */
     //buf[0] = CMD_READ_RDID_SST;
-		buf[0] = CMD_READ_RDID;
+		buf[0] = cmd;
 		//buf[3] = 1;
 
     /* Send command and receive register value */
@@ -597,13 +597,20 @@ static int32_t Uninitialize (void) {
 //--------------------------------------------------------------------------------				
 				volatile uint32_t i=0x03; 
 				while(i-->0) {
-					ReadJedecId (&jdc_id_) ; 
+					ReadJedecId (CMD_READ_RDID, &jdc_id_) ; 
 					delay_mic();	
 			  }
-				if (jdc_id_.man_id == 0xFF & jdc_id_.dev_id == 0xFFFF) {
-				i = 3;
+				if (jdc_id_.man_id == 0xFF && (jdc_id_.dev_id == 0xFFFF | jdc_id_.dev_id == 0xFF)) {
+				i = 1;
 				while(i-->0) {
 					ReadIdSST (&jdc_id_);
+					delay_mic();
+					}		  
+			 }
+				if (jdc_id_.man_id == 0xFF && (jdc_id_.dev_id == 0xFFFF | jdc_id_.dev_id == 0xFF)) {
+				i = 1;
+				while(i-->0) {
+					ReadJedecId (CMD_READ_RDID_ATMEL, &jdc_id_);
 					delay_mic();
 					}		  
 			 }
@@ -732,6 +739,7 @@ static int32_t Uninitialize (void) {
         uint8_t  cmd[4];
         int32_t  status;
         uint32_t num, n;
+	      uint16_t flash_page_size = flschip->page_size;
 
   if ((addr > (flschip->total_size*1024)) || (data == NULL)) {
     return ARM_DRIVER_ERROR_PARAMETER;
@@ -765,7 +773,7 @@ static int32_t Uninitialize (void) {
 				  __asm("nop");
 			    };
 
-          n = FLASH_PAGE_SIZE - (addr % FLASH_PAGE_SIZE);
+          n = flash_page_size - (addr % flash_page_size);
 
           if (n > cnt) {
             n = cnt;
@@ -829,6 +837,7 @@ static int32_t Uninitialize (void) {
         uint8_t  cmd[4];
         int32_t  status;
         uint32_t num, n;
+	      uint16_t flash_page_size = flschip->page_size;
 
   if ((addr > (flschip->total_size*1024)) || (data == NULL)) {
     return ARM_DRIVER_ERROR_PARAMETER;
@@ -862,7 +871,7 @@ static int32_t Uninitialize (void) {
           /* Wait until command and address are sent */
           while (ptrSPI->GetDataCount() != 4U) {__asm("nop");};
 
-          n = FLASH_PAGE_SIZE - (addr % FLASH_PAGE_SIZE);
+          n = flash_page_size - (addr % flash_page_size);
 
           if (n > cnt) {
             n = cnt;
@@ -1320,6 +1329,11 @@ int32_t spi_disable_blockprotect_at2x_global_unprotect(void)
 	return spi_disable_blockprotect_generic(0x0C, 1 << 7, 1 << 4, 0x00);
 }
 
+int spi_disable_blockprotect_at25f512a(void)
+{
+	return spi_disable_blockprotect_generic(0x04, 1 << 7, 0, 0xFF);
+}
+
 /**
   \fn          int32_t ARM_Flash_EraseChip (void)
   \brief       Erase complete Flash.
@@ -1344,8 +1358,8 @@ int32_t spi_erase_bulk (uint8_t cmd) {
 	 
 	if (isErased() == 0) return ARM_DRIVER_OK; //no need execute erase
 	 
-	if (flschip->unlock == spi_disable_blockprotect) {
-		status = spi_disable_blockprotect(); // 
+	if (flschip->unlock) {  //(flschip->unlock == spi_disable_blockprotect)
+		status = flschip->unlock();//spi_disable_blockprotect(); // 
 		if (status) return status;
 		}
 

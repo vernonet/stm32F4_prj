@@ -49,6 +49,7 @@
 #define CMD_READ_SFDP           (0x5AU) // Read SFDP 
 #define CMD_READ_RDID           (0x9fU) // Read Manufacturer and JDEC Device ID 
 #define CMD_READ_RDID_SST       (0x90U)
+#define CMD_READ_RDID_ATMEL     (0x15U)
 #define CMD_EWSR                (0x50U)
 #define CMD_WRSR                (0x01U)
 
@@ -67,7 +68,7 @@ typedef struct _JEDEC_ID {
 int32_t ReadData (uint32_t addr, void *data, uint32_t cnt);
 int32_t ProgramData (uint32_t addr, const void *data, uint32_t cnt);
 int32_t ReadSfdpReg (uint8_t cmd, uint32_t* _size);
-int32_t ReadJedecId ( JEDEC_ID* jdc_id);
+int32_t ReadJedecId (uint8_t cmd, JEDEC_ID* jdc_id);
 int32_t ReadIdSST ( JEDEC_ID* jdc_id) ;
 int32_t EraseChip (void);
 int32_t Initialize (ARM_Flash_SignalEvent_t cb_event);
@@ -84,3 +85,4 @@ int32_t spi_erase_bulk        (uint8_t cmd);
 int32_t spi_erase_bulk_sec    (uint8_t cmd);
 int32_t spi_disable_blockprotect (void);
 int32_t spi_disable_blockprotect_at2x_global_unprotect(void);
+int32_t spi_disable_blockprotect_at25f512a(void);
