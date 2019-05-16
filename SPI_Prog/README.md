@@ -30,6 +30,12 @@ If the LED 4 flashes after connecting the chip and powered, then the chip is ide
 otherwise the LED 5 will be flash. After write the chip, the CRC will be checked. The erase-write-read process will be displayed using LED 3, 
 if there were no errors, LED 4 will be flashed, otherwise LED 5 will be flash. You also need to pull-up the following  pins - WP, HOLD, DO.
 You do not need to format the disk, just drag-n-drop the file there, will work only in the Windows system (tested WinXp, Win7).
+
+# Remarks
+
+Only for the target without the cmsis suffix:
+the github change the file attributes, file "RTE_Components.h" must have read-only attributes.  So that these targets are successfully compiled, 
+you need to unzip the RTE.7z file in the "SPI_Prog\MDK-ARM\RTE" folder.
   
 # License
 

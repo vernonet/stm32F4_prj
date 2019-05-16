@@ -6148,7 +6148,7 @@ const struct flashchip flashchips[] = {
 		.page_size	= 256,
 		/* OTP: 1024B total, 256B reserved; read 0x48; write 0x42 */
 		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ | FEATURE_OTP,
-//		.tested		= TEST_OK_PREWU,
+		.tested		= TEST_OK_PREWU,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
 		.block_erasers	=
@@ -6188,7 +6188,7 @@ const struct flashchip flashchips[] = {
 		.page_size	= 256,
 		/* OTP: 1024B total, 256B reserved; read 0x48; write 0x42 */
 		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ | FEATURE_OTP,
-//		.tested		= TEST_OK_PREWU,
+		.tested		= TEST_OK_PREWU,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
 		.block_erasers	=
@@ -6227,7 +6227,7 @@ const struct flashchip flashchips[] = {
 		.total_size	= 4096,
 		.page_size	= 256,
 		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
-//		.tested		= TEST_OK_PREWU,
+		.tested		= TEST_OK_PREWU,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
 		.block_erasers	=
@@ -6336,43 +6336,44 @@ const struct flashchip flashchips[] = {
 		//.wp		= &wp_w25q,
 	},
 
-//	{
-//		.vendor		= "Winbond",
-//		.name		= "W25Q128.V",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= WINBOND_NEX_ID,
-//		.model_id	= WINBOND_NEX_W25Q128_V,
-//		.total_size	= 16384,
-//		.page_size	= 256,
-//		/* OTP: 1024B total, 256B reserved; read 0x48; write 0x42 */
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ | FEATURE_OTP,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Winbond",
+		.name		= "W25Q128.V",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= WINBOND_NEX_ID,
+		.model_id	= WINBOND_NEX_W25Q128_V,
+		.total_size	= 16384,
+		.page_size	= 256,
+		/* OTP: 1024B total, 256B reserved; read 0x48; write 0x42 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ | FEATURE_OTP,
+		.tested		= TEST_OK_PREWU,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 4096} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 512} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 256} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {16 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {16 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 4096} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {32 * 1024, 512} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 256} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {16 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {16 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		  = spi_chip_read,
+		.erase    = spi_erase_bulk,
 //		.wp		= &wp_w25q,
-//	},
+	},
 
 //	{
 //		.vendor		= "Winbond",
@@ -6419,43 +6420,45 @@ const struct flashchip flashchips[] = {
 //		.wp		= &wp_w25q,
 //	},
 
-//	{
-//		.vendor		= "Winbond",
-//		.name		= "W25Q128J",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= WINBOND_NEX_ID,
-//		.model_id	= WINBOND_NEX_W25Q128J,
-//		.total_size	= 16384,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ | FEATURE_OTP,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Winbond",
+		.name		= "W25Q128J",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= WINBOND_NEX_ID,
+		.model_id	= WINBOND_NEX_W25Q128J,
+		.total_size	= 16384,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ | FEATURE_OTP,
+		.tested		= TEST_OK_PREWU,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 4096} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 512} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 256} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {16 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {16 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//		.wp		= &wp_w25,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 4096} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {32 * 1024, 512} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 256} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {16 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {16 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		  = spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+		//.wp		= &wp_w25,
+	},
+	
 //	{
 //		.vendor		= "Winbond",
 //		.name		= "W25Q256JV",
