@@ -7327,6 +7327,10 @@ const struct flashchip *flash_id_to_entry(uint8_t mfg_id, uint32_t model_id)
 	return NULL;
 }
 
+unsigned int flashchips_in_base(void){
+	return (sizeof(flashchips)/sizeof(flashchips[0]));
+}
+
 //struct voltage_range voltage_ranges[NUM_VOLTAGE_RANGES];
 
 //static int compar(const void *_x, const void *_y)

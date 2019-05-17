@@ -53,6 +53,8 @@
 #include "string.h"
 #include "stm32f4xx_hal.h"
 #include "stm32f4_discovery.h"
+#include "usbd_conf.h"
+
 
 #include "flashchips.h"
 
@@ -217,8 +219,9 @@ static int32_t WriteStatusReg (uint8_t sr) {
 	int32_t feature_bits = flschip->feature_bits;
 	
 	if (!(feature_bits & (FEATURE_WRSR_WREN | FEATURE_WRSR_EWSR))) {
-		printf("Missing status register write definition, assuming "
+		SPI_UsrLog("Missing status register write definition, assuming "
 			 "EWSR is needed\n");
+
 		feature_bits |= FEATURE_WRSR_EWSR;
 	}
 	
@@ -615,9 +618,12 @@ static int32_t Uninitialize (void) {
 					}		  
 			 }
 				 flschip = flash_id_to_entry(jdc_id_.man_id, jdc_id_.dev_id);
-				 if (flschip == NULL) printf ("\n Flash not supported\n\n");
+				 if (flschip == NULL) {
+					 SPI_UsrLog ("\n Flash not supported\n\n");
+				 }
 				    else {
-							printf ("\n Vendor - %s\n Chip   - %s\n Size   - %d Kbytes\n\n\n",\
+							//SPI_UsrLog ("\n Flash supported");
+							SPI_UsrLog ("\n Vendor - %s\n Chip   - %s\n Size   - %d Kbytes\n\n\n",\
 							flschip->vendor, flschip->name, flschip->total_size);
 							FlashInfo.sector_count = flschip->block_erasers->eraseblocks[0].count;
 						}
@@ -716,11 +722,11 @@ static int32_t Uninitialize (void) {
 		if (status) return status;
 		}
 	 
-	 printf ("\n pd_addr -> 0x%05x   cnt -> 0x%03x", addr, cnt);
+	 SPI_UsrLog ("\n pd_addr -> 0x%05x   cnt -> 0x%03x", addr, cnt);
 	 
 	 sts = flschip->write(addr, data, cnt);
 	 if (sts < 0) {
-		 printf ("\n ProgramData error -> %d", sts);
+		 SPI_UsrLog("\n ProgramData error -> %d", sts);
 	 }
   
   return (sts);
@@ -945,8 +951,7 @@ static int32_t Uninitialize (void) {
 		if (status) return status;
 		}
 	
-	printf (" addr -> 0x%05x   cnt -> 0x%03x", addr, cnt);
-	
+	SPI_UsrLog (" addr -> 0x%05x   cnt -> 0x%03x", addr, cnt);
 
   status = ARM_DRIVER_OK;
 
@@ -1049,7 +1054,7 @@ int32_t spi_chip_write_1 (uint32_t addr, const void *data, uint32_t cnt) {  // o
     return ARM_DRIVER_ERROR_PARAMETER;
   }
 	
-	printf ("\n addr -> 0x%05x   cnt -> 0x%03x", addr, cnt);
+	SPI_UsrLog ("\n addr -> 0x%05x   cnt -> 0x%03x", addr, cnt);
 	
 	if (flschip->unlock == spi_disable_blockprotect) {
 		status = spi_disable_blockprotect(); // 
@@ -1273,41 +1278,41 @@ static int32_t spi_disable_blockprotect_generic(uint8_t bp_mask, uint8_t lock_ma
 		return ARM_DRIVER_OK;
 	}
 
-	printf("Some block protection in effect, disabling... ");
+	SPI_UsrLog("Some block protection in effect, disabling... ");
 	if ((stat & lock_mask) != 0) {
-		printf("\n\tNeed to disable the register lock first... ");
+		SPI_UsrLog("\n\tNeed to disable the register lock first... ");
 		if (wp_mask != 0 && (stat & wp_mask) == 0) {
-			printf("Hardware protection is active, disabling write protection is impossible.\n");
+			SPI_UsrLog("Hardware protection is active, disabling write protection is impossible.\n");
 			return 1;
 		}
 		/* All bits except the register lock bit (often called SPRL, SRWD, WPEN) are readonly. */
 		status = WriteStatusReg(stat & ~lock_mask);
 		if (status) {
-			printf("spi_write_status_register failed.\n");
+			SPI_UsrLog("spi_write_status_register failed.\n");
 			return status;
 		}
 		status = ReadStatusReg(CMD_READ_STATUS, &stat);
 		if (status != ARM_DRIVER_OK) return status;
 		if ((stat & lock_mask) != 0) {
-			printf("Unsetting lock bit(s) failed.\n");
+			SPI_UsrLog("Unsetting lock bit(s) failed.\n");
 			return 1;
 		}
-		printf("done.\n");
+		SPI_UsrLog("done.\n");
 	}
 	/* Global unprotect. Make sure to mask the register lock bit as well. */
 	status = WriteStatusReg (stat & ~(bp_mask | lock_mask) & unprotect_mask);
 	if (status) {
-		printf("write_status_register failed.\n");
+		SPI_UsrLog("write_status_register failed.\n");
 		return status;
 	}
 	status = ReadStatusReg(CMD_READ_STATUS, &stat);
 	if (status != ARM_DRIVER_OK) return status;
 	if ((stat & bp_mask) != 0) {
-		printf("Block protection could not be disabled!\n");
+		SPI_UsrLog("Block protection could not be disabled!\n");
 		//flash->chip->printlock(flash);
 		return ARM_DRIVER_ERROR_SPECIFIC;
 	}
-	printf("disabled.\n");
+	SPI_UsrLog("disabled.\n");
 	return ARM_DRIVER_OK;
 }
 
@@ -1329,9 +1334,23 @@ int32_t spi_disable_blockprotect_at2x_global_unprotect(void)
 	return spi_disable_blockprotect_generic(0x0C, 1 << 7, 1 << 4, 0x00);
 }
 
-int spi_disable_blockprotect_at25f512a(void)
+int32_t spi_disable_blockprotect_at25f512a(void)
 {
 	return spi_disable_blockprotect_generic(0x04, 1 << 7, 0, 0xFF);
+}
+
+/* A common block protection disable that tries to unset the status register bits masked by 0x3C (BP0-3) and
+ * protected/locked by bit #7. */
+int32_t spi_disable_blockprotect_bp3_srwd(void)
+{
+	return spi_disable_blockprotect_generic(0x3C, 1 << 7, 0, 0xFF);
+}
+
+/* A common block protection disable that tries to unset the status register bits masked by 0x7C (BP0-4) and
+ * protected/locked by bit #7. */
+int32_t spi_disable_blockprotect_bp4_srwd(void)
+{
+	return spi_disable_blockprotect_generic(0x7C, 1 << 7, 0, 0xFF);
 }
 
 /**
@@ -1404,10 +1423,10 @@ int32_t spi_erase_bulk (uint8_t cmd) {
   }
  }
 	 if (isErased()){ 
-	   printf ("\n Flash not erased!!!\n");
+	   SPI_UsrLog ("\n Flash not erased!!!\n");
 		 return ARM_DRIVER_ERROR;
 	 }
-	   else printf ("\n Flash erased!!!, all 0xFF\n");
+	   else SPI_UsrLog ("\n Flash erased!!!, all 0xFF\n");
    BSP_LED_Off(LED3);
    return status;
  
@@ -1462,8 +1481,10 @@ int32_t spi_erase_bulk (uint8_t cmd) {
 			}
 	
 	
-  if (isErased()) printf ("\n Flash not erased!!!\n");
-	   else printf ("\n Flash erased!!!, all 0xFF\n");
+  if (isErased()) {
+	   SPI_UsrLog("\n Flash not erased!!!\n")
+	}
+	   else SPI_UsrLog ("\n Flash erased!!!, all 0xFF\n");
   return status;
 }
 

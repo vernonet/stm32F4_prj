@@ -99,13 +99,17 @@
 /*---------- -----------*/
 #define USBD_SUPPORT_USER_STRING     0
 /*---------- -----------*/
-#define USBD_DEBUG_LEVEL             2
+#define USBD_DEBUG_LEVEL             0 //2
+/*---------- -----------*/
+#define SPI_DEBUG_LEVEL              0
 /*---------- -----------*/
 #define USBD_LPM_ENABLED     0
 /*---------- -----------*/
 #define USBD_SELF_POWERED     1
 /*---------- -----------*/
 #define MSC_MEDIA_PACKET     512
+/*---------- -----------*/
+
 
 /****************************************/
 /* #define for FS and HS identification */
@@ -141,8 +145,8 @@
 /* DEBUG macros */
 
 #if (USBD_DEBUG_LEVEL > 0)
-#define USBD_UsrLog(...)    printf(__VA_ARGS__);\
-                            printf("\n");
+#define USBD_UsrLog(...)    printf(__VA_ARGS__);//\
+                            //printf("\n");
 #else
 #define USBD_UsrLog(...)
 #endif
@@ -162,6 +166,15 @@
                             printf("\n");
 #else
 #define USBD_DbgLog(...)
+#endif
+
+
+#if (SPI_DEBUG_LEVEL > 0)
+
+#define SPI_UsrLog(...)   printf(__VA_ARGS__);//;\
+                           // printf("\n");
+#else
+#define SPI_UsrLog(...)
 #endif
 
 /**

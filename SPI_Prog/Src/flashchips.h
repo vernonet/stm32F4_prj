@@ -573,6 +573,7 @@ struct flashchip {
 };
 
 const struct flashchip *flash_id_to_entry(uint8_t mfg_id, uint32_t model_id);
+unsigned int flashchips_in_base(void);
 
 
 #endif /* !FLASHCHIPS_H */

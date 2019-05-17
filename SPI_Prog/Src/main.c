@@ -67,14 +67,15 @@ extern uint8_t Wr_Protect;
 volatile uint8_t complet=0, error = 0;
 CRC_HandleTypeDef   CrcHandle;
 /* Used for storing CRC Value */
-__IO uint32_t CRCValue_actual =  0;  //рассчитывается после записи
-__IO uint32_t CRCValue_nominal = 0;  //рассчитывается до записи
+__IO uint32_t CRCValue_actual =  0;  //calculated after write flash
+__IO uint32_t CRCValue_nominal = 0;  //calculated before write flash
 extern int32_t file_size;
 //extern IWDG_HandleTypeDef hiwdg;
 extern TIM_HandleTypeDef htim6;
 uint8_t crc_buf[0x200] __attribute__ ((aligned (4)));
 extern const struct flashchip * flschip;
 extern unsigned char boot_sec[]; 
+extern const struct flashchip flashchips[];
 volatile uint32_t blink= 2;
 uint32_t spi_spd[6] = {0,1313,2625,5250,10500,21000};  //spi speed in KHz for SPI2
 
@@ -166,7 +167,8 @@ int main(void)
 	 /* Initialize User Button */
   BSP_PB_Init(BUTTON_KEY, BUTTON_MODE_GPIO);
 	//Wr_Protect = 1;
-	printf("\033[2J");                           //clear screen
+	SPI_UsrLog("\033[2J");                           //clear screen
+	SPI_UsrLog(" In base %d flashchips\n", flashchips_in_base());
 	HAL_Delay(500);
 	if (Initialize(NULL) == ARM_DRIVER_OK) {     //init SPI2 
 		 PowerControl(ARM_POWER_FULL);
@@ -189,7 +191,7 @@ int main(void)
 	}
 	if (flschip) {                    //flash identified	    
 				BSP_LED_Off(LED4);
-				HAL_Delay(1500);
+				HAL_Delay(500);
 				//Wr_Protect = 0;            //allow write
 				if (Prepare_FAT()) Error_Handler();				
 				/* USER CODE END SysInit */
@@ -387,9 +389,7 @@ void _Error_Handler(char *file, int line)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-	#if (USBD_DEBUG_LEVEL > 0)
-	printf("\n\r ERROR -> %s %d", file, line);
-	#endif
+	SPI_UsrLog("\n\r ERROR -> %s %d", file, line);
 	complet = 1;                                         
 	error = 1;
   while(1){

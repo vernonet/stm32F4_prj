@@ -165,7 +165,7 @@ int8_t STORAGE_GetCapacity(uint8_t lun, uint32_t * block_num,
   switch (lun)
   {
     case 0:
-      *block_num  = flschip->total_size*1024/STORAGE_BLK_SIZ + 0x1D;   //STORAGE_BLK_NBR;
+      *block_num  = flschip->total_size*1024/STORAGE_BLK_SIZ + FAT_FILE_DATA_BLK ;//0x1D;   //STORAGE_BLK_NBR;
       *block_size = STORAGE_BLK_SIZ;
       break;
     case 1:
@@ -235,9 +235,7 @@ int8_t STORAGE_Read(uint8_t lun, uint8_t * buf, uint32_t blk_addr,
 						}
 			   }
 			}
-			#if (USBD_DEBUG_LEVEL > 0)
-			printf("\n\r RD blk_addr-> %d blk_len-> %d", blk_addr,blk_len);
-			#endif
+			USBD_UsrLog("\n\r RD blk_addr-> %d blk_len-> %d", blk_addr,blk_len);
       break;
     case 1:
       break;
@@ -317,9 +315,7 @@ int8_t STORAGE_Write(uint8_t lun, uint8_t * buf, uint32_t blk_addr,
   switch (lun)
   {
     case 0:	
-		 #if (USBD_DEBUG_LEVEL > 0)
-     printf("\n\r WR blk_addr-> %d blk_len-> %d", blk_addr, blk_len);
-		 #endif
+     USBD_UsrLog("\n\r WR blk_addr-> %d blk_len-> %d", blk_addr, blk_len);
 		 if (!(error)) {                                      //
 			 if (blk_addr >= FAT_FILE_DATA_BLK) {                             //0x3a00 file body
 				 if ((modulo)&&(blk_addr == (FAT_FILE_DATA_BLK+file_size/STORAGE_BLK_SIZ))) {
@@ -346,9 +342,7 @@ int8_t STORAGE_Write(uint8_t lun, uint8_t * buf, uint32_t blk_addr,
 																																			 *(uint32_t*)(buf+28+0x20);
 								 if (file_size) {
 									 if (file_size > flschip->total_size*1024) {
-										 #if (USBD_DEBUG_LEVEL > 0)
-										 printf("\n\r ERROR, file size > flash size!!!");
-										 #endif
+										 USBD_UsrLog("\n\r ERROR, file size > flash size!!!");
 										 return -1;
 									 }
 									 modulo = 	file_size % STORAGE_BLK_SIZ;	//chunk of file

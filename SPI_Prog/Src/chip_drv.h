@@ -86,3 +86,5 @@ int32_t spi_erase_bulk_sec    (uint8_t cmd);
 int32_t spi_disable_blockprotect (void);
 int32_t spi_disable_blockprotect_at2x_global_unprotect(void);
 int32_t spi_disable_blockprotect_at25f512a(void);
+int32_t spi_disable_blockprotect_bp3_srwd(void);
+int32_t spi_disable_blockprotect_bp4_srwd(void);
