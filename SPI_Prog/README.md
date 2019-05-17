@@ -31,8 +31,8 @@ otherwise the LED 5 will be flash. After write the chip, the CRC will be checked
 if there were no errors, LED 4 will be flashed, otherwise LED 5 will be flash. You also need to pull-up the following  pins - WP, HOLD, DO.
 You do not need to format the disk, just drag-n-drop the file there, will work only in the Windows system (tested WinXp, Win7).
 To display debug information set in file "usbd_conf.h" :
- USBD_DEBUG_LEVEL             1
- SPI_DEBUG_LEVEL              1
+ - USBD_DEBUG_LEVEL             1
+ - SPI_DEBUG_LEVEL              1
 
 # Remarks
 
