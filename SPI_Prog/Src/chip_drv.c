@@ -358,7 +358,7 @@ static int32_t WriteStatusReg (uint8_t sr) {
 /* Read JEDEC ID */
  int32_t ReadJedecId (uint8_t cmd, JEDEC_ID* jdc_id) {
   int32_t status; /* driver execution status */
-  uint8_t buf[8];
+  uint8_t buf[8]= {0};
 
   /* Select Slave */
   status = ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE);
@@ -389,7 +389,7 @@ static int32_t WriteStatusReg (uint8_t sr) {
 }
  
 /* Read JEDEC ID */
- int32_t ReadIdSST ( JEDEC_ID* jdc_id) {
+ int32_t ReadIdSST ( uint8_t cmd, JEDEC_ID* jdc_id) {
   int32_t status; /* driver execution status */
   uint8_t buf[12] = {0};
 
@@ -398,7 +398,7 @@ static int32_t WriteStatusReg (uint8_t sr) {
 
   if (status == ARM_DRIVER_OK) {
     /* Set command */
-		buf[0] = CMD_READ_RDID_SST;
+		buf[0] = cmd;//CMD_READ_RDID_SST;
 		//buf[3] = 1;
 
     /* Send command and receive register value */
@@ -606,18 +606,27 @@ static int32_t Uninitialize (void) {
 				if (jdc_id_.man_id == 0xFF && (jdc_id_.dev_id == 0xFFFF | jdc_id_.dev_id == 0xFF)) {
 				i = 1;
 				while(i-->0) {
-					ReadIdSST (&jdc_id_);
+					ReadIdSST (CMD_READ_RDID_SST, &jdc_id_);
 					delay_mic();
 					}		  
 			 }
-				if (jdc_id_.man_id == 0xFF && (jdc_id_.dev_id == 0xFFFF | jdc_id_.dev_id == 0xFF)) {
+				if (jdc_id_.man_id == 0xFF && (jdc_id_.dev_id == 0xFFFF | jdc_id_.dev_id == 0xFF | jdc_id_.dev_id == 0x00)) {
+				i = 1;
+				while(i-->0) {
+					ReadIdSST (CMD_READ_RDID_PMC, &jdc_id_);
+					delay_mic();
+					}		  
+			 }
+				if (jdc_id_.man_id == 0xFF && (jdc_id_.dev_id == 0xFFFF | jdc_id_.dev_id == 0xFF | jdc_id_.dev_id == 0x00)) {
 				i = 1;
 				while(i-->0) {
 					ReadJedecId (CMD_READ_RDID_ATMEL, &jdc_id_);
 					delay_mic();
 					}		  
 			 }
+				 if (!(jdc_id_.man_id == GENERIC_MANUF_ID && (jdc_id_.dev_id == GENERIC_DEVICE_ID ))){
 				 flschip = flash_id_to_entry(jdc_id_.man_id, jdc_id_.dev_id);
+				 }
 				 if (flschip == NULL) {
 					 SPI_UsrLog ("\n Flash not supported\n\n");
 				 }
@@ -1351,6 +1360,11 @@ int32_t spi_disable_blockprotect_bp3_srwd(void)
 int32_t spi_disable_blockprotect_bp4_srwd(void)
 {
 	return spi_disable_blockprotect_generic(0x7C, 1 << 7, 0, 0xFF);
+}
+
+int32_t spi_disable_blockprotect_at25f512b(void)
+{
+	return spi_disable_blockprotect_generic(0x04, 1 << 7, 1 << 4, 0xFF);
 }
 
 /**

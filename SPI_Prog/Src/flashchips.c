@@ -1155,47 +1155,48 @@ const struct flashchip flashchips[] = {
 		.voltage	= {2700, 3600},
 	},
 
-//	{
-//		.vendor		= "Atmel",
-//		.name		= "AT25F512B",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ATMEL_ID,
-//		.model_id	= ATMEL_AT25F512B,
-//		.total_size	= 64,
-//		.page_size	= 256,
-//		/* OTP: 128B total, 64B pre-programmed; read 0x77; write 0x9B */
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Atmel",
+		.name		= "AT25F512B",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ATMEL_ID,
+		.model_id	= ATMEL_AT25F512B,
+		.total_size	= 64,
+		.page_size	= 256,
+		/* OTP: 128B total, 64B pre-programmed; read 0x77; write 0x9B */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 16} },
-//				.block_erase = spi_block_erase_20,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 2} },
-//				.block_erase = spi_block_erase_52,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 2} },
-//				.block_erase = spi_block_erase_d8,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 1} },
-//				.block_erase = spi_block_erase_60,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 1} },
-//				.block_erase = spi_block_erase_c7,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 1} },
-//				.block_erase = spi_block_erase_62,
-//			}
-//		},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 16} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {32 * 1024, 2} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {32 * 1024, 2} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_62,
+			}
+		},
 //		.printlock	= spi_prettyprint_status_register_at25f512b,
-//		.unlock		= spi_disable_blockprotect_at25f512b,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.unlock		= spi_disable_blockprotect_at25f512b,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
 //	{
 //		.vendor		= "Atmel",
@@ -4739,36 +4740,38 @@ const struct flashchip flashchips[] = {
 //		.voltage	= {2700, 3600},
 //	},
 
-//	{
-//		.vendor		= "PMC",
-//		.name		= "Pm25LV010",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= PMC_ID,
-//		.model_id	= PMC_PM25LV010,
-//		.total_size	= 128,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
-//		.probe		= probe_spi_rdid,
+{
+		.vendor		= "PMC",
+		.name		= "Pm25LV010",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= PMC_ID_NOPREFIX,
+		.model_id	= PMC_PM25LV010,
+		.total_size	= 128,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_res2, /* The continuation code is transferred as the 3rd byte m( */
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 32} },
-//				.block_erase = spi_block_erase_d7,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 4} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {128 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_D7,
+			}, {
+				.eraseblocks = { {32 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {128 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp1_srwd,
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read	  	= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
 //	{
 //		.vendor		= "PMC",
@@ -4906,37 +4909,38 @@ const struct flashchip flashchips[] = {
 //		.voltage	= {2700, 3600},
 //	},
 
-//	{
-//		.vendor		= "PMC",
-//		.name		= "Pm25LV512",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= PMC_ID,
-//		.model_id	= PMC_PM25LV512,
-//		.total_size	= 64,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
-//		.probe		= probe_spi_rdid,
+{
+		.vendor		= "PMC",
+		.name		= "Pm25LV512(A)",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= PMC_ID_NOPREFIX,
+		.model_id	= PMC_PM25LV512,
+		.total_size	= 64,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_res2, /* The continuation code is transferred as the 3rd byte m( */
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 16} },
-//				.block_erase = spi_block_erase_d7,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 2} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
-
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 16} },
+				.block_erase = SPI_BLOCK_ERASE_D7,
+			}, {
+				.eraseblocks = { {32 * 1024, 2} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp1_srwd,
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		  = spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 //	
 //	{
 //		.vendor		= "Sanyo",
