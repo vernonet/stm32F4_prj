@@ -64,6 +64,7 @@
 #define FEATURE_NO_ERASE	(1 << 11)
 #define FEATURE_4BA_SUPPORT	(1 << 12)
 #define FEATURE_WREN	(1 << 13)
+#define FEATURE_QPI		(1 << 14)
 
 
 #define SPI_BLOCK_ERASE_81      (0x81U)
@@ -432,6 +433,19 @@
 #define ST_M25PE40		0x8013
 #define ST_M25PE80		0x8014
 #define ST_M25PE16		0x8015
+
+#define ST_N25Q016__1E		0xBB15	/* N25Q016, 1.8V, (uniform sectors expected) */
+#define ST_N25Q032__3E		0xBA16	/* N25Q032, 3.0V, (uniform sectors expected) */
+#define ST_N25Q032__1E		0xBB16	/* N25Q032, 1.8V, (uniform sectors expected) */
+#define ST_N25Q064__3E		0xBA17	/* N25Q064, 3.0V, (uniform sectors expected) */
+#define ST_N25Q064__1E		0xBB17	/* N25Q064, 1.8V, (uniform sectors expected) */
+#define ST_N25Q128__3E		0xBA18	/* N25Q128, 3.0V, (uniform sectors expected) */
+#define ST_N25Q128__1E		0xBB18	/* N25Q128, 1.8V, (uniform sectors expected) */
+#define ST_N25Q256__3E		0xBA19	/* N25Q256, 3.0V, (uniform sectors expected) */
+#define ST_N25Q256__1E		0xBB19	/* N25Q256, 1.8V, (uniform sectors expected) */
+#define ST_N25Q512__3E		0xBA20	/* N25Q512, 3.0V, (uniform sectors expected) */
+#define ST_N25Q512__1E		0xBB20	/* N25Q512, 1.8V, (uniform sectors expected) */
+#define ST_N25Q00A__3E		0xBA21	/* N25Q00A, 3.0V, (uniform sectors expected) */
 
 /*
  * W25X chips are SPI, first byte of device ID is memory type, second

@@ -439,316 +439,324 @@ const struct flashchip flashchips[] = {
 //		.voltage	= {2700, 3600},
 //	},
 
-//	{
-//		.vendor		= "AMIC",
-//		.name		= "A25L512",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= AMIC_ID_NOPREFIX,
-//		.model_id	= AMIC_A25L512,
-//		.total_size	= 64,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "AMIC",
+		.name		= "A25L512",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= AMIC_ID_NOPREFIX,
+		.model_id	= AMIC_A25L512,
+		.total_size	= 64,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { { 4 * 1024, 16 } },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { { 64 * 1024, 1 } },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { { 64 * 1024, 1 } },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { { 4 * 1024, 16 } },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { { 64 * 1024, 1 } },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { { 64 * 1024, 1 } },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
 //		.printlock	= spi_prettyprint_status_register_amic_a25l40p,
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "AMIC",
-//		.name		= "A25L010",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= AMIC_ID_NOPREFIX,
-//		.model_id	= AMIC_A25L010,
-//		.total_size	= 128,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "AMIC",
+		.name		= "A25L010",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= AMIC_ID_NOPREFIX,
+		.model_id	= AMIC_A25L010,
+		.total_size	= 128,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { { 4 * 1024, 32 } },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { { 64 * 1024, 2 } },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { { 128 * 1024, 1 } },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { { 4 * 1024, 32 } },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { { 64 * 1024, 2 } },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { { 128 * 1024, 1 } },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
 //		.printlock	= spi_prettyprint_status_register_amic_a25l40p,
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "AMIC",
-//		.name		= "A25L020",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= AMIC_ID_NOPREFIX,
-//		.model_id	= AMIC_A25L020,
-//		.total_size	= 256,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "AMIC",
+		.name		= "A25L020",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= AMIC_ID_NOPREFIX,
+		.model_id	= AMIC_A25L020,
+		.total_size	= 256,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { { 4 * 1024, 64 } },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { { 64 * 1024, 4 } },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { { 256 * 1024, 1 } },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { { 4 * 1024, 64 } },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { { 64 * 1024, 4 } },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { { 256 * 1024, 1 } },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
 //		.printlock	= spi_prettyprint_status_register_amic_a25l40p,
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "AMIC",
-//		.name		= "A25L040",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= AMIC_ID_NOPREFIX,
-//		.model_id	= AMIC_A25L040,
-//		.total_size	= 512,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "AMIC",
+		.name		= "A25L040",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= AMIC_ID_NOPREFIX,
+		.model_id	= AMIC_A25L040,
+		.total_size	= 512,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { { 4 * 1024, 128 } },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { { 64 * 1024, 8 } },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { { 512 * 1024, 1 } },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { { 4 * 1024, 128 } },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { { 64 * 1024, 8 } },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { { 512 * 1024, 1 } },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
 //		.printlock	= spi_prettyprint_status_register_amic_a25l40p,
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//		.wp		= &wp_w25,
-//	},
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "AMIC",
-//		.name		= "A25L080",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= AMIC_ID_NOPREFIX,
-//		.model_id	= AMIC_A25L080,
-//		.total_size	= 1024,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "AMIC",
+		.name		= "A25L080",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= AMIC_ID_NOPREFIX,
+		.model_id	= AMIC_A25L080,
+		.total_size	= 1024,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { { 4 * 1024, 256 } },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { { 64 * 1024, 16 } },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { { 1024 * 1024, 1 } },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { { 4 * 1024, 256 } },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { { 64 * 1024, 16 } },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { { 1024 * 1024, 1 } },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
 //		.printlock	= spi_prettyprint_status_register_amic_a25l40p,
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "AMIC",
-//		.name		= "A25L016",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= AMIC_ID_NOPREFIX,
-//		.model_id	= AMIC_A25L016,
-//		.total_size	= 2048,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "AMIC",
+		.name		= "A25L016",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= AMIC_ID_NOPREFIX,
+		.model_id	= AMIC_A25L016,
+		.total_size	= 2048,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { { 4 * 1024, 512 } },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { { 64 * 1024, 32 } },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { { 2048 * 1024, 1 } },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { { 4 * 1024, 512 } },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { { 64 * 1024, 32 } },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { { 2048 * 1024, 1 } },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
 //		.printlock	= spi_prettyprint_status_register_amic_a25l40p,
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "AMIC",
-//		.name		= "A25L032",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= AMIC_ID_NOPREFIX,
-//		.model_id	= AMIC_A25L032,
-//		.total_size	= 4096,
-//		.page_size	= 256,
-//		/* OTP: 64B total; read 0x4B, 0x48; write 0x42 */
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ | FEATURE_OTP,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "AMIC",
+		.name		= "A25L032",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= AMIC_ID_NOPREFIX,
+		.model_id	= AMIC_A25L032,
+		.total_size	= 4096,
+		.page_size	= 256,
+		/* OTP: 64B total; read 0x4B, 0x48; write 0x42 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ | FEATURE_OTP,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { { 4 * 1024, 1024 } },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { { 64 * 1024, 64 } },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { { 64 * 1024, 64 } },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { { 4096 * 1024, 1 } },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { { 4096 * 1024, 1 } },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { { 4 * 1024, 1024 } },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { { 64 * 1024, 64 } },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { { 64 * 1024, 64 } },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { { 4096 * 1024, 1 } },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { { 4096 * 1024, 1 } },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
 //		.printlock	= spi_prettyprint_status_register_amic_a25l032,
-//		.unlock		= NULL, /* Two status reg bytes (read with 0x35 and 0x05) */
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.unlock		= NULL, /* Two status reg bytes (read with 0x35 and 0x05) */
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "AMIC",
-//		.name		= "A25LQ032",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= AMIC_ID_NOPREFIX,
-//		.model_id	= AMIC_A25LQ032,
-//		.total_size	= 4096,
-//		.page_size	= 256,
-//		/* OTP: 64B total; read 0x4B, 0x48; write 0x42 */
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ | FEATURE_OTP,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "AMIC",
+		.name		= "A25LQ032",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= AMIC_ID_NOPREFIX,
+		.model_id	= AMIC_A25LQ032,
+		.total_size	= 4096,
+		.page_size	= 256,
+		/* OTP: 64B total; read 0x4B, 0x48; write 0x42 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ | FEATURE_OTP,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { { 4 * 1024, 1024 } },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { { 64 * 1024, 64 } },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { { 64 * 1024, 64 } },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { { 4096 * 1024, 1 } },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { { 4096 * 1024, 1 } },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { { 4 * 1024, 1024 } },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { { 64 * 1024, 64 } },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { { 64 * 1024, 64 } },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { { 4096 * 1024, 1 } },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { { 4096 * 1024, 1 } },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
 //		.printlock	= spi_prettyprint_status_register_amic_a25lq032,
-//		.unlock		= NULL, /* Two status reg bytes (read with 0x35 and 0x05) */
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.unlock		= NULL, /* Two status reg bytes (read with 0x35 and 0x05) */
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
 
-//	{
-//		.vendor		= "Atmel",
-//		.name		= "ATMEL_AT25SL128A",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ATMEL_ID,
-//		.model_id	= ATMEL_AT25SL128A,
-//		.total_size	= 16384,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ | FEATURE_OTP,
-//		.tested		= TEST_OK_PREWU,
+{
+		.vendor		= "ATMEL",
+		.name		= "AT25SL128A",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ATMEL_ID,
+		.model_id	= ATMEL_AT25SL128A,
+		.total_size	= 16384,
+		.page_size	= 256,
+		/* supports SFDP */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP | FEATURE_QPI,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 4096} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 512} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 256} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {16 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {16 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.printlock	= spi_prettyprint_status_register_at25df,
-//		.unlock		= spi_disable_blockprotect_at25df,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {1700, 2000},
-//		.wp		= &wp_w25q,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 4096} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {32 * 1024, 512} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 256} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {16 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {16 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		  = spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {1700, 2000},
+	},
 
 //	{
 //		.vendor		= "Atmel",
@@ -1685,659 +1693,937 @@ const struct flashchip flashchips[] = {
 //		.voltage	= {2700, 3600},
 //	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B05",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B05,
-//		.total_size	= 64,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+{
+		.vendor		= "Eon",
+		.name		= "EN25B05",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B05,
+		.total_size	= 64,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{4 * 1024, 2},
-//					{8 * 1024, 1},
-//					{16 * 1024, 1},
-//					{32 * 1024, 1},
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{4 * 1024, 2},
+					{8 * 1024, 1},
+					{16 * 1024, 1},
+					{32 * 1024, 1},
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B05T",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B05,
-//		.total_size	= 64,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+{
+		.vendor		= "Eon",
+		.name		= "EN25B05",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B05,
+		.total_size	= 64,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{32 * 1024, 1},
-//					{16 * 1024, 1},
-//					{8 * 1024, 1},
-//					{4 * 1024, 2},
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{4 * 1024, 2},
+					{8 * 1024, 1},
+					{16 * 1024, 1},
+					{32 * 1024, 1},
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B10",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B10,
-//		.total_size	= 128,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25B05T",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B05,
+		.total_size	= 64,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{4 * 1024, 2},
-//					{8 * 1024, 1},
-//					{16 * 1024, 1},
-//					{32 * 1024, 3},
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {128 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{32 * 1024, 1},
+					{16 * 1024, 1},
+					{8 * 1024, 1},
+					{4 * 1024, 2},
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B10T",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B10,
-//		.total_size	= 128,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25P05",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B05,
+		.total_size	= 64,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{32 * 1024, 3},
-//					{16 * 1024, 1},
-//					{8 * 1024, 1},
-//					{4 * 1024, 2},
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {128 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{32 * 1024, 2} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B20",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B20,
-//		.total_size	= 256,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25B10",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B10,
+		.total_size	= 128,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{4 * 1024, 2},
-//					{8 * 1024, 1},
-//					{16 * 1024, 1},
-//					{32 * 1024, 1},
-//					{64 * 1024, 3}
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {256 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{4 * 1024, 2},
+					{8 * 1024, 1},
+					{16 * 1024, 1},
+					{32 * 1024, 3},
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {128 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B20T",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B20,
-//		.total_size	= 256,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25B10T",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B10,
+		.total_size	= 128,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{64 * 1024, 3},
-//					{32 * 1024, 1},
-//					{16 * 1024, 1},
-//					{8 * 1024, 1},
-//					{4 * 1024, 2},
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {256 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{32 * 1024, 3},
+					{16 * 1024, 1},
+					{8 * 1024, 1},
+					{4 * 1024, 2},
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {128 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B40",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B40,
-//		.total_size	= 512,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25P10",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B10,
+		.total_size	= 128,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{4 * 1024, 2},
-//					{8 * 1024, 1},
-//					{16 * 1024, 1},
-//					{32 * 1024, 1},
-//					{64 * 1024, 7}
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {512 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {32 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {128 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B40T",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B40,
-//		.total_size	= 512,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25B20",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B20,
+		.total_size	= 256,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{64 * 1024, 7},
-//					{32 * 1024, 1},
-//					{16 * 1024, 1},
-//					{8 * 1024, 1},
-//					{4 * 1024, 2},
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {512 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{4 * 1024, 2},
+					{8 * 1024, 1},
+					{16 * 1024, 1},
+					{32 * 1024, 1},
+					{64 * 1024, 3}
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {256 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B80",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B80,
-//		.total_size	= 1024,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25B20T",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B20,
+		.total_size	= 256,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{4 * 1024, 2},
-//					{8 * 1024, 1},
-//					{16 * 1024, 1},
-//					{32 * 1024, 1},
-//					{64 * 1024, 15}
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{64 * 1024, 3},
+					{32 * 1024, 1},
+					{16 * 1024, 1},
+					{8 * 1024, 1},
+					{4 * 1024, 2},
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {256 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B80T",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B80,
-//		.total_size	= 1024,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25P20",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B20,
+		.total_size	= 256,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{64 * 1024, 15},
-//					{32 * 1024, 1},
-//					{16 * 1024, 1},
-//					{8 * 1024, 1},
-//					{4 * 1024, 2},
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {256 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B16",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B16,
-//		.total_size	= 2048,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25B40",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B40,
+		.total_size	= 512,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{4 * 1024, 2},
-//					{8 * 1024, 1},
-//					{16 * 1024, 1},
-//					{32 * 1024, 1},
-//					{64 * 1024, 31},
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{4 * 1024, 2},
+					{8 * 1024, 1},
+					{16 * 1024, 1},
+					{32 * 1024, 1},
+					{64 * 1024, 7}
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B16T",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B16,
-//		.total_size	= 2048,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25B40T",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B40,
+		.total_size	= 512,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{64 * 1024, 31},
-//					{32 * 1024, 1},
-//					{16 * 1024, 1},
-//					{8 * 1024, 1},
-//					{4 * 1024, 2},
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{64 * 1024, 7},
+					{32 * 1024, 1},
+					{16 * 1024, 1},
+					{8 * 1024, 1},
+					{4 * 1024, 2},
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B32",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B32,
-//		.total_size	= 4096,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25P40",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B40,
+		.total_size	= 512,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{4 * 1024, 2},
-//					{8 * 1024, 1},
-//					{16 * 1024, 1},
-//					{32 * 1024, 1},
-//					{64 * 1024, 63},
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {4 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 8} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B32T",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B32,
-//		.total_size	= 4096,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25B80",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B80,
+		.total_size	= 1024,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{64 * 1024, 63},
-//					{32 * 1024, 1},
-//					{16 * 1024, 1},
-//					{8 * 1024, 1},
-//					{4 * 1024, 2},
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {4 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{4 * 1024, 2},
+					{8 * 1024, 1},
+					{16 * 1024, 1},
+					{32 * 1024, 1},
+					{64 * 1024, 15}
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B64",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B64,
-//		.total_size	= 8192,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25B80T",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B80,
+		.total_size	= 1024,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{4 * 1024, 2},
-//					{8 * 1024, 1},
-//					{16 * 1024, 1},
-//					{32 * 1024, 1},
-//					{64 * 1024, 127},
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {8 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{64 * 1024, 15},
+					{32 * 1024, 1},
+					{16 * 1024, 1},
+					{8 * 1024, 1},
+					{4 * 1024, 2},
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25B64T",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25B64,
-//		.total_size	= 8192,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25P80",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B80,
+		.total_size	= 1024,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = {
-//					{64 * 1024, 127},
-//					{32 * 1024, 1},
-//					{16 * 1024, 1},
-//					{8 * 1024, 1},
-//					{4 * 1024, 2},
-//				},
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {8 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 16} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		/* Note: EN25Q16 is an evil twin which shares the model ID
-//		   but has different write protection capabilities */
-//		.vendor		= "Eon",
-//		.name		= "EN25D16",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25D16,
-//		.total_size	= 2048,
-//		.page_size	= 256,
-//		/* OTP: D16 512B/Q16 128B total; enter 0x3A */
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ | FEATURE_OTP,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25B16",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B16,
+		.total_size	= 2048,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 512} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 32} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 32} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{4 * 1024, 2},
+					{8 * 1024, 1},
+					{16 * 1024, 1},
+					{32 * 1024, 1},
+					{64 * 1024, 31},
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25F05",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25F05,
-//		.total_size	= 64,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25B16T",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B16,
+		.total_size	= 2048,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 16} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 2} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 2} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{64 * 1024, 31},
+					{32 * 1024, 1},
+					{16 * 1024, 1},
+					{8 * 1024, 1},
+					{4 * 1024, 2},
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Eon",
-//		.name		= "EN25F10",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= EON_ID_NOPREFIX,
-//		.model_id	= EON_EN25F10,
-//		.total_size	= 128,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Eon",
+		.name		= "EN25P16",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B16,
+		.total_size	= 2048,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 32} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 4} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 4} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {128 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {128 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+	{
+		.vendor		= "Eon",
+		.name		= "EN25B32",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B32,
+		.total_size	= 4096,
+		.page_size	= 256,
+		/* OTP: 512B total; enter 0x3A */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{4 * 1024, 2},
+					{8 * 1024, 1},
+					{16 * 1024, 1},
+					{32 * 1024, 1},
+					{64 * 1024, 63},
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+	{
+		.vendor		= "Eon",
+		.name		= "EN25B32T",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B32,
+		.total_size	= 4096,
+		.page_size	= 256,
+		/* OTP: 512B total; enter 0x3A */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{64 * 1024, 63},
+					{32 * 1024, 1},
+					{16 * 1024, 1},
+					{8 * 1024, 1},
+					{4 * 1024, 2},
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+	{
+		.vendor		= "Eon",
+		.name		= "EN25P32", /* Uniform version of EN25B32 */
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B32,
+		.total_size	= 4096,
+		.page_size	= 256,
+		/* OTP: 512B total; enter 0x3A */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+	{
+		.vendor		= "Eon",
+		.name		= "EN25B64",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B64,
+		.total_size	= 8192,
+		.page_size	= 256,
+		/* OTP: 512B total; enter 0x3A */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{4 * 1024, 2},
+					{8 * 1024, 1},
+					{16 * 1024, 1},
+					{32 * 1024, 1},
+					{64 * 1024, 127},
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {8 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+	{
+		.vendor		= "Eon",
+		.name		= "EN25B64T",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B64,
+		.total_size	= 8192,
+		.page_size	= 256,
+		/* OTP: 512B total; enter 0x3A */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{64 * 1024, 127},
+					{32 * 1024, 1},
+					{16 * 1024, 1},
+					{8 * 1024, 1},
+					{4 * 1024, 2},
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {8 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+	{
+		.vendor		= "Eon",
+		.name		= "EN25P64",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25B64,
+		.total_size	= 8192,
+		.page_size	= 256,
+		/* OTP: 512B total; enter 0x3A */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {8 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+	{
+		.vendor		= "Eon",
+		.name		= "EN25F05",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25F05,
+		.total_size	= 64,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 16} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {32 * 1024, 2} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {32 * 1024, 2} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		  = spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+	{
+		.vendor		= "Eon",
+		.name		= "EN25F10",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= EON_ID_NOPREFIX,
+		.model_id	= EON_EN25F10,
+		.total_size	= 128,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {32 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {32 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {128 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {128 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+	//	.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
 	{
 		.vendor		= "Eon",
@@ -4562,19 +4848,19 @@ const struct flashchip flashchips[] = {
 //		{
 //			{
 //				.eraseblocks = { {4 * 1024, 64} },
-//				.block_erase = spi_block_erase_20,
+//				.block_erase = SPI_BLOCK_ERASE_20,
 //			}, {
 //				.eraseblocks = { {4 * 1024, 64} },
 //				.block_erase = spi_block_erase_d7,
 //			}, {
 //				.eraseblocks = { {64 * 1024, 4} },
-//				.block_erase = spi_block_erase_d8,
+//				.block_erase = SPI_BLOCK_ERASE_D8,
 //			}, {
 //				.eraseblocks = { {256 * 1024, 1} },
 //				.block_erase = spi_block_erase_60,
 //			}, {
 //				.eraseblocks = { {256 * 1024, 1} },
-//				.block_erase = spi_block_erase_c7,
+//				.block_erase = SPI_BLOCK_ERASE_C7,
 //			}
 //		},
 //		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6 is quad enable */
@@ -4601,19 +4887,19 @@ const struct flashchip flashchips[] = {
 //		{
 //			{
 //				.eraseblocks = { {4 * 1024, 128} },
-//				.block_erase = spi_block_erase_20,
+//				.block_erase = SPI_BLOCK_ERASE_20,
 //			}, {
 //				.eraseblocks = { {4 * 1024, 128} },
 //				.block_erase = spi_block_erase_d7,
 //			}, {
 //				.eraseblocks = { {64 * 1024, 8} },
-//				.block_erase = spi_block_erase_d8,
+//				.block_erase = SPI_BLOCK_ERASE_D8,
 //			}, {
 //				.eraseblocks = { {512 * 1024, 1} },
 //				.block_erase = spi_block_erase_60,
 //			}, {
 //				.eraseblocks = { {512 * 1024, 1} },
-//				.block_erase = spi_block_erase_c7,
+//				.block_erase = SPI_BLOCK_ERASE_C7,
 //			}
 //		},
 //		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6 is quad enable */
@@ -4640,19 +4926,19 @@ const struct flashchip flashchips[] = {
 //		{
 //			{
 //				.eraseblocks = { {4 * 1024, 256} },
-//				.block_erase = spi_block_erase_20,
+//				.block_erase = SPI_BLOCK_ERASE_20,
 //			}, {
 //				.eraseblocks = { {4 * 1024, 256} },
 //				.block_erase = spi_block_erase_d7,
 //			}, {
 //				.eraseblocks = { {64 * 1024, 16} },
-//				.block_erase = spi_block_erase_d8,
+//				.block_erase = SPI_BLOCK_ERASE_D8,
 //			}, {
 //				.eraseblocks = { {1024 * 1024, 1} },
 //				.block_erase = spi_block_erase_60,
 //			}, {
 //				.eraseblocks = { {1024 * 1024, 1} },
-//				.block_erase = spi_block_erase_c7,
+//				.block_erase = SPI_BLOCK_ERASE_C7,
 //			}
 //		},
 //		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6 is quad enable */
@@ -4679,19 +4965,19 @@ const struct flashchip flashchips[] = {
 //		{
 //			{
 //				.eraseblocks = { {4 * 1024, 512} },
-//				.block_erase = spi_block_erase_20,
+//				.block_erase = SPI_BLOCK_ERASE_20,
 //			}, {
 //				.eraseblocks = { {4 * 1024, 512} },
 //				.block_erase = spi_block_erase_d7,
 //			}, {
 //				.eraseblocks = { {64 * 1024, 32} },
-//				.block_erase = spi_block_erase_d8,
+//				.block_erase = SPI_BLOCK_ERASE_D8,
 //			}, {
 //				.eraseblocks = { {2048 * 1024, 1} },
 //				.block_erase = spi_block_erase_60,
 //			}, {
 //				.eraseblocks = { {2048 * 1024, 1} },
-//				.block_erase = spi_block_erase_c7,
+//				.block_erase = SPI_BLOCK_ERASE_C7,
 //			}
 //		},
 //		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6 is quad enable */
@@ -4718,19 +5004,19 @@ const struct flashchip flashchips[] = {
 //		{
 //			{
 //				.eraseblocks = { {4 * 1024, 1024} },
-//				.block_erase = spi_block_erase_20,
+//				.block_erase = SPI_BLOCK_ERASE_20,
 //			}, {
 //				.eraseblocks = { {4 * 1024, 1024} },
 //				.block_erase = spi_block_erase_d7,
 //			}, {
 //				.eraseblocks = { {64 * 1024, 64} },
-//				.block_erase = spi_block_erase_d8,
+//				.block_erase = SPI_BLOCK_ERASE_D8,
 //			}, {
 //				.eraseblocks = { {4096 * 1024, 1} },
 //				.block_erase = spi_block_erase_60,
 //			}, {
 //				.eraseblocks = { {4096 * 1024, 1} },
-//				.block_erase = spi_block_erase_c7,
+//				.block_erase = SPI_BLOCK_ERASE_C7,
 //			}
 //		},
 //		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6 is quad enable */
@@ -6075,324 +6361,625 @@ const struct flashchip flashchips[] = {
 		.voltage	= {2700, 3600},
 	},
 
-//	{
-//		.vendor		= "ST",
-//		.name		= "M25P40-old",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= 0, /* Not used. */
-//		.model_id	= ST_M25P40_RES,
-//		.total_size	= 512,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+{
+		.vendor		= "Micron/Numonyx/ST", /* Numonyx */
+		.name		= "M25P40",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25P40,
+		.total_size	= 512,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 8} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* TODO: check */
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "M25P40-old",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= 0, /* Not used. */
+		.model_id	= ST_M25P40_RES,
+		.total_size	= 512,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_res1,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {64 * 1024, 8} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {512 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 8} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* TODO: check */
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+	},
 
-//	{
-//		.vendor		= "ST",
-//		.name		= "M25P80",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ST_ID,
-//		.model_id	= ST_M25P80,
-//		.total_size	= 1024,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "M25P80",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25P80,
+		.total_size	= 1024,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {64 * 1024, 16} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 16} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* TODO: check */
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "ST",
-//		.name		= "M25P16",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ST_ID,
-//		.model_id	= ST_M25P16,
-//		.total_size	= 2048,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_OK_PRU,
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "M25P16",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25P16,
+		.total_size	= 2048,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {64 * 1024, 32} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* TODO: check */
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "ST",
-//		.name		= "M25P32",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ST_ID,
-//		.model_id	= ST_M25P32,
-//		.total_size	= 4096,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "M25P32",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25P32,
+		.total_size	= 4096,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {64 * 1024, 64} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {4 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* TODO: check */
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "ST",
-//		.name		= "M25P64",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ST_ID,
-//		.model_id	= ST_M25P64,
-//		.total_size	= 8192,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "M25P64",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25P64,
+		.total_size	= 8192,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {64 * 1024, 128} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {8 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {8 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* TODO: check */
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "ST",
-//		.name		= "M25P128",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ST_ID,
-//		.model_id	= ST_M25P128,
-//		.total_size	= 16384,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "M25P128",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25P128,
+		.total_size	= 16384,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {256 * 1024, 64} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {16 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {256 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {16 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+	//	.printlock	= spi_prettyprint_status_register_bp3_srwd, /* TODO: check */
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "ST",
-//		.name		= "M25PX16",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ST_ID,
-//		.model_id	= ST_M25PX16,
-//		.total_size	= 2048,
-//		.page_size	= 256,
-//		/* OTP: 64B total; read 0x4B; write 0x42 */
-//		.feature_bits	= FEATURE_UNBOUND_READ | FEATURE_OTP,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "M25PE10",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25PE10,
+		.total_size	= 128,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { { 4 * 1024, 512 } },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 32} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 2} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {128 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "ST",
-//		.name		= "M25PX32",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ST_ID,
-//		.model_id	= ST_M25PX32,
-//		.total_size	= 4096,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_OK_PREU,
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "M25PE20",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25PE20,
+		.total_size	= 256,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { { 4 * 1024, 1024 } },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 64} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {4 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {256 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "ST",
-//		.name		= "M25PX64",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ST_ID,
-//		.model_id	= ST_M25PX64,
-//		.total_size	= 8192,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_OK_PREU,
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "M25PE40",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25PE40,
+		.total_size	= 512,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { { 4 * 1024, 2048 } },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 128} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {8 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 8} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "ST",
-//		.name		= "M25PX32",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ST_ID,
-//		.model_id	= ST_M25PX32,
-//		.total_size	= 4096,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_OK_PREU,
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "M25PE80",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25PE80,
+		.total_size	= 1024,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { { 4 * 1024, 1024 } },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 64} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {4 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 256} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 16} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "ST",
-//		.name		= "M25PX64",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ST_ID,
-//		.model_id	= ST_M25PX64,
-//		.total_size	= 8192,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_OK_PREU,
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "M25PE16",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25PE16,
+		.total_size	= 2048,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { { 4 * 1024, 2048 } },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 128} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {8 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 512} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "M25PX80",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25PX80,
+		.total_size	= 1024,
+		.page_size	= 256,
+		/* OTP: 64B total; read 0x4B, write 0x42 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	= {
+			{
+				.eraseblocks = { { 4 * 1024, 256 } },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 16} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp2_srwd, /* bit5: T/B */
+		.unlock		= spi_disable_blockprotect_bp2_srwd, /* TODO: per 64kB sector lock registers */
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "M25PX16",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25PX16,
+		.total_size	= 2048,
+		.page_size	= 256,
+		/* OTP: 64B total; read 0x4B; write 0x42 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { { 4 * 1024, 512 } },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp2_srwd, /* bit5: T/B */
+		.unlock		= spi_disable_blockprotect_bp2_srwd, /* TODO: per 64kB sector lock registers */
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2300, 3600},
+	},
+
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "M25PX32",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25PX32,
+		.total_size	= 4096,
+		.page_size	= 256,
+		/* OTP: 64B total; read 0x4B; write 0x42 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_OK_PRE,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { { 4 * 1024, 1024 } },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp2_srwd, /* bit5: T/B */
+		.unlock		= spi_disable_blockprotect_bp2_srwd, /* TODO: per 64kB sector lock registers */
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "M25PX64",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_M25PX64,
+		.total_size	= 8192,
+		.page_size	= 256,
+		/* OTP: 64B total; read 0x4B; write 0x42 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { { 4 * 1024, 2048 } },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {8 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp2_srwd, /* bit5: T/B */
+		.unlock		= spi_disable_blockprotect_bp2_srwd, /* TODO: per 64kB sector lock registers */
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+	
+
+
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "N25Q032..3E",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ST_ID,
+		.model_id	= ST_N25Q032__3E,
+		.total_size	= 4096,
+		.page_size	= 256,
+		/* supports SFDP */
+		/* OTP: 64B total; read 0x4B, write 0x42 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 1024} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_n25q, /* TODO: config, lock, flag regs */
+		.unlock		= spi_disable_blockprotect_n25q, /* TODO: per 64kB sector lock registers */
+		.write		= spi_chip_write_256, /* Multi I/O supported */
+		.read		= spi_chip_read, /* Fast read (0x0B) and multi I/O supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+
+
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "N25Q064..3E", /* ..3E = 3V, uniform 64KB/4KB blocks/sectors */
+		.bustype	= BUS_SPI,
+		.manufacture_id = ST_ID,
+		.model_id	= ST_N25Q064__3E,
+		.total_size	= 8192,
+		.page_size	= 256,
+		/* supports SFDP */
+		/* OTP: 64B total; read 0x4B, write 0x42 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 2048 } },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {8 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_n25q, /* TODO: config, lock, flag regs */
+		.unlock		= spi_disable_blockprotect_n25q, /* TODO: per 64kB sector lock registers */
+		.write		= spi_chip_write_256, /* Multi I/O supported */
+		.read		= spi_chip_read, /* Fast read (0x0B) and multi I/O supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+
+
+	{
+		.vendor		= "Micron/Numonyx/ST",
+		.name		= "N25Q128..3E", /* ..3E = 3V, uniform 64KB/4KB blocks/sectors */
+		.bustype	= BUS_SPI,
+		.manufacture_id = ST_ID,
+		.model_id	= ST_N25Q128__3E,
+		.total_size	= 16384,
+		.page_size	= 256,
+		/* supports SFDP */
+		/* OTP: 64B total; read 0x4B, write 0x42 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	= {
+			{
+				.eraseblocks = { {4 * 1024, 4096 } },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 256} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {16384 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_n25q, /* TODO: config, lock, flag regs */
+		.unlock		= spi_disable_blockprotect_n25q, /* TODO: per 64kB sector lock registers */
+		.write		= spi_chip_write_256, /* Multi I/O supported */
+		.read		= spi_chip_read, /* Fast read (0x0B) and multi I/O supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
 
 //	
 //	{

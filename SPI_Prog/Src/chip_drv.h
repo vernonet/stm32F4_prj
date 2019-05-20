@@ -90,3 +90,5 @@ int32_t spi_disable_blockprotect_at25f512a(void);
 int32_t spi_disable_blockprotect_bp3_srwd(void);
 int32_t spi_disable_blockprotect_bp4_srwd(void);
 int32_t spi_disable_blockprotect_at25f512b(void);
+int32_t spi_disable_blockprotect_bp2_srwd(void);
+int32_t spi_disable_blockprotect_n25q(void);

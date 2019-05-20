@@ -1367,6 +1367,21 @@ int32_t spi_disable_blockprotect_at25f512b(void)
 	return spi_disable_blockprotect_generic(0x04, 1 << 7, 1 << 4, 0xFF);
 }
 
+/* A common block protection disable that tries to unset the status register bits masked by 0x1C (BP0-2) and
+ * protected/locked by bit #7. Useful when bit #5 is neither a protection bit nor reserved (and hence possibly
+ * non-0). */
+int32_t spi_disable_blockprotect_bp2_srwd(void)
+{
+	return spi_disable_blockprotect_generic(0x1C, 1 << 7, 0, 0xFF);
+}
+
+/* === Intel/Numonyx/Micron - Spansion === */
+
+int32_t spi_disable_blockprotect_n25q(void)
+{
+	return spi_disable_blockprotect_generic(0x5C, 1 << 7, 0, 0xFF);
+}
+
 /**
   \fn          int32_t ARM_Flash_EraseChip (void)
   \brief       Erase complete Flash.
@@ -1376,7 +1391,8 @@ int32_t spi_disable_blockprotect_at25f512b(void)
  int32_t EraseChip (void) {
 	 uint8_t i;
 	 for (i = 0; i < NUM_ERASEFUNCTIONS; i++) {
-		 if (flschip->block_erasers[i].eraseblocks->count == 1) break;
+		 //search for a command to erase the entire chip,  not individual sectors
+		 if (flschip->block_erasers[i].eraseblocks->count == 1 && flschip->block_erasers[i].eraseblocks[1].size == 0) break;
 	 }
 	 
 	 return flschip->erase(flschip->block_erasers[i].block_erase);
