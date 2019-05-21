@@ -622,6 +622,11 @@
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
             </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1332,6 +1337,11 @@
               <FileName>flashchips.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2044,6 +2054,11 @@
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
             </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2755,6 +2770,11 @@
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
             </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2892,7 +2912,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>Bootloader\</OutputDirectory>
+          <OutputDirectory>.\binary\</OutputDirectory>
           <OutputName>spi_prog_RAM_clang</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -3585,6 +3605,11 @@
               <FileName>flashchips.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4486,6 +4511,11 @@
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
             </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4830,7 +4860,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>Bootloader\</OutputDirectory>
+          <OutputDirectory>.\binary\</OutputDirectory>
           <OutputName>spi_prog_RAM_clang</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -5524,6 +5554,11 @@
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
             </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5868,7 +5903,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>Bootloader\</OutputDirectory>
+          <OutputDirectory>.\binary\</OutputDirectory>
           <OutputName>spi_prog_RAM_clang</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -6561,6 +6596,11 @@
               <FileName>flashchips.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
             </File>
           </Files>
         </Group>
