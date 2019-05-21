@@ -50,6 +50,7 @@
 #include "usb_device.h"
 #include "flashchips.h"
 #include "chip_drv.h"
+#include "spi.h"
 #include "stm32f4_discovery.h"
 
 

@@ -33,27 +33,6 @@
 #define FLASH_ERASED_VALUE      ((uint8_t)0xFF)      /* Contents of erased memory */
 
 
-/* SPI Data Flash Commands */
-#define CMD_READ_DATA           (0x03U)
-#define CMD_READ_STATUS         (0x05U)
-#define CMD_WRITE_ENABLE        (0x06U)
-#define CMD_WRITE_DISABLE       (0x04U)
-#define CMD_PAGE_PROGRAM        (0x02U)
-#define CMD_PAGE_PROGRAM_11     (0x11U)
-#define CMD_PROGRAM_BYTE_AF     (0xAFU)
-#define CMD_PROGRAM_BYTE        (0x02U)
-#define CMD_READ_FLAG_STATUS    (0x70U)
-#define CMD_SECTOR_ERASE        (0x20U)//(0xD8U)
-#define CMD_BULK_ERASE          (0xC7U)
-#define CMD_BULK_ERASE_SST      (0x60U)
-#define CMD_READ_SFDP           (0x5AU) // Read SFDP 
-#define CMD_READ_RDID           (0x9fU) // Read Manufacturer and JDEC Device ID 
-#define CMD_READ_RDID_SST       (0x90U)
-#define CMD_READ_RDID_ATMEL     (0x15U)
-#define CMD_READ_RDID_PMC       (0xABU)
-#define CMD_EWSR                (0x50U)
-#define CMD_WRSR                (0x01U)
-
 
 /* Flash Driver Flags */
 #define FLASH_INIT              (0x01U)
@@ -75,7 +54,7 @@ int32_t EraseChip (void);
 int32_t Initialize (ARM_Flash_SignalEvent_t cb_event);
 int32_t PowerControl (ARM_POWER_STATE state);
 
-uint32_t CalcCRC32(uint8_t *Buf, uint32_t Len, uint32_t id);
+
 
 int32_t spi_chip_read         (uint32_t addr, void *data, uint32_t cnt);
 int32_t spi_chip_write_256    (uint32_t addr, const void *data, uint32_t cnt);
@@ -84,11 +63,4 @@ int32_t spi_chip_write_af     (uint32_t addr, const void *data, uint32_t cnt);
 int32_t spi_chip_write_1      (uint32_t addr, const void *data, uint32_t cnt);
 int32_t spi_erase_bulk        (uint8_t cmd); 
 int32_t spi_erase_bulk_sec    (uint8_t cmd);
-int32_t spi_disable_blockprotect (void);
-int32_t spi_disable_blockprotect_at2x_global_unprotect(void);
-int32_t spi_disable_blockprotect_at25f512a(void);
-int32_t spi_disable_blockprotect_bp3_srwd(void);
-int32_t spi_disable_blockprotect_bp4_srwd(void);
-int32_t spi_disable_blockprotect_at25f512b(void);
-int32_t spi_disable_blockprotect_bp2_srwd(void);
-int32_t spi_disable_blockprotect_n25q(void);
+

@@ -44,27 +44,28 @@
 #define NUM_ERASEFUNCTIONS 6
 
 
-#define FEATURE_REGISTERMAP	(1 << 0)
-#define FEATURE_BYTEWRITES	(1 << 1)
-#define FEATURE_LONG_RESET	(0 << 4)
-#define FEATURE_SHORT_RESET	(1 << 4)
-#define FEATURE_EITHER_RESET	FEATURE_LONG_RESET
-#define FEATURE_RESET_MASK	(FEATURE_LONG_RESET | FEATURE_SHORT_RESET)
-#define FEATURE_ADDR_FULL	(0 << 2)
-#define FEATURE_ADDR_MASK	(3 << 2)
-#define FEATURE_ADDR_2AA	(1 << 2)
-#define FEATURE_ADDR_AAA	(2 << 2)
-#define FEATURE_ADDR_SHIFTED	(1 << 5)
+/* Feature bits used for SPI only */
+#define FEATURE_WREN	    (1 << 5)      //I added
 #define FEATURE_WRSR_EWSR	(1 << 6)
 #define FEATURE_WRSR_WREN	(1 << 7)
 #define FEATURE_WRSR_EITHER	(FEATURE_WRSR_EWSR | FEATURE_WRSR_WREN)
 #define FEATURE_OTP		(1 << 8)
-#define FEATURE_ERASE_TO_ZERO	(1 << 9)
-#define FEATURE_UNBOUND_READ	(1 << 10)
-#define FEATURE_NO_ERASE	(1 << 11)
-#define FEATURE_4BA_SUPPORT	(1 << 12)
-#define FEATURE_WREN	(1 << 13)
-#define FEATURE_QPI		(1 << 14)
+#define FEATURE_QPI		(1 << 9)
+#define FEATURE_4BA_ENTER	(1 << 10) /**< Can enter/exit 4BA mode with instructions 0xb7/0xe9 w/o WREN */
+#define FEATURE_4BA_ENTER_WREN	(1 << 11) /**< Can enter/exit 4BA mode with instructions 0xb7/0xe9 after WREN */
+#define FEATURE_4BA_ENTER_EAR7	(1 << 12) /**< Can enter/exit 4BA mode by setting bit7 of the ext addr reg */
+#define FEATURE_4BA_EXT_ADDR	(1 << 13) /**< Regular 3-byte operations can be used by writing the most
+					       significant address byte into an extended address register. */
+#define FEATURE_4BA_READ	(1 << 14) /**< Native 4BA read instruction (0x13) is supported. */
+#define FEATURE_4BA_FAST_READ	(1 << 15) /**< Native 4BA fast read instruction (0x0c) is supported. */
+#define FEATURE_4BA_WRITE	(1 << 16) /**< Native 4BA byte program (0x12) is supported. */
+/* 4BA Shorthands */
+#define FEATURE_4BA_NATIVE	(FEATURE_4BA_READ | FEATURE_4BA_FAST_READ | FEATURE_4BA_WRITE)
+#define FEATURE_4BA		(FEATURE_4BA_ENTER | FEATURE_4BA_EXT_ADDR | FEATURE_4BA_NATIVE)
+#define FEATURE_4BA_WREN	(FEATURE_4BA_ENTER_WREN | FEATURE_4BA_EXT_ADDR | FEATURE_4BA_NATIVE)
+#define FEATURE_4BA_EAR7	(FEATURE_4BA_ENTER_EAR7 | FEATURE_4BA_EXT_ADDR | FEATURE_4BA_NATIVE)
+
+
 
 
 #define SPI_BLOCK_ERASE_81      (0x81U)
@@ -147,7 +148,7 @@
 #define ATMEL_AT25F512		0x60	/* Needs AT25F_RDID. ID from PCN and actual HW. Seems to be a relabeled AT25F1024. */
 #define ATMEL_AT25F512A		0x6565	/* Needs AT25F_RDID */
 #define ATMEL_AT25F512B		0x6500
-#define ATMEL_AT25F1024		0x60	/* Needs AT25F_RDID */
+#define ATMEL_AT25F1024		0x6060	/* Needs AT25F_RDID */
 #define ATMEL_AT25F2048		0x63	/* Needs AT25F_RDID */
 #define ATMEL_AT25F4096		0x64	/* Needs AT25F_RDID */
 #define ATMEL_AT25FS010		0x6601

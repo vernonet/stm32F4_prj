@@ -62,6 +62,8 @@
 #include "chip_drv.h"
 #include "flashchips.h"
 #include "Driver_SPI.h"
+#include "spi.h"
+
 
 extern uint8_t Wr_Protect;
 volatile uint8_t complet=0, error = 0;
@@ -130,7 +132,7 @@ uint32_t set_spi_speed (void) {  //return ARM_DRIVER_ERROR, ARM_DRIVER_OK
 			 }
 			 HAL_Delay(9);
 			}
-			if (i++>4) i=1;
+			if (i++>sizeof(spi_spd)/sizeof(spi_spd[0]) - 2) i=1;
 			}
 	
 }

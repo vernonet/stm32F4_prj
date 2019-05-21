@@ -50,6 +50,7 @@
 
 #include "Driver_SPI.h"
 #include "chip_drv.h"
+#include "spi.h"
 #include "string.h"
 #include "stm32f4xx_hal.h"
 #include "stm32f4_discovery.h"
@@ -127,149 +128,9 @@ const struct flashchip * flschip = NULL; //&flashchips[0];
 JEDEC_ID jdc_id_ = {0};
 
 
-static int32_t isErased (void);
-//static int32_t isLocked (void);
-static int32_t SetWriteEnable(void);
 
-void delay_mic(void)
-{
-	volatile uint32_t mic = 100;
-	 while(mic-->0){};
-}
 
-//id - UID of chip, if not use -> id=0U
-uint32_t CalcCRC32(uint8_t *Buf, uint32_t Len, uint32_t id)   //calc CRC hardware
-{
-        unsigned int i;
-        unsigned int Temp;
 
-        __HAL_RCC_CRC_CLK_ENABLE();                  //Разрешить тактирование CRC-юнита
-
-        CRC->CR = 1;
-        __asm("nop");                                //Аппаратная готовность за 4 такта, жду...
-        __asm("nop");
-        __asm("nop");
-
-        // Аппаратный CRC-расчёт работает с 32-битными словами. Т.е. сразу по 4 байта из входной последовательности
-        i = Len >> 2;
-        while(i--)
-        {
-                Temp = *((uint32_t*)Buf);
-                //Temp = revbit(Temp);            //Переставить биты во входных данных
-					      if (id) Temp = Temp ^ id;
-					      Temp = __RBIT(Temp);
-                CRC->DR = Temp;
-
-                Buf += 4;
-        }
-        Temp = CRC->DR;
-        //Temp = revbit(Temp);                    //Переставить биты в выходных данных
-				Temp = __RBIT(Temp);
-        
-        // Обработать оставшиеся байты (классическим не аппаратным методом), если их число не было кратно 4
-        i = Len & 3;
-        while(i--)
-        {
-                Temp ^= (uint32_t)*Buf++;
-                
-                for(int j=0; j<8; j++)
-                        if (Temp & 1)
-                                Temp = (Temp >> 1) ^ 0xEDB88320;
-                        else
-                                Temp >>= 1;
-        }
-
-        Temp ^= 0xFFFFFFFFul;
-        return Temp;
-}
-/* Read status or flag status register */
-static int32_t ReadStatusReg (uint8_t cmd, uint8_t *stat) {
-  int32_t status; /* driver execution status */
-  uint8_t buf[4];
-
-  /* Select Slave */
-  status = ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE);
-
-  if (status == ARM_DRIVER_OK) {
-    /* Set command */
-    buf[0] = cmd;
-
-    /* Send command and receive register value */
-    status = ptrSPI->Transfer (&buf[0], &buf[2], 2U);
-
-    if (status == ARM_DRIVER_OK) {
-      /* Wait till transfer done */
-      while (ptrSPI->GetDataCount() != 2U) {
-				__asm("nop");
-			};
-
-      *stat = buf[3];
-    }
-  }
-  /* Deselect Slave */
-  ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
-  
-  return (status);
-}
-
-/* Write status or flag status register */
-static int32_t WriteStatusReg (uint8_t sr) {
-  int32_t status; /* driver execution status */
-  uint8_t buf[4] = {0};
-	int32_t feature_bits = flschip->feature_bits;
-	
-	if (!(feature_bits & (FEATURE_WRSR_WREN | FEATURE_WRSR_EWSR))) {
-		SPI_UsrLog("Missing status register write definition, assuming "
-			 "EWSR is needed\n");
-
-		feature_bits |= FEATURE_WRSR_EWSR;
-	}
-	
-	if (feature_bits & FEATURE_WRSR_WREN) SetWriteEnable();
-	
-	if (feature_bits & FEATURE_WRSR_EWSR) {
-	/* Select slave */
-  status = ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE);
-
-  
-		if (status == ARM_DRIVER_OK) {
-			buf[0] = CMD_EWSR;
-
-			status = ptrSPI->Send(&buf, 1U);
-			
-			if (status == ARM_DRIVER_OK) {
-				while (ptrSPI->GetDataCount() != 1U) {__asm("nop");};
-			}
-			
-			/* Deselect Slave */
-			ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
-
-			delay_mic();
-		}
-}
-	
-	 /* Select slave */
-   status = ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE);
-
-    /* Set command */
-    buf[0] = CMD_WRSR;
-	  buf[1] = sr;
-
-    /* Send command and receive register value */
-    status = ptrSPI->Send(&buf, 2U);
-
-    if (status == ARM_DRIVER_OK) {
-      /* Wait till transfer done */
-      while (ptrSPI->GetDataCount() != 2U) {__asm("nop");};
-
-      //*stat = buf[3];
-    }
-  
-  /* Deselect Slave */
-  ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
-  
-  return (status);
-}
 
 /* Read SFDP register */
 //uint32_t* _size - size of flash in bytes
@@ -420,88 +281,7 @@ static int32_t WriteStatusReg (uint8_t sr) {
   return (status);
 }
 
-/* Set "Write enable latch" bit in status register */
-static int32_t SetWriteEnable (void) {
-  int32_t status;
-  uint8_t val;
-	
-	if (status == ARM_DRIVER_OK) {
-      /* Check if "Write enable latch" bit set */
-      if (val & 0x02U) {
-        return ARM_DRIVER_OK;  //no need Write enable latch
-      }
-    }
- 
-  /* Select slave */
-  status = ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE);
 
-  if (status == ARM_DRIVER_OK) {
-    val = CMD_WRITE_ENABLE;
-
-    status = ptrSPI->Send(&val, 1U);
-
-    if (status == ARM_DRIVER_OK) {
-      while (ptrSPI->GetDataCount() != 1U){
-				__asm("nop");
-			};
-    }
-  }
-  /* Deselect slave */
-  ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
-
-  if (status == ARM_DRIVER_OK) {
-    /* Read status */
-    val = 0U;
-
-    status = ReadStatusReg(CMD_READ_STATUS, &val);
-
-    if (status == ARM_DRIVER_OK) {
-      /* Check if "Write enable latch" bit set */
-      if ((val & 0x02U) == 0x00U) {
-        status = ARM_DRIVER_ERROR;
-      }
-    }
-  }
-
-  return (status);
-}
-
-/* Reset "Write enable latch" bit in status register */
-static int32_t SetWriteDisable (void) {
-  int32_t status;
-  uint8_t val;
- 
-  /* Select slave */
-  status = ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE);
-
-  if (status == ARM_DRIVER_OK) {
-    val = CMD_WRITE_DISABLE;
-
-    status = ptrSPI->Send(&val, 1U);
-
-    if (status == ARM_DRIVER_OK) {
-      while (ptrSPI->GetDataCount() != 1U) {__asm("nop");};
-    }
-  }
-  /* Deselect slave */
-  ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
-
-  if (status == ARM_DRIVER_OK) {
-    /* Read status */
-    val = 0U;
-
-    status = ReadStatusReg(CMD_READ_STATUS, &val);
-
-    if (status == ARM_DRIVER_OK) {
-      /* Check if "Write enable latch" bit set */
-      if ((val & 0x02U) != 0x00U) {
-        status = ARM_DRIVER_ERROR;
-      }
-    }
-  }
-
-  return (status);
-}
 
 /**
   \fn          ARM_DRIVER_VERSION ARM_Flash_GetVersion (void)
@@ -713,6 +493,8 @@ static int32_t Uninitialize (void) {
 
   return (status);
 }
+	
+
 
 /**
   \fn          int32_t ARM_Flash_ProgramData (uint32_t addr, const void *data, uint32_t cnt)
@@ -732,6 +514,18 @@ static int32_t Uninitialize (void) {
 		}
 	 
 	 SPI_UsrLog ("\n pd_addr -> 0x%05x   cnt -> 0x%03x", addr, cnt);
+		
+	 /* Enable/disable 4-byte addressing mode if flash chip supports it */
+	 if (flschip->feature_bits & (FEATURE_4BA_ENTER | FEATURE_4BA_ENTER_WREN | FEATURE_4BA_ENTER_EAR7)) {
+		int ret;
+		
+		ret = spi_enter_4ba();
+		
+		if (ret) {
+			SPI_UsrLog ("Failed to set correct 4BA mode! Aborting.\n");
+			return 1;
+		}
+	}	
 	 
 	 sts = flschip->write(addr, data, cnt);
 	 if (sts < 0) {
@@ -955,11 +749,6 @@ static int32_t Uninitialize (void) {
     return ARM_DRIVER_ERROR_PARAMETER;
   }
 	
-	if (flschip->unlock) { //(flschip->unlock == spi_disable_blockprotect) 
-		status = flschip->unlock(); // 
-		if (status) return status;
-		}
-	
 	SPI_UsrLog (" addr -> 0x%05x   cnt -> 0x%03x", addr, cnt);
 
   status = ARM_DRIVER_OK;
@@ -1064,11 +853,6 @@ int32_t spi_chip_write_1 (uint32_t addr, const void *data, uint32_t cnt) {  // o
   }
 	
 	SPI_UsrLog ("\n addr -> 0x%05x   cnt -> 0x%03x", addr, cnt);
-	
-	if (flschip->unlock == spi_disable_blockprotect) {
-		status = spi_disable_blockprotect(); // 
-		if (status) return status;
-		}
 
   status = ARM_DRIVER_OK;
 
@@ -1163,25 +947,12 @@ static int32_t EraseSector (uint32_t addr) {
     FlashStatus.busy  = 1U;
     FlashStatus.error = 0U;
 
-    /* Select Slave */
-    status = ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE);
-
-    if (status == ARM_DRIVER_OK) {
-      /* Prepare command with address */
-      buf[0] = flschip->block_erasers[i].block_erase ;//CMD_SECTOR_ERASE;
-      buf[1] = (uint8_t)(addr >> 16U);
-      buf[2] = (uint8_t)(addr >>  8U);
-      buf[3] = (uint8_t)(addr >>  0U);
-
-      status = ptrSPI->Send(buf, 4U);
-
-      if (status == ARM_DRIVER_OK) {
-        /* Wait until command and address are sent */
-        while (ptrSPI->GetDataCount() != 4U) {__asm("nop");};
-      }
-    }
-    /* Deselect Slave */
-    ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
+		buf[0] = flschip->block_erasers[i].block_erase ;//CMD_SECTOR_ERASE;
+    buf[1] = (uint8_t)(addr >> 16U);
+    buf[2] = (uint8_t)(addr >>  8U);
+    buf[3] = (uint8_t)(addr >>  0U);
+		
+    status = SendCmd(buf, 4U);
   }
 
   return status;
@@ -1255,132 +1026,7 @@ static int32_t isErased (void) {
 
 
 
-/* A generic block protection disable.
- * Tests if a protection is enabled with the block protection mask (bp_mask) and returns success otherwise.
- * Tests if the register bits are locked with the lock_mask (lock_mask).
- * Tests if a hardware protection is active (i.e. low pin/high bit value) with the write protection mask
- * (wp_mask) and bails out in that case.
- * If there are register lock bits set we try to disable them by unsetting those bits of the previous register
- * contents that are set in the lock_mask. We then check if removing the lock bits has worked and continue as if
- * they never had been engaged:
- * If the lock bits are out of the way try to disable engaged protections.
- * To support uncommon global unprotects (e.g. on most AT2[56]xx1(A)) unprotect_mask can be used to force
- * bits to 0 additionally to those set in bp_mask and lock_mask. Only bits set in unprotect_mask are potentially
- * preserved when doing the final unprotect.
- *
- * To sum up:
- * bp_mask: set those bits that correspond to the bits in the status register that indicate an active protection
- *          (which should be unset after this function returns).
- * lock_mask: set the bits that correspond to the bits that lock changing the bits above.
- * wp_mask: set the bits that correspond to bits indicating non-software removable protections.
- * unprotect_mask: set the bits that should be preserved if possible when unprotecting.
- */
-static int32_t spi_disable_blockprotect_generic(uint8_t bp_mask, uint8_t lock_mask, uint8_t wp_mask, uint8_t unprotect_mask)
-{
-	uint8_t status, stat;
-	
 
-	status = ReadStatusReg(CMD_READ_STATUS, &stat);
-	if (status != ARM_DRIVER_OK) return status;
-	if ((stat & bp_mask) == 0) {
-		//printf("Block protection is disabled.\n");
-		return ARM_DRIVER_OK;
-	}
-
-	SPI_UsrLog("Some block protection in effect, disabling... ");
-	if ((stat & lock_mask) != 0) {
-		SPI_UsrLog("\n\tNeed to disable the register lock first... ");
-		if (wp_mask != 0 && (stat & wp_mask) == 0) {
-			SPI_UsrLog("Hardware protection is active, disabling write protection is impossible.\n");
-			return 1;
-		}
-		/* All bits except the register lock bit (often called SPRL, SRWD, WPEN) are readonly. */
-		status = WriteStatusReg(stat & ~lock_mask);
-		if (status) {
-			SPI_UsrLog("spi_write_status_register failed.\n");
-			return status;
-		}
-		status = ReadStatusReg(CMD_READ_STATUS, &stat);
-		if (status != ARM_DRIVER_OK) return status;
-		if ((stat & lock_mask) != 0) {
-			SPI_UsrLog("Unsetting lock bit(s) failed.\n");
-			return 1;
-		}
-		SPI_UsrLog("done.\n");
-	}
-	/* Global unprotect. Make sure to mask the register lock bit as well. */
-	status = WriteStatusReg (stat & ~(bp_mask | lock_mask) & unprotect_mask);
-	if (status) {
-		SPI_UsrLog("write_status_register failed.\n");
-		return status;
-	}
-	status = ReadStatusReg(CMD_READ_STATUS, &stat);
-	if (status != ARM_DRIVER_OK) return status;
-	if ((stat & bp_mask) != 0) {
-		SPI_UsrLog("Block protection could not be disabled!\n");
-		//flash->chip->printlock(flash);
-		return ARM_DRIVER_ERROR_SPECIFIC;
-	}
-	SPI_UsrLog("disabled.\n");
-	return ARM_DRIVER_OK;
-}
-
-/* A common block protection disable that tries to unset the status register bits masked by 0x3C. */
-int32_t spi_disable_blockprotect(void)
-{
-	return spi_disable_blockprotect_generic( 0x3C, 0, 0, 0xFF);
-}
-
-
-
- /* Some Atmel DataFlash chips support per sector protection bits and the write protection bits in the status
- * register do indicate if none, some or all sectors are protected. It is possible to globally (un)lock all
- * sectors at once by writing 0 not only the protection bits (2 and 3) but also completely unrelated bits (4 and
- * 5) which normally are not touched.
- * Affected are all known Atmel chips matched by AT2[56]D[FLQ]..1A? but the AT26DF041. */
-int32_t spi_disable_blockprotect_at2x_global_unprotect(void)
-{
-	return spi_disable_blockprotect_generic(0x0C, 1 << 7, 1 << 4, 0x00);
-}
-
-int32_t spi_disable_blockprotect_at25f512a(void)
-{
-	return spi_disable_blockprotect_generic(0x04, 1 << 7, 0, 0xFF);
-}
-
-/* A common block protection disable that tries to unset the status register bits masked by 0x3C (BP0-3) and
- * protected/locked by bit #7. */
-int32_t spi_disable_blockprotect_bp3_srwd(void)
-{
-	return spi_disable_blockprotect_generic(0x3C, 1 << 7, 0, 0xFF);
-}
-
-/* A common block protection disable that tries to unset the status register bits masked by 0x7C (BP0-4) and
- * protected/locked by bit #7. */
-int32_t spi_disable_blockprotect_bp4_srwd(void)
-{
-	return spi_disable_blockprotect_generic(0x7C, 1 << 7, 0, 0xFF);
-}
-
-int32_t spi_disable_blockprotect_at25f512b(void)
-{
-	return spi_disable_blockprotect_generic(0x04, 1 << 7, 1 << 4, 0xFF);
-}
-
-/* A common block protection disable that tries to unset the status register bits masked by 0x1C (BP0-2) and
- * protected/locked by bit #7. Useful when bit #5 is neither a protection bit nor reserved (and hence possibly
- * non-0). */
-int32_t spi_disable_blockprotect_bp2_srwd(void)
-{
-	return spi_disable_blockprotect_generic(0x1C, 1 << 7, 0, 0xFF);
-}
-
-/* === Intel/Numonyx/Micron - Spansion === */
-
-int32_t spi_disable_blockprotect_n25q(void)
-{
-	return spi_disable_blockprotect_generic(0x5C, 1 << 7, 0, 0xFF);
-}
 
 /**
   \fn          int32_t ARM_Flash_EraseChip (void)
@@ -1415,27 +1061,13 @@ int32_t spi_erase_bulk (uint8_t cmd) {
   FlashStatus.busy  = 1U;
   FlashStatus.error = 0U;
 
-	if (flschip->feature_bits & FEATURE_WRSR_WREN) {   //flschip->write != spi_chip_write_256_11
+	if (flschip->feature_bits & (FEATURE_WRSR_WREN | FEATURE_WREN)) {   //flschip->write != spi_chip_write_256_11
   status = SetWriteEnable();
 
   if (status == ARM_DRIVER_OK) {
-    /* Select Slave */
-    status = ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE);
-
-    if (status == ARM_DRIVER_OK) {
-      /* Prepare command */
-
-      status = ptrSPI->Send(&cmd, 1U);
-
-      if (status == ARM_DRIVER_OK) {
-        /* Wait until command is sent */
-        while (ptrSPI->GetDataCount() != 1U){
-				__asm("nop");
-			};
-      }
-    }
-    /* Deselect Slave */
-    ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
+    
+		status = SendCmd(&cmd, 1U);
+		
 		do {
           status = ReadStatusReg(CMD_READ_STATUS, &buf[0]);  //CMD_READ_FLAG_STATUS
           if (status != ARM_DRIVER_OK) {
@@ -1475,25 +1107,14 @@ int32_t spi_erase_bulk (uint8_t cmd) {
 
 
 	for(addr=0; addr<(flschip->total_size*1024); )  {
-		  /* Select Slave */
-    status = ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE);
 
-    if (status == ARM_DRIVER_OK) {
-      /* Prepare command with address */
-      buf[0] = CMD_SECTOR_ERASE;
-      buf[1] = (uint8_t)(addr >> 16U);
-      buf[2] = (uint8_t)(addr >>  8U);
-      buf[3] = (uint8_t)(addr >>  0U);
-
-      status = ptrSPI->Send(buf, 4U);
-
-      if (status == ARM_DRIVER_OK) {
-        /* Wait until command and address are sent */
-        while (ptrSPI->GetDataCount() != 4U) {__asm("nop");};
-      }
-    }
-    /* Deselect Slave */
-    ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
+		buf[0] = CMD_SECTOR_ERASE;
+		buf[1] = (uint8_t)(addr >> 16U);
+		buf[2] = (uint8_t)(addr >>  8U);
+		buf[3] = (uint8_t)(addr >>  0U);
+		
+		status = SendCmd(buf, 4U);
+		
 		do {
           status = ReadStatusReg(CMD_READ_STATUS, &buf[0]);  //CMD_READ_FLAG_STATUS
           if (status != ARM_DRIVER_OK) {
