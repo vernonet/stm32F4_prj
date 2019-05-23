@@ -80,12 +80,8 @@ extern unsigned char boot_sec[];
 extern const struct flashchip flashchips[];
 volatile uint32_t blink= 2;
 uint32_t spi_spd[6] = {0,1313,2625,5250,10500,21000};  //spi speed in KHz for SPI2
+extern bool backup_mode;  //backup firmware first
 
-/* SPI Driver */
-#define _SPI_Driver_(n)  Driver_SPI##n
-#define  SPI_Driver_(n)  _SPI_Driver_(n)
-extern ARM_DRIVER_SPI     SPI_Driver_(DRIVER_SPI_NUM);
-#define ptrSPI          (&SPI_Driver_(DRIVER_SPI_NUM))
 #define DUR_PULSE       (200/10)                     //200ms
 /* USER CODE END PV */
 
@@ -185,9 +181,9 @@ int main(void)
 		  HAL_Delay(10);
 			if (BSP_PB_GetState(BUTTON_KEY) == 1) {BSP_LED_Off(LED4); break; }
 		 }			
-		 if (EraseChip()) {              
-		   Error_Handler();             //flash not erased
-		  }
+//		 if (EraseChip()) {              
+//		   Error_Handler();             //flash not erased
+//		  }
 		 }	 
 		 else Error_Handler();          //flash not identified   
 	}
@@ -195,14 +191,28 @@ int main(void)
 				BSP_LED_Off(LED4);
 				HAL_Delay(500);
 				//Wr_Protect = 0;            //allow write
-				if (Prepare_FAT()) Error_Handler();				
+		    backup_mode = true;
+				if (Prepare_FAT()) Error_Handler();		  //backup mode
+        //create_fs();  
 				/* USER CODE END SysInit */
 
 				/* Initialize all configured peripherals */
 				MX_GPIO_Init();
 				MX_USB_DEVICE_Init();
 				/* USER CODE BEGIN 2 */
-		
+		    while (1){
+					if (blink-- == 0) {BSP_LED_Toggle(LED4); blink = 40;}
+					HAL_Delay(10);
+					if (BSP_PB_GetState(BUTTON_KEY) == 1) {BSP_LED_Off(LED4); break; }
+			  }
+        backup_mode = false;
+        MX_USB_DEVICE_DeInit();
+			  if (EraseChip()) {              
+		        Error_Handler();                //flash not erased
+		    }
+        HAL_Delay(100);
+				if (Prepare_FAT()) Error_Handler();  //update mode
+        MX_USB_DEVICE_Init();				
 				/* USER CODE END 2 */
 
 				/* Infinite loop */

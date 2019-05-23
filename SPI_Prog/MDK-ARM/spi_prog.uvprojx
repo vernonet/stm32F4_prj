@@ -622,6 +622,11 @@
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
             </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1332,6 +1337,11 @@
               <FileName>flashchips.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2044,6 +2054,11 @@
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
             </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2755,6 +2770,11 @@
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
             </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2892,7 +2912,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>Bootloader\</OutputDirectory>
+          <OutputDirectory>.\binary\</OutputDirectory>
           <OutputName>spi_prog_RAM_clang</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -3585,6 +3605,11 @@
               <FileName>flashchips.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4486,6 +4511,11 @@
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
             </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4830,7 +4860,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>Bootloader\</OutputDirectory>
+          <OutputDirectory>.\binary\</OutputDirectory>
           <OutputName>spi_prog_RAM_clang</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -5142,7 +5172,7 @@
             </VariousControls>
           </Aads>
           <LDads>
-            <umfTarg>1</umfTarg>
+            <umfTarg>0</umfTarg>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
             <noStLib>0</noStLib>
@@ -5151,7 +5181,7 @@
             <TextAddressRange>0x08000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>.\binary\spi_prog_RAM_cmsis.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -5523,6 +5553,11 @@
               <FileName>flashchips.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5868,11 +5903,11 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>Bootloader\</OutputDirectory>
+          <OutputDirectory>.\binary\</OutputDirectory>
           <OutputName>spi_prog_RAM_clang</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
+          <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>0</BrowseInformation>
           <ListingPath></ListingPath>
@@ -6180,7 +6215,7 @@
             </VariousControls>
           </Aads>
           <LDads>
-            <umfTarg>1</umfTarg>
+            <umfTarg>0</umfTarg>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
             <noStLib>0</noStLib>
@@ -6189,7 +6224,7 @@
             <TextAddressRange>0x08000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>.\binary\spi_prog_RAM_clang.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -6561,6 +6596,11 @@
               <FileName>flashchips.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\flashchips.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
             </File>
           </Files>
         </Group>

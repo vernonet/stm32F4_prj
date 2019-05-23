@@ -21,7 +21,7 @@
  * $Revision:    V1.1
  *
  * Driver:       Driver_Flash# (default: Driver_Flash0)
- * Project:      Flash Device Driver for Micron W25Q80BV (SPI)
+ * Project:      Flash Device Driver for spi flash
  * -----------------------------------------------------------------------
  * Use the following configuration settings in the middleware component
  * to connect to this driver.
@@ -74,15 +74,6 @@
 #define DRIVER_SPI_BUS_SPEED    24000000  /* Default SPI bus speed */
 #endif
 
-
-
-
-/* SPI Driver */
-#define _SPI_Driver_(n)  Driver_SPI##n
-#define  SPI_Driver_(n)  _SPI_Driver_(n)
-extern ARM_DRIVER_SPI     SPI_Driver_(DRIVER_SPI_NUM);
-#define ptrSPI          (&SPI_Driver_(DRIVER_SPI_NUM))
-
 /* SPI Bus Speed */
 #define SPI_BUS_SPEED   ((uint32_t)DRIVER_SPI_BUS_SPEED)
 
@@ -130,7 +121,53 @@ JEDEC_ID jdc_id_ = {0};
 
 
 
+//attempt to read chip id by different methods
+const struct flashchip * ReadId (void) {   
+	
+	const struct flashchip * flschip_ = NULL; 
+	volatile uint32_t i=0x03; 
 
+				while(i-->0) {
+					ReadJedecId (CMD_READ_RDID, &jdc_id_) ; 
+					delay_mic();	
+			  }
+				if (jdc_id_.man_id == 0xFF && (jdc_id_.dev_id == 0xFFFF | jdc_id_.dev_id == 0xFF)) {
+				i = 1;
+				while(i-->0) {
+					ReadIdSST (CMD_READ_RDID_SST, &jdc_id_);
+					delay_mic();
+					}		  
+			 }
+				if (jdc_id_.man_id == 0xFF && (jdc_id_.dev_id == 0xFFFF | jdc_id_.dev_id == 0xFF | jdc_id_.dev_id == 0x00)) {
+				i = 1;
+				while(i-->0) {
+					ReadIdSST (CMD_READ_RDID_PMC, &jdc_id_);
+					delay_mic();
+					}		  
+			 }
+				if (jdc_id_.man_id == 0xFF && (jdc_id_.dev_id == 0xFFFF | jdc_id_.dev_id == 0xFF | jdc_id_.dev_id == 0x00)) {
+				i = 1;
+				while(i-->0) {
+					ReadJedecId (CMD_READ_RDID_ATMEL, &jdc_id_);
+					delay_mic();
+					}		  
+			 }
+				 if (!(jdc_id_.man_id == GENERIC_MANUF_ID && (jdc_id_.dev_id == GENERIC_DEVICE_ID ))){
+				 flschip_ = flash_id_to_entry(jdc_id_.man_id, jdc_id_.dev_id);
+				 }
+				 if (flschip_ == NULL) {
+					 SPI_UsrLog ("\n Flash not supported\n\n");
+				 }
+				    else {
+							//SPI_UsrLog ("\n Flash supported");
+							SPI_UsrLog ("\n Vendor - %s\n Chip   - %s\n Size   - %d Kbytes\n\n\n",\
+							flschip_->vendor, flschip_->name, flschip_->total_size);
+							//FlashInfo.sector_count = flschip_->block_erasers->eraseblocks[0].count;
+						}
+	
+	
+	return flschip_;
+}
 
 /* Read SFDP register */
 //uint32_t* _size - size of flash in bytes
@@ -377,45 +414,8 @@ static int32_t Uninitialize (void) {
 
         Flags |= FLASH_POWER;
 				
-//--------------------------------------------------------------------------------				
-				volatile uint32_t i=0x03; 
-				while(i-->0) {
-					ReadJedecId (CMD_READ_RDID, &jdc_id_) ; 
-					delay_mic();	
-			  }
-				if (jdc_id_.man_id == 0xFF && (jdc_id_.dev_id == 0xFFFF | jdc_id_.dev_id == 0xFF)) {
-				i = 1;
-				while(i-->0) {
-					ReadIdSST (CMD_READ_RDID_SST, &jdc_id_);
-					delay_mic();
-					}		  
-			 }
-				if (jdc_id_.man_id == 0xFF && (jdc_id_.dev_id == 0xFFFF | jdc_id_.dev_id == 0xFF | jdc_id_.dev_id == 0x00)) {
-				i = 1;
-				while(i-->0) {
-					ReadIdSST (CMD_READ_RDID_PMC, &jdc_id_);
-					delay_mic();
-					}		  
-			 }
-				if (jdc_id_.man_id == 0xFF && (jdc_id_.dev_id == 0xFFFF | jdc_id_.dev_id == 0xFF | jdc_id_.dev_id == 0x00)) {
-				i = 1;
-				while(i-->0) {
-					ReadJedecId (CMD_READ_RDID_ATMEL, &jdc_id_);
-					delay_mic();
-					}		  
-			 }
-				 if (!(jdc_id_.man_id == GENERIC_MANUF_ID && (jdc_id_.dev_id == GENERIC_DEVICE_ID ))){
-				 flschip = flash_id_to_entry(jdc_id_.man_id, jdc_id_.dev_id);
-				 }
-				 if (flschip == NULL) {
-					 SPI_UsrLog ("\n Flash not supported\n\n");
-				 }
-				    else {
-							//SPI_UsrLog ("\n Flash supported");
-							SPI_UsrLog ("\n Vendor - %s\n Chip   - %s\n Size   - %d Kbytes\n\n\n",\
-							flschip->vendor, flschip->name, flschip->total_size);
-							FlashInfo.sector_count = flschip->block_erasers->eraseblocks[0].count;
-						}
+//-----------------------------------------------------------------------------------				
+			  flschip = ReadId();
 //-----------------------------------------------------------------------------------				
       }
       return ARM_DRIVER_OK;
@@ -491,6 +491,7 @@ static int32_t Uninitialize (void) {
   }
   ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
 
+	BSP_LED_Off(LED3); 
   return (status);
 }
 	
@@ -505,7 +506,7 @@ static int32_t Uninitialize (void) {
   \return      number of data items programmed or \ref execution_status
 */
  int32_t ProgramData (uint32_t addr, const void *data, uint32_t cnt) {
-	 int32_t sts;
+	 //int32_t sts;
 	 int32_t  status;
 	 
 	 if (flschip->unlock) {
@@ -517,22 +518,21 @@ static int32_t Uninitialize (void) {
 		
 	 /* Enable/disable 4-byte addressing mode if flash chip supports it */
 	 if (flschip->feature_bits & (FEATURE_4BA_ENTER | FEATURE_4BA_ENTER_WREN | FEATURE_4BA_ENTER_EAR7)) {
-		int ret;
 		
-		ret = spi_enter_4ba();
+		status = spi_enter_4ba();
 		
-		if (ret) {
+		if (status) {
 			SPI_UsrLog ("Failed to set correct 4BA mode! Aborting.\n");
 			return 1;
 		}
 	}	
 	 
-	 sts = flschip->write(addr, data, cnt);
-	 if (sts < 0) {
-		 SPI_UsrLog("\n ProgramData error -> %d", sts);
+	 status = flschip->write(addr, data, cnt);
+	 if (status < 0) {
+		 SPI_UsrLog("\n ProgramData error -> %d", status);
 	 }
   
-  return (sts);
+  return (status);
 }
  
 /**
@@ -709,11 +709,6 @@ static int32_t Uninitialize (void) {
             break;
           }
 
-          /* Check Flags Status register value */
-//          if ((cmd[0] & 0x1U) != 1U) {
-//            FlashStatus.busy = 0U;
-//          }
-
         }
         while ((cmd[0] & 0x1U) == 0x1U);
 				FlashStatus.busy = 0U;
@@ -748,8 +743,6 @@ static int32_t Uninitialize (void) {
   if ((addr > (flschip->total_size*1024)) || (data == NULL)) {
     return ARM_DRIVER_ERROR_PARAMETER;
   }
-	
-	SPI_UsrLog (" addr -> 0x%05x   cnt -> 0x%03x", addr, cnt);
 
   status = ARM_DRIVER_OK;
 
@@ -1174,7 +1167,7 @@ static ARM_FLASH_STATUS GetStatus (void) {
   \return      Pointer to Flash information \ref ARM_FLASH_INFO
 */
 static ARM_FLASH_INFO * GetInfo (void) {
-	//FlashInfo.sector_count = fl_sec_cnt;
+	
   return &FlashInfo;
 }
 

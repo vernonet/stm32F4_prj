@@ -1301,84 +1301,243 @@ const struct flashchip flashchips[] = {
 		.voltage	= {2700, 3600},
 	},
 
-//	{
-//		.vendor		= "Atmel",
-//		.name		= "AT25FS010",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ATMEL_ID,
-//		.model_id	= ATMEL_AT25FS010,
-//		.total_size	= 128,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+{
+		.vendor		= "Atmel",
+		.name		= "AT25FS010",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ATMEL_ID,
+		.model_id	= ATMEL_AT25FS010,
+		.total_size	= 128,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 32} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {4 * 1024, 32} },
-//				.block_erase = spi_block_erase_d7,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 4} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 4} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {128 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {128 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {4 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_D7,
+			}, {
+				.eraseblocks = { {32 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {32 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {128 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {128 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
 //		.printlock	= spi_prettyprint_status_register_at25fs010,
-//		.unlock		= spi_disable_blockprotect_at25fs010,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.unlock		= spi_disable_blockprotect_at25fs010,
+		.write		= spi_chip_write_256,
+		.read		  = spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Atmel",
-//		.name		= "AT25FS040",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ATMEL_ID,
-//		.model_id	= ATMEL_AT25FS040,
-//		.total_size	= 512,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_UNBOUND_READ,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Atmel",
+		.name		= "AT25FS040",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ATMEL_ID,
+		.model_id	= ATMEL_AT25FS040,
+		.total_size	= 512,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 128} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 8} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 8} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {512 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {512 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 8} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 8} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
 //		.printlock	= spi_prettyprint_status_register_at25fs040,
-//		.unlock		= spi_disable_blockprotect_at25fs040,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.unlock		= spi_disable_blockprotect_at25fs040,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+	{
+		.vendor		= "Atmel",
+		.name		= "AT25SF041",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ATMEL_ID,
+		.model_id	= ATMEL_AT25SF041,
+		.total_size	= 512,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {32 * 1024, 16} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 8} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain,
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2500, 3600},
+	},
+
+	{
+		.vendor		= "Atmel",
+		.name		= "AT25SF081",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ATMEL_ID,
+		.model_id	= ATMEL_AT25SF081,
+		.total_size	= 1024,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 256} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {32 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 16} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain,
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2300, 3600},
+	},
+
+	{
+		.vendor		= "Atmel",
+		.name		= "AT25SF161",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ATMEL_ID,
+		.model_id	= ATMEL_AT25SF161,
+		.total_size	= 2048,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 512} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {32 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {2048 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {2048 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain,
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2500, 3600},
+	},
+
+	{
+		.vendor		= "ATMEL",
+		.name		= "AT25SL128A",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ATMEL_ID,
+		.model_id	= ATMEL_AT25SL128A,
+		.total_size	= 16384,
+		.page_size	= 256,
+		/* supports SFDP */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP | FEATURE_QPI,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 4096} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {32 * 1024, 512} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 256} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {16 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {16 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {1700, 2000},
+	},
 
 	{
 		.vendor		= "Atmel",
@@ -1452,97 +1611,102 @@ const struct flashchip flashchips[] = {
 		.voltage	= {2700, 3600},
 	},
 
-//	{
-//		.vendor		= "Atmel",
-//		.name		= "AT26DF161",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ATMEL_ID,
-//		.model_id	= ATMEL_AT26DF161,
-//		.total_size	= 2048,
-//		.page_size	= 256,
-//		.tested		= TEST_UNTESTED,
+{
+		.vendor		= "Atmel",
+		.name		= "AT26DF161",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ATMEL_ID,
+		.model_id	= ATMEL_AT26DF161,
+		.total_size	= 2048,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 512} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 64} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 32} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 512} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {32 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
 //		.printlock	= spi_prettyprint_status_register_at25df,
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.unlock		= spi_disable_blockprotect_at2x_global_unprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Atmel",
-//		.name		= "AT26DF161A",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ATMEL_ID,
-//		.model_id	= ATMEL_AT26DF161A,
-//		.total_size	= 2048,
-//		.page_size	= 256,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Atmel",
+		.name		= "AT26DF161A",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ATMEL_ID,
+		.model_id	= ATMEL_AT26DF161A,
+		.total_size	= 2048,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 512} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 64} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 32} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 512} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {32 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
 //		.printlock	= spi_prettyprint_status_register_at26df081a,
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.unlock		= spi_disable_blockprotect_at2x_global_unprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	/*The AT26DF321 has the same ID as the AT25DF321. */
-//	/*{
-//		.vendor		= "Atmel",
-//		.name		= "AT26DF321",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= ATMEL_ID,
-//		.model_id	= ATMEL_AT26DF321,
-//		.total_size	= 4096,
-//		.page_size	= 256,
-//		.tested		= TEST_UNTESTED,
-//		.probe		= probe_spi_rdid,
-//		.probe_timing	= TIMING_ZERO,
-//		.printlock	= spi_prettyprint_status_register_at26df081a,
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//	  },*/
+	/*The AT26DF321 has the same ID as the AT25DF321. */
+	/*{
+		.vendor		= "Atmel",
+		.name		= "AT26DF321",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= ATMEL_ID,
+		.model_id	= ATMEL_AT26DF321,
+		.total_size	= 4096,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
+		.probe		= probe_spi_rdid,
+		.probe_timing	= TIMING_ZERO,
+		.printlock	= spi_prettyprint_status_register_at26df081a,
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+	  },*/
 
 //	{
 //		.vendor		= "Atmel",
@@ -4946,13 +5110,13 @@ const struct flashchip flashchips[] = {
 //				.block_erase = SPI_BLOCK_ERASE_20,
 //			}, {
 //				.eraseblocks = { {4 * 1024, 64} },
-//				.block_erase = spi_block_erase_d7,
+//				.block_erase = SPI_BLOCK_ERASE_D7,
 //			}, {
 //				.eraseblocks = { {64 * 1024, 4} },
 //				.block_erase = SPI_BLOCK_ERASE_D8,
 //			}, {
 //				.eraseblocks = { {256 * 1024, 1} },
-//				.block_erase = spi_block_erase_60,
+//				.block_erase = SPI_BLOCK_ERASE_60,
 //			}, {
 //				.eraseblocks = { {256 * 1024, 1} },
 //				.block_erase = SPI_BLOCK_ERASE_C7,
@@ -4985,13 +5149,13 @@ const struct flashchip flashchips[] = {
 //				.block_erase = SPI_BLOCK_ERASE_20,
 //			}, {
 //				.eraseblocks = { {4 * 1024, 128} },
-//				.block_erase = spi_block_erase_d7,
+//				.block_erase = SPI_BLOCK_ERASE_D7,
 //			}, {
 //				.eraseblocks = { {64 * 1024, 8} },
 //				.block_erase = SPI_BLOCK_ERASE_D8,
 //			}, {
 //				.eraseblocks = { {512 * 1024, 1} },
-//				.block_erase = spi_block_erase_60,
+//				.block_erase = SPI_BLOCK_ERASE_60,
 //			}, {
 //				.eraseblocks = { {512 * 1024, 1} },
 //				.block_erase = SPI_BLOCK_ERASE_C7,
@@ -5024,13 +5188,13 @@ const struct flashchip flashchips[] = {
 //				.block_erase = SPI_BLOCK_ERASE_20,
 //			}, {
 //				.eraseblocks = { {4 * 1024, 256} },
-//				.block_erase = spi_block_erase_d7,
+//				.block_erase = SPI_BLOCK_ERASE_D7,
 //			}, {
 //				.eraseblocks = { {64 * 1024, 16} },
 //				.block_erase = SPI_BLOCK_ERASE_D8,
 //			}, {
 //				.eraseblocks = { {1024 * 1024, 1} },
-//				.block_erase = spi_block_erase_60,
+//				.block_erase = SPI_BLOCK_ERASE_60,
 //			}, {
 //				.eraseblocks = { {1024 * 1024, 1} },
 //				.block_erase = SPI_BLOCK_ERASE_C7,
@@ -5063,13 +5227,13 @@ const struct flashchip flashchips[] = {
 //				.block_erase = SPI_BLOCK_ERASE_20,
 //			}, {
 //				.eraseblocks = { {4 * 1024, 512} },
-//				.block_erase = spi_block_erase_d7,
+//				.block_erase = SPI_BLOCK_ERASE_D7,
 //			}, {
 //				.eraseblocks = { {64 * 1024, 32} },
 //				.block_erase = SPI_BLOCK_ERASE_D8,
 //			}, {
 //				.eraseblocks = { {2048 * 1024, 1} },
-//				.block_erase = spi_block_erase_60,
+//				.block_erase = SPI_BLOCK_ERASE_60,
 //			}, {
 //				.eraseblocks = { {2048 * 1024, 1} },
 //				.block_erase = SPI_BLOCK_ERASE_C7,
@@ -5102,13 +5266,13 @@ const struct flashchip flashchips[] = {
 //				.block_erase = SPI_BLOCK_ERASE_20,
 //			}, {
 //				.eraseblocks = { {4 * 1024, 1024} },
-//				.block_erase = spi_block_erase_d7,
+//				.block_erase = SPI_BLOCK_ERASE_D7,
 //			}, {
 //				.eraseblocks = { {64 * 1024, 64} },
 //				.block_erase = SPI_BLOCK_ERASE_D8,
 //			}, {
 //				.eraseblocks = { {4096 * 1024, 1} },
-//				.block_erase = spi_block_erase_60,
+//				.block_erase = SPI_BLOCK_ERASE_60,
 //			}, {
 //				.eraseblocks = { {4096 * 1024, 1} },
 //				.block_erase = SPI_BLOCK_ERASE_C7,
@@ -5170,7 +5334,7 @@ const struct flashchip flashchips[] = {
 //		{
 //			{
 //				.eraseblocks = { {4 * 1024, 512} },
-//				.block_erase = spi_block_erase_d7,
+//				.block_erase = SPI_BLOCK_ERASE_D7,
 //			}, {
 //				.eraseblocks = { {4 * 1024, 512} },
 //				.block_erase = SPI_BLOCK_ERASE_20,
@@ -5207,7 +5371,7 @@ const struct flashchip flashchips[] = {
 //		{
 //			{
 //				.eraseblocks = { {4 * 1024, 64} },
-//				.block_erase = spi_block_erase_d7,
+//				.block_erase = SPI_BLOCK_ERASE_D7,
 //			}, {
 //				.eraseblocks = { {64 * 1024, 4} },
 //				.block_erase = SPI_BLOCK_ERASE_D8,
@@ -5238,7 +5402,7 @@ const struct flashchip flashchips[] = {
 //		{
 //			{
 //				.eraseblocks = { {4 * 1024, 128} },
-//				.block_erase = spi_block_erase_d7,
+//				.block_erase = SPI_BLOCK_ERASE_D7,
 //			}, {
 //				.eraseblocks = { {64 * 1024, 8} },
 //				.block_erase = SPI_BLOCK_ERASE_D8,
@@ -5269,7 +5433,7 @@ const struct flashchip flashchips[] = {
 //		{
 //			{
 //				.eraseblocks = { {4 * 1024, 256} },
-//				.block_erase = spi_block_erase_d7,
+//				.block_erase = SPI_BLOCK_ERASE_D7,
 //			}, {
 //				.eraseblocks = { {4 * 1024, 256} },
 //				.block_erase = SPI_BLOCK_ERASE_20,

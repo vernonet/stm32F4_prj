@@ -29,6 +29,7 @@ This can be changed in the file "RTE_Device.h".
 If the LED 4 flashes after connecting the chip and powered, then the chip is identified and you can continue to work (press user button),
 otherwise the LED 5 will be flash. After write the chip, the CRC will be checked. The erase-write-read process will be displayed using LED 3, 
 if there were no errors, LED 4 will be flashed, otherwise LED 5 will be flash. You also need to pull-up the following  pins - WP, HOLD, DO.
+After the first button pressing  the backup mode will be enabled, if you press the button again, the device switches to the update mode.
 You do not need to format the disk, just drag-n-drop the file there, will work only in the Windows system (tested WinXp, Win7).
 To display debug information set in file "usbd_conf.h" :
  - USBD_DEBUG_LEVEL             1

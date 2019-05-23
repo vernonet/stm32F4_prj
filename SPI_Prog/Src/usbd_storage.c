@@ -94,6 +94,7 @@ extern uint8_t complet, error;
 extern uint8_t inter;
 volatile uint32_t  ttt=0;
 extern __IO uint32_t CRCValue_nominal;
+bool backup_mode = false;  //backup firmware first
 
 
 uint8_t FAT[STORAGE_BLK_SIZ*26]  __attribute__ ((aligned (4))) = {0};   //__attribute__((section(".ARM.__at_0x20010e39")));//
@@ -114,6 +115,23 @@ extern const struct flashchip * flschip;
     0x53, 0x50, 0x49, 0x2D, 0x50, 0x52, 0x4F, 0x47, 0x20, 0x20, 0x20, 0x08, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x48, 0x53, 0xA8, 0x4E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
+ 
+unsigned char backup_fil[28] = {
+    0x46, 0x49, 0x52, 0x4D, 0x57, 0x41, 0x52, 0x45, 0x42, 0x49, 0x4E, 0x20, 0x18, 0x7A, 0x62, 0x7F,
+    0xB6, 0x4E, 0xB6, 0x4E, 0x00, 0x00, 0x63, 0x7F, 0xB6, 0x4E, 0x02, 0x00 
+};
+
+ 
+typedef  struct FAT12_FAT_TABLE {  //struct size  6 bytes for 4 clusters
+	uint32_t cluster0:12;
+	uint32_t cluster1:12;
+	uint32_t cluster2:12;
+	uint32_t cluster3:12;
+} __attribute__((packed)) FAT12_FAT_TABLE;
+
+
+
+uint8_t a[5];
 
  int32_t file_size = 0;
 
@@ -131,7 +149,35 @@ USBD_StorageTypeDef USBD_DISK_fops = {
 
 /* Private functions --------------------------------------------------------- */
 
-
+void create_fs(void) {   //create fat for backup  flash
+	uint8_t i=0;
+	uint16_t clusters ;//= 16;
+	FAT12_FAT_TABLE * tbl	= (FAT12_FAT_TABLE*)&FAT[0x203];	
+	
+	for (int k=0;k<2;k++) {
+	i=0;
+	tbl	= (FAT12_FAT_TABLE*)&FAT[0x203+k*SECTOR_PER_FAT*STORAGE_BLK_SIZ];
+	clusters = (*(uint32_t*)&FAT[0x20])/(*(uint8_t*)&FAT[0x0d]);	//cluster cnt;
+	while (clusters>0){			
+			if (clusters == 1) {tbl->cluster0 = 0xfff; break;}
+					 else tbl->cluster0 = 3+ i*4;
+			clusters--;
+			if (clusters == 1) {tbl->cluster1 = 0xfff; break;}
+					 else tbl->cluster1 = 4+ i*4;
+			clusters--;
+			if (clusters == 1) {tbl->cluster2 = 0xfff; break;}
+					 else tbl->cluster2 = 5+ i*4;
+			clusters--;
+			if (clusters == 1) {tbl->cluster3 = 0xfff; break;}
+					 else tbl->cluster3 = 6+ i*4;
+			clusters--;
+			i++;
+			tbl++;
+	}
+ }
+	memcpy(&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x20], backup_fil, sizeof(backup_fil));
+  *(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+28+0x20] = flschip->total_size*1024;
+}
 
 /**
   * @brief  Initailizes the storage unit (medium)       
@@ -227,8 +273,10 @@ int8_t STORAGE_Read(uint8_t lun, uint8_t * buf, uint32_t blk_addr,
     case 0:
   	  for(n = 0; n < blk_len; n++)
 			{ 
+				//for backup firmware mode
+				if (blk_addr>=FAT_FILE_DATA_BLK && backup_mode) ReadData((blk_addr-FAT_FILE_DATA_BLK)*STORAGE_BLK_SIZ, buf32, STORAGE_BLK_SIZ*blk_len);
 				//fill zeros if blk_addr>sizeof(FAT)/STORAGE_BLK_SIZ
-				if (blk_addr>sizeof(FAT)/STORAGE_BLK_SIZ ) memset (buf, 0, STORAGE_BLK_SIZ);
+				else if (blk_addr>sizeof(FAT)/STORAGE_BLK_SIZ ) memset (buf, 0, STORAGE_BLK_SIZ);
 					else {
 						for(i = 0; i < STORAGE_BLK_SIZ; i+=4) {
 								*buf32 = *(__IO uint32_t*)(&FAT[0] + (blk_addr+n)*STORAGE_BLK_SIZ+i);  
@@ -260,11 +308,18 @@ int8_t Sector_Erase(void)
 {
 	int8_t ret=0;
 	
+	  memset(FAT, 0, sizeof(FAT));	
+	
 		ret =  Write_LL((uint32_t)&FAT[0]                                        , &boot_sec[0], sizeof(boot_sec)- 4*2);
 		ret |= Write_LL((uint32_t)&FAT[0]+0x01FC                                 , &boot_sec[sizeof(boot_sec)- 4*1], 4*1);	
 		ret |= Write_LL((uint32_t)&FAT[0]+(STORAGE_BLK_SIZ*1)                    , &boot_sec[sizeof(boot_sec)- 4*2], 4*1);  //+0x0200
 		ret |= Write_LL((uint32_t)&FAT[0]+(STORAGE_BLK_SIZ*(SECTOR_PER_FAT*1+1)) , &boot_sec[sizeof(boot_sec)- 4*2], 4*1);  //+0x1000
 		ret |= Write_LL((uint32_t)&FAT[0]+(STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK)    , &Label_disk[0], sizeof(Label_disk));	    //+0x1E00
+	
+	  if (backup_mode){ 
+		 memcpy(&FAT[0]+STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+4, "BACKUP", 6);
+		 create_fs(); 	
+		}
 
 		//if (ret) Error_Handler();				
 			
@@ -295,7 +350,8 @@ static int8_t Write_LL(uint32_t  dest, uint8_t * src, uint16_t len)
 	 //else writing  FAT
 	 else  if ((dest <= ((uint32_t)&FAT[0] + sizeof(FAT))) && (dest >= ((uint32_t)&FAT[0]))) memcpy ((uint8_t*)dest, src, len);
 		   else return 1;
-			 
+	
+  BSP_LED_Off(LED3); 	 
 	return ARM_DRIVER_OK;
  
 }
@@ -368,6 +424,7 @@ int8_t STORAGE_Write(uint8_t lun, uint8_t * buf, uint32_t blk_addr,
 	      if (blk_addr == (29-1) + mod + file_size/STORAGE_BLK_SIZ){       //If the file is recorded fully
 				  Wr_Protect = 1;
 					complet = 1;
+					//backup_mode = true;
 				 } 
 			 }
 
