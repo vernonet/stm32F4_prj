@@ -48,7 +48,7 @@
     Default setting is 36000000 (36MHz).
 */
 
-#include "Driver_SPI.h"
+//#include "Driver_SPI.h"
 #include "chip_drv.h"
 #include "spi.h"
 #include "string.h"
@@ -117,7 +117,7 @@ static const ARM_FLASH_CAPABILITIES DriverCapabilities = {
 //extern const struct flashchip flashchips[];
 const struct flashchip * flschip = NULL; //&flashchips[0];
 JEDEC_ID jdc_id_ = {0};
-
+bool first = true;
 
 
 
@@ -159,10 +159,13 @@ const struct flashchip * ReadId (void) {
 					 SPI_UsrLog ("\n Flash not supported\n\n");
 				 }
 				    else {
+							if (first) {
 							//SPI_UsrLog ("\n Flash supported");
 							SPI_UsrLog ("\n Vendor - %s\n Chip   - %s\n Size   - %d Kbytes\n\n\n",\
 							flschip_->vendor, flschip_->name, flschip_->total_size);
 							//FlashInfo.sector_count = flschip_->block_erasers->eraseblocks[0].count;
+							first = false;
+							}
 						}
 	
 	
@@ -366,7 +369,7 @@ static ARM_FLASH_CAPABILITIES GetCapabilities (void) {
   \brief       De-initialize the Flash Interface.
   \return      \ref execution_status
 */
-static int32_t Uninitialize (void) {
+int32_t Uninitialize (void) {
 
   Flags = 0U;
   return ptrSPI->Uninitialize();
@@ -437,6 +440,9 @@ static int32_t Uninitialize (void) {
   \return      number of data items read or \ref execution_status
 */
  int32_t ReadData (uint32_t addr, void *data, uint32_t cnt) {
+	 
+	//memset(data, 0, cnt); 
+	SPI_UsrLog ("\n rd_addr -> 0x%05x   cnt -> 0x%03x", addr, cnt); 
   
   return (flschip->read(addr, data, cnt));
 }
@@ -509,12 +515,16 @@ static int32_t Uninitialize (void) {
 	 //int32_t sts;
 	 int32_t  status;
 	 
+	 if (!(flschip->write))  {
+		  SPI_UsrLog("\n No write support!");
+		  return ARM_DRIVER_ERROR_UNSUPPORTED;
+	 }
 	 if (flschip->unlock) {
 		status = flschip->unlock(); // 
 		if (status) return status;
 		}
 	 
-	 SPI_UsrLog ("\n pd_addr -> 0x%05x   cnt -> 0x%03x", addr, cnt);
+	 SPI_UsrLog ("\n wr_addr -> 0x%05x   cnt -> 0x%03x", addr, cnt);
 		
 	 /* Enable/disable 4-byte addressing mode if flash chip supports it */
 	 if (flschip->feature_bits & (FEATURE_4BA_ENTER | FEATURE_4BA_ENTER_WREN | FEATURE_4BA_ENTER_EAR7)) {
@@ -526,8 +536,12 @@ static int32_t Uninitialize (void) {
 			return 1;
 		}
 	}	
-	 
+	 if ((addr & 0x1fff)  == 0) BSP_LED_Toggle(LED3);                //indicate writing
+	
 	 status = flschip->write(addr, data, cnt);
+	
+	 BSP_LED_Off(LED3); 
+	
 	 if (status < 0) {
 		 SPI_UsrLog("\n ProgramData error -> %d", status);
 	 }
@@ -735,7 +749,7 @@ static int32_t Uninitialize (void) {
 */
  int32_t spi_chip_write_af(uint32_t addr, const void *data, uint32_t cnt) {
   const uint8_t *buf;
-        uint8_t  cmd[4], first = 1, bytes;
+        uint8_t  cmd[4], first_ = 1, bytes;
         int32_t  status;
         uint32_t num;//, n;
 	  
@@ -815,8 +829,8 @@ static int32_t Uninitialize (void) {
     }
     /* Number of data items programmed */
     status = (int32_t)num;
-		if (first) {
-			first = 0;
+		if (first_) {
+			first_ = 0;
 			addr = 0;
 		}
   }
@@ -1029,6 +1043,11 @@ static int32_t isErased (void) {
 */
  int32_t EraseChip (void) {
 	 uint8_t i;
+	 
+	 if (!(flschip->erase)) {
+		 SPI_UsrLog("\n No erase support!");
+		 return ARM_DRIVER_ERROR_UNSUPPORTED;
+	 }
 	 for (i = 0; i < NUM_ERASEFUNCTIONS; i++) {
 		 //search for a command to erase the entire chip,  not individual sectors
 		 if (flschip->block_erasers[i].eraseblocks->count == 1 && flschip->block_erasers[i].eraseblocks[1].size == 0) break;
@@ -1169,6 +1188,12 @@ static ARM_FLASH_STATUS GetStatus (void) {
 static ARM_FLASH_INFO * GetInfo (void) {
 	
   return &FlashInfo;
+}
+
+ARM_SPI_STATUS Spi_status(void){
+	ARM_SPI_STATUS stat;
+	stat = ptrSPI->GetStatus();
+	return stat;
 }
 
 

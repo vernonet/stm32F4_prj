@@ -45,25 +45,25 @@
 
 
 /* Feature bits used for SPI only */
-#define FEATURE_WREN	    (1 << 5)      //I added
-#define FEATURE_WRSR_EWSR	(1 << 6)
-#define FEATURE_WRSR_WREN	(1 << 7)
-#define FEATURE_WRSR_EITHER	(FEATURE_WRSR_EWSR | FEATURE_WRSR_WREN)
-#define FEATURE_OTP		(1 << 8)
-#define FEATURE_QPI		(1 << 9)
-#define FEATURE_4BA_ENTER	(1 << 10) /**< Can enter/exit 4BA mode with instructions 0xb7/0xe9 w/o WREN */
+#define FEATURE_WREN	          (1 << 5)      //I added
+#define FEATURE_WRSR_EWSR	      (1 << 6)
+#define FEATURE_WRSR_WREN	      (1 << 7)
+#define FEATURE_WRSR_EITHER	    (FEATURE_WRSR_EWSR | FEATURE_WRSR_WREN)
+#define FEATURE_OTP		          (1 << 8)
+#define FEATURE_QPI		          (1 << 9)
+#define FEATURE_4BA_ENTER	      (1 << 10) /**< Can enter/exit 4BA mode with instructions 0xb7/0xe9 w/o WREN */
 #define FEATURE_4BA_ENTER_WREN	(1 << 11) /**< Can enter/exit 4BA mode with instructions 0xb7/0xe9 after WREN */
 #define FEATURE_4BA_ENTER_EAR7	(1 << 12) /**< Can enter/exit 4BA mode by setting bit7 of the ext addr reg */
-#define FEATURE_4BA_EXT_ADDR	(1 << 13) /**< Regular 3-byte operations can be used by writing the most
-					       significant address byte into an extended address register. */
-#define FEATURE_4BA_READ	(1 << 14) /**< Native 4BA read instruction (0x13) is supported. */
-#define FEATURE_4BA_FAST_READ	(1 << 15) /**< Native 4BA fast read instruction (0x0c) is supported. */
-#define FEATURE_4BA_WRITE	(1 << 16) /**< Native 4BA byte program (0x12) is supported. */
+#define FEATURE_4BA_EXT_ADDR	  (1 << 13) /**< Regular 3-byte operations can be used by writing the most
+					                                  significant address byte into an extended address register. */
+#define FEATURE_4BA_READ	      (1 << 14) /**< Native 4BA read instruction (0x13) is supported. */
+#define FEATURE_4BA_FAST_READ	  (1 << 15) /**< Native 4BA fast read instruction (0x0c) is supported. */
+#define FEATURE_4BA_WRITE	      (1 << 16) /**< Native 4BA byte program (0x12) is supported. */
 /* 4BA Shorthands */
-#define FEATURE_4BA_NATIVE	(FEATURE_4BA_READ | FEATURE_4BA_FAST_READ | FEATURE_4BA_WRITE)
-#define FEATURE_4BA		(FEATURE_4BA_ENTER | FEATURE_4BA_EXT_ADDR | FEATURE_4BA_NATIVE)
-#define FEATURE_4BA_WREN	(FEATURE_4BA_ENTER_WREN | FEATURE_4BA_EXT_ADDR | FEATURE_4BA_NATIVE)
-#define FEATURE_4BA_EAR7	(FEATURE_4BA_ENTER_EAR7 | FEATURE_4BA_EXT_ADDR | FEATURE_4BA_NATIVE)
+#define FEATURE_4BA_NATIVE	    (FEATURE_4BA_READ | FEATURE_4BA_FAST_READ | FEATURE_4BA_WRITE)
+#define FEATURE_4BA		          (FEATURE_4BA_ENTER | FEATURE_4BA_EXT_ADDR | FEATURE_4BA_NATIVE)
+#define FEATURE_4BA_WREN	      (FEATURE_4BA_ENTER_WREN | FEATURE_4BA_EXT_ADDR | FEATURE_4BA_NATIVE)
+#define FEATURE_4BA_EAR7	      (FEATURE_4BA_ENTER_EAR7 | FEATURE_4BA_EXT_ADDR | FEATURE_4BA_NATIVE)
 
 
 
@@ -153,6 +153,9 @@
 #define ATMEL_AT25F4096		0x64	/* Needs AT25F_RDID */
 #define ATMEL_AT25FS010		0x6601
 #define ATMEL_AT25FS040		0x6604
+#define ATMEL_AT25SF041		0x8401
+#define ATMEL_AT25SF081		0x8501
+#define ATMEL_AT25SF161		0x8601
 #define ATMEL_AT25SL128A	0x4218
 #define ATMEL_AT26DF041		0x4400
 #define ATMEL_AT26DF081		0x4500	/* guessed, no datasheet available */
@@ -285,6 +288,12 @@
 #define EON_EN29GL256HL		0x7F2201	/* Uniform Sectors, WP protects Top OR Bottom sector */
 
 
+#define MACRONIX_ID		0xC2	/* Macronix (MX) */
+/* Mask ROMs */
+#define MACRONIX_MX23L1654	0x0515
+#define MACRONIX_MX23L3254	0x0516
+#define MACRONIX_MX23L6454	0x0517
+#define MACRONIX_MX23L12854	0x0518
 /* MX25 chips are SPI, first byte of device ID is memory type,
  * second byte of device ID is log(bitsize)-9.
  * Generalplus SPI chips seem to be compatible with Macronix
@@ -297,21 +306,22 @@
 #define MACRONIX_MX25L1605	0x2015	/* MX25L1605 (64k 0x20); MX25L1605A/MX25L1606E/MX25L1608E (4k 0x20, 64k 0x52); MX25L1605D/MX25L1608D/MX25L1673E (4k 0x20) */
 #define MACRONIX_MX25L3205	0x2016	/* MX25L3205, MX25L3205A (64k 0x20); MX25L3205D/MX25L3208D (4k 0x20); MX25L3206E/MX25L3208E (4k 0x20, 64k 0x52); MX25L3273E (4k 0x20, 32k 0x52) */
 #define MACRONIX_MX25L6405	0x2017	/* MX25L6405, MX25L6405D (64k 0x20); MX25L6406E/MX25L6408E (4k 0x20); MX25L6436E/MX25L6445E/MX25L6465E/MX25L6473E (4k 0x20, 32k 0x52) */
-#define MACRONIX_MX25L12805	0x2018	/* MX25L12805 */
 #define MACRONIX_MX25L12805D	0x2018	/* MX25L12805D (no 32k); MX25L12865E, MX25L12835F, MX25L12845E (32k 0x52) */
 #define MACRONIX_MX25L25635F	0x2019	/* Same as MX25L25639F, but the latter seems to not support REMS */
 #define MACRONIX_MX25L1635D	0x2415
 #define MACRONIX_MX25L1635E	0x2515	/* MX25L1635{E} */
+#define MACRONIX_MX66L51235F	0x201a	/* MX66L51235F */
+#define MACRONIX_MX25U8032E	0x2534
 #define MACRONIX_MX25U1635E	0x2535
 #define MACRONIX_MX25U3235E	0x2536	/* Same as MX25U6435F */
 #define MACRONIX_MX25U6435E	0x2537	/* Same as MX25U6435F */
-#define MACRONIX_MX25U12835F	0x2538	/* Same as MX25U12835E */
+#define MACRONIX_MX25U12835E	0x2538	/* Same as MX25U12835F */
 #define MACRONIX_MX25U25635F	0x2539
+#define MACRONIX_MX25U51245G	0x253a
 #define MACRONIX_MX25L3235D	0x5E16	/* MX25L3225D/MX25L3235D/MX25L3237D */
 #define MACRONIX_MX25L6495F	0x9517
 
-
-
+#define MACRONIX_MX25R6435F	0x2817
 /*
  * Programmable Micro Corp is listed in JEP106W in bank 2, so it should
  * have a 0x7F continuation code prefix.
@@ -585,7 +595,7 @@ struct flashchip {
 		uint16_t max;
 	} voltage;
 	//struct wp *wp;
-};
+} ;//__attribute__((packed));
 
 const struct flashchip *flash_id_to_entry(uint8_t mfg_id, uint32_t model_id);
 unsigned int flashchips_in_base(void);

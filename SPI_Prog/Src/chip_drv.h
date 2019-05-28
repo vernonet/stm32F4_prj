@@ -25,6 +25,7 @@
  * -------------------------------------------------------------------- */
  #include <stdint.h>
  #include "Driver_Flash.h"
+ #include "Driver_SPI.h"
 
 #define FLASH_SECTOR_COUNT      ((uint32_t)256)      /* Number of sectors */
 #define FLASH_SECTOR_SIZE       ((uint32_t)0x1000)   /* Sector size: 4kB */
@@ -52,7 +53,9 @@ int32_t ReadJedecId (uint8_t cmd, JEDEC_ID* jdc_id);
 int32_t ReadIdSST ( uint8_t cmd, JEDEC_ID* jdc_id);
 int32_t EraseChip (void);
 int32_t Initialize (ARM_Flash_SignalEvent_t cb_event);
+int32_t Uninitialize (void);
 int32_t PowerControl (ARM_POWER_STATE state);
+ARM_SPI_STATUS Spi_status(void);
 
 
 

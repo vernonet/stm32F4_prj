@@ -3956,686 +3956,761 @@ const struct flashchip flashchips[] = {
 //			.wp		= &wp_generic,
 //		},
 
-//	
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25L25635F/MX25L25645G",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25L25635F,
-//		.total_size	= 32768,
-//		.page_size	= 256,
-//		.feature_bits	=
-//			FEATURE_WRSR_WREN | FEATURE_4BA_SUPPORT,
-//		.four_bytes_addr_funcs =
-//		{
-//			.set_4ba = spi_enter_4ba_b7,
-//			.read_nbyte = spi_nbyte_read_4ba_direct,
-//			.program_byte = spi_byte_program_4ba_direct,
-//			.program_nbyte = spi_nbyte_program_4ba_direct
-//		},
-//		.tested		= TEST_UNTESTED,
+{
+		.vendor		= "Macronix",
+		.name		= "MX23L1654",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX23L1654,
+		.total_size	= 2048,
+		.page_size	= 256,
+		.tested		= {.probe = NT, .read = NT, .erase = NA, .write = NA},
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 8192} },
-//				.block_erase = spi_block_erase_21_4ba_direct,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 1024} },
-//				.block_erase = spi_block_erase_5c_4ba_direct,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 512} },
-//				.block_erase = spi_block_erase_dc_4ba_direct,
-//			}, {
-//				.eraseblocks = { {32768 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {32768 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			},
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//		.wp		= &wp_generic,
-//	},
+		.write		= NULL, /* MX23L1654 is a mask ROM, so it is read-only */
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.voltage	= {3000, 3600},
+	},
 
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25L512(E)/MX25V512(C)",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25L512,
-//		.total_size	= 64,
-//		.page_size	= 256,
-//		/* MX25L512E supports SFDP */
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX23L3254",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX23L3254,
+		.total_size	= 4096,
+		.page_size	= 256,
+		.tested		= {.probe = OK, .read = OK, .erase = NA, .write = NA},
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 16} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			},
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read, /* Fast read (0x0B) supported, MX25L512E supports dual I/O */
-//		.voltage	= {2700, 3600}, /* 2.35-3.6V for MX25V512(C) */
-//	},
+		.write		= NULL, /* MX23L3254 is a mask ROM, so it is read-only */
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.voltage	= {3000, 3600},
+	},
 
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25L1005(C)/MX25L1006E",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25L1005,
-//		.total_size	= 128,
-//		.page_size	= 256,
-//		/* MX25L1006E supports SFDP */
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX23L6454",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX23L6454,
+		.total_size	= 8192,
+		.page_size	= 256,
+		.tested		= {.probe = OK, .read = OK, .erase = NA, .write = NA},
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 32} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 2} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {128 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {128 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			},
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read, /* Fast read (0x0B) supported, MX25L1006E supports dual I/O */
-//		.voltage	= {2700, 3600},
-//		.wp		= &wp_w25,
-//	},
+		.write		= NULL, /* MX23L6454 is a mask ROM, so it is read-only */
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.voltage	= {3000, 3600},
+	},
 
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25L2005(C)",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25L2005,
-//		.total_size	= 256,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX23L12854",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX23L12854,
+		.total_size	= 16384,
+		.page_size	= 256,
+		.tested		= {.probe = NT, .read = NT, .erase = NA, .write = NA},
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 64} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 4} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 4} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {256 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {256 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			},
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read, /* Fast read (0x0B) supported */
-//		.voltage	= {2700, 3600},
-//		.wp		= &wp_w25,
-//	},
+		.write		= NULL, /* MX23L12854 is a mask ROM, so it is read-only */
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.voltage	= {3000, 3600},
+	},
 
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25L4005(A/C)",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25L4005,
-//		.total_size	= 512,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L512(E)/MX25V512(C)",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L512,
+		.total_size	= 64,
+		.page_size	= 256,
+		/* MX25L512E supports SFDP */
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 128} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 8} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 8} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {512 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {512 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			},
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read, /* Fast read (0x0B) supported */
-//		.voltage	= {2700, 3600},
-//		.wp		= &wp_w25,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 16} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {64 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			},
+		},
+//		.printlock	= spi_prettyprint_status_register_bp1_srwd,
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported, MX25L512E supports dual I/O */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600}, /* 2.35-3.6V for MX25V512(C) */
+	},
 
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25L8005/MX25V8005",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25L8005,
-//		.total_size	= 1024,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L1005(C)/MX25L1006E",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L1005,
+		.total_size	= 128,
+		.page_size	= 256,
+		/* MX25L1006E supports SFDP */
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 256} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 16} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 16} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			},
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//		.wp		= &wp_w25,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 2} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {128 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {128 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			},
+		},
+//		.printlock	= spi_prettyprint_status_register_bp1_srwd,
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported, MX25L1006E supports dual I/O */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25L1605",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25L1605,
-//		.total_size	= 2048,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L2005(C)/MX25L2006E",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L2005,
+		.total_size	= 256,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 512} },
-//				.block_erase = SPI_BLOCK_ERASE_20,	/* This erase function has 64k blocksize for eLiteFlash */
-//			}, {
-//				.eraseblocks = { {64 * 1024, 32} },	/* Not supported in MX25L1605 (eLiteFlash) and MX25L1605D */
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 32} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			},
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//		.wp		= &wp_w25,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {256 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {256 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			},
+		},
+//		.printlock	= spi_prettyprint_status_register_bp1_srwd,
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25L1635D",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25L1635D,
-//		.total_size	= 2048,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L4005(A/C)/MX25L4006E",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L4005,
+		.total_size	= 512,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 512} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 32} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 8} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 8} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			},
+		},
+//		.printlock	= spi_prettyprint_status_register_bp2_srwd,
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25L1635E",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25L1635E,
-//		.total_size	= 2048,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L8005/MX25L8006E/MX25L8008E/MX25V8005",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L8005,
+		.total_size	= 1024,
+		.page_size	= 256,
+		/* MX25L8006E, MX25L8008E support SFDP */
+		/* OTP: 64B total; enter 0xB1, exit 0xC1 (MX25L8006E, MX25L8008E only) */
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 512} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 32} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 256} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 16} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 16} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			},
+		},
+//		.printlock	= spi_prettyprint_status_register_bp2_srwd,
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600}, /* 2.35-3.6V for MX25V8005 */
+	},
 
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25L3205",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25L3205,
-//		.total_size	= 4096,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L1605",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L1605,
+		.total_size	= 2048,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 1024} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {4 * 1024, 1024} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {4 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {4 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			},
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//		.wp		= &wp_w25,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			},
+		},
+//		.printlock	= spi_prettyprint_status_register_bp2_srwd, /* bit6: error flag */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25L3235D",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25L3235D,
-//		.total_size	= 4096,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L1605A/MX25L1606E/MX25L1608E",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L1605,
+		.total_size	= 2048,
+		.page_size	= 256,
+		/* OTP: 64B total; enter 0xB1, exit 0xC1 (MX25L1606E and MX25L1608E only) */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 1024} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 64} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {4 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {4 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 512} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			},
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* MX25L1605A bp2 only */
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported (MX25L1608E supports dual-I/O read) */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25U3235E/F",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25U3235E,
-//		.total_size	= 4096,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_UNTESTED,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L1605D/MX25L1608D/MX25L1673E",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L1605,
+		.total_size	= 2048,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 1024} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 128} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 64} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {4 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {4 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read, /* Fast read (0x0B) supported */
-//		.voltage	= {1650, 2000},
-//		.wp		= &wp_w25,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 512} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			},
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6: Continuously Program (CP) mode, for 73E is quad enable */
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B), dual I/O supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//#if 0
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25L6405",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25L6405,
-//		.total_size	= 8192,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_OK_PREW,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L1635D",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L1635D,
+		.total_size	= 2048,
+		.page_size	= 256,
+		/* OTP: 64B total; enter 0xB1, exit 0xC1 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {64 * 1024, 128} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 128} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {8 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {8 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read,
-//		.voltage	= {2700, 3600},
-//		.wp		= &wp_w25,
-//	},
-//#endif
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 512} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6 is quad enable */
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) and multi I/O supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		/* FIXME: This is an evil twin of the MX25L6405, with the same
-//		 * ID bytes but different block erase capabilities */
-//		.vendor		= "Macronix",
-//		.name		= "MX25L6406E",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25L6405,
-//		.total_size	= 8192,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L1635E",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L1635E,
+		.total_size	= 2048,
+		.page_size	= 256,
+		/* OTP: 64B total; enter 0xB1, exit 0xC1 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_UNTESTED,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 2048} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 128} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 128} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {8 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {8 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read, /* Fast read (0x0B) supported */
-//		.voltage	= {2700, 3600}, /* 2.35-3.6V for MX25V8005 */
-//		.wp		= &wp_generic,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 512} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 32} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {2 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6 is quad enable */
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) and multi I/O supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25L6495F",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25L6495F,
-//		.total_size	= 8192,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L3205(A)",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L3205,
+		.total_size	= 4096,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 2048} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 128} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 256} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {8 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {8 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read, /* Fast read (0x0B) supported */
-//		.voltage	= {2700, 3600},
-//		.wp		= &wp_generic,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {64 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			},
+		},
+//		.printlock	= spi_prettyprint_status_register_bp2_srwd, /* bit6: error flag */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25U6435E/F",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25U6435E,
-//		.total_size	= 8192,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L3205D/MX25L3208D",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L3205,
+		.total_size	= 4096,
+		.page_size	= 256,
+		/* OTP: 64B total; enter 0xB1, exit 0xC1 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 2048} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 256} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 128} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {8 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {8 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read, /* Fast read (0x0B) supported */
-//		.voltage	= {1650, 2000},
-//		.wp		= &wp_w25,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 1024} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			},
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6: continuously program mode */
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) and dual I/O supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25U12835F",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25U12835F,
-//		.total_size	= 16384,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L3206E/MX25L3208E",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L3205,
+		.total_size	= 4096,
+		.page_size	= 256,
+		/* OTP: 64B total; enter 0xB1, exit 0xC1 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			{
-//				.eraseblocks = { {4 * 1024, 4096} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 512} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 256} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {8 * 1024 * 2048, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {8 * 1024 * 2048, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read, /* Fast read (0x0B) supported */
-//		.voltage	= {1650, 2000},
-//		.wp		= &wp_w25,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 1024} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {64 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			},
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd,
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) and dual I/O supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
-//	{
-//		.vendor		= "Macronix",
-//		.name		= "MX25U25635F",
-//		.bustype	= BUS_SPI,
-//		.manufacture_id	= MACRONIX_ID,
-//		.model_id	= MACRONIX_MX25U25635F,
-//		/* FIXME(dhendrix): support 32-bit addressing */
-//		.total_size	= 32768/2,
-//		.page_size	= 256,
-//		.feature_bits	= FEATURE_WRSR_WREN,
-//		.tested		= TEST_OK_PREWU,
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L3273E",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L3205,
+		.total_size	= 4096,
+		.page_size	= 256,
+		/* OTP: 64B total; enter 0xB1, exit 0xC1 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_OK_PREW,
 //		.probe		= probe_spi_rdid,
 //		.probe_timing	= TIMING_ZERO,
-//		.block_erasers	=
-//		{
-//			/* FIXME(dhendrix): support 32-bit addressing */
-//			{
-//				.eraseblocks = { {4 * 1024, 8192/2} },
-//				.block_erase = SPI_BLOCK_ERASE_20,
-//			}, {
-//				.eraseblocks = { {32 * 1024, 1024/2} },
-//				.block_erase = SPI_BLOCK_ERASE_52,
-//			}, {
-//				.eraseblocks = { {64 * 1024, 512/2} },
-//				.block_erase = SPI_BLOCK_ERASE_D8,
-//			}, {
-//				.eraseblocks = { {32/2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_60,
-//			}, {
-//				.eraseblocks = { {32/2 * 1024 * 1024, 1} },
-//				.block_erase = SPI_BLOCK_ERASE_C7,
-//			}
-//		},
-//		.unlock		= spi_disable_blockprotect,
-//		.write		= spi_chip_write_256,
-//		.read		= spi_chip_read, /* Fast read (0x0B) supported */
-//		.voltage	= {1650, 2000},
-//		/* FIXME(dhendrix): write-protect support */
-////		.wp		= &wp_generic,
-//	},
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 1024} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {32 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			},
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd,
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) and dual I/O supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L3235D",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L3235D,
+		.total_size	= 4096,
+		.page_size	= 256,
+		/* OTP: 256B total; enter 0xB1, exit 0xC1 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 1024} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {4 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6 is quad enable */
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25L6406E_MX25L6408E",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L6405,
+		.total_size	= 8192,
+		.page_size	= 256,
+		/* MX25L6406E supports SFDP */
+		/* OTP: 06E 64B total; enter 0xB1, exit 0xC1 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 2048} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {8 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {8 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd,
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B), dual I/O read supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+{
+		.vendor		= "Macronix",
+		.name		= "MX25L6495F",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L6495F,
+		.total_size	= 8192,
+		.page_size	= 256,
+		/* OTP: 1024B total; enter 0xB1, exit 0xC1 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 2048} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {32 * 1024, 256} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {8 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {8 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) and multi I/O supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
+	{
+		.vendor		= "Macronix",
+		.name		= "MX25R6435F",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25R6435F,
+		.total_size	= 8192,
+		.page_size	= 256,
+		/* OTP: 1024B total; enter 0xB1, exit 0xC1 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 2048} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {64 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {32 * 1024, 256} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {8 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {8 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6 is quad enable */
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) and multi I/O supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {1650, 3600},
+	},
+
 
 //	{
 //		.vendor		= "Macronix",

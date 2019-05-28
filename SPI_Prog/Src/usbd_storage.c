@@ -52,6 +52,8 @@
 #include "chip_drv.h"
 #include "spi.h"
 #include "stm32f4_discovery.h"
+#include "ff.h"
+#include "Driver_SPI.h"
 
 
 /* Private typedef ----------------------------------------------------------- */
@@ -85,7 +87,7 @@ int8_t Sector_Erase(void);
 uint32_t FirstSector = 0, NbOfSectors = 0, Address = 0, Sector = 0;
 uint32_t SectorError = 0, last_wr_adr=0xffffffff;
 /*Variable used for Erase procedure*/
-uint8_t flash_eraset = 0, temp=0,Wr_Protect, first=1, mod=0;
+uint8_t flash_eraset = 0, temp=0,Wr_Protect, mod=0;
 uint8_t write_started =0;
 uint16_t block_num_cnt=0, modulo=0;
 IWDG_HandleTypeDef hiwdg;
@@ -95,12 +97,18 @@ extern uint8_t inter;
 volatile uint32_t  ttt=0;
 extern __IO uint32_t CRCValue_nominal;
 bool backup_mode = false;  //backup firmware first
-
+extern uint32_t spi_speed;
+ARM_SPI_STATUS  sts;
 
 uint8_t FAT[STORAGE_BLK_SIZ*26]  __attribute__ ((aligned (4))) = {0};   //__attribute__((section(".ARM.__at_0x20010e39")));//
 
 extern const struct flashchip flashchips[];
 extern const struct flashchip * flschip;
+
+FRESULT res;
+WCHAR tmp[FF_LFN_BUF];
+FRESULT check;
+FATFS  * fs;//__attribute__ ((aligned (4)));
 
  unsigned char boot_sec[] = { //188
  
@@ -121,14 +129,6 @@ unsigned char backup_fil[28] = {
     0xB6, 0x4E, 0xB6, 0x4E, 0x00, 0x00, 0x63, 0x7F, 0xB6, 0x4E, 0x02, 0x00 
 };
 
- 
-typedef  struct FAT12_FAT_TABLE {  //struct size  6 bytes for 4 clusters
-	uint32_t cluster0:12;
-	uint32_t cluster1:12;
-	uint32_t cluster2:12;
-	uint32_t cluster3:12;
-} __attribute__((packed)) FAT12_FAT_TABLE;
-
 
 
 uint8_t a[5];
@@ -148,35 +148,84 @@ USBD_StorageTypeDef USBD_DISK_fops = {
 };
 
 /* Private functions --------------------------------------------------------- */
+/*-----------------------------------------------------------------------*/
+/* Miscellaneous Functions                                               */
+/*-----------------------------------------------------------------------*/
 
-void create_fs(void) {   //create fat for backup  flash
+DWORD get_fattime (void)
+{
+	return	((2019UL-1980) << 25)	      // Year = 2006
+			| (5UL << 21)	      // Month = Feb
+			| (9UL << 16)	      // Day = 9
+			| (22U << 11)	      // Hour = 22
+			| (30U << 5)	      // Min = 30
+			| (0U >> 1)	      // Sec = 0
+			;
+}
+
+int8_t create_fs(void) {   //create fat for backup  flash
 	uint8_t i=0;
-	uint16_t clusters ;//= 16;
-	FAT12_FAT_TABLE * tbl	= (FAT12_FAT_TABLE*)&FAT[0x203];	
+	uint16_t clusters ;
+	FAT12_FAT_TABLE * tbl	= (FAT12_FAT_TABLE*)&FAT[0x200+3];	
 	
 	for (int k=0;k<2;k++) {
 	i=0;
 	tbl	= (FAT12_FAT_TABLE*)&FAT[0x203+k*SECTOR_PER_FAT*STORAGE_BLK_SIZ];
 	clusters = (*(uint32_t*)&FAT[0x20])/(*(uint8_t*)&FAT[0x0d]);	//cluster cnt;
 	while (clusters>0){			
-			if (clusters == 1) {tbl->cluster0 = 0xfff; break;}
+			if (clusters == 1) {tbl->cluster0 = END_OF_CHAIN; break;}
 					 else tbl->cluster0 = 3+ i*4;
 			clusters--;
-			if (clusters == 1) {tbl->cluster1 = 0xfff; break;}
+			if (clusters == 1) {tbl->cluster1 = END_OF_CHAIN; break;}
 					 else tbl->cluster1 = 4+ i*4;
 			clusters--;
-			if (clusters == 1) {tbl->cluster2 = 0xfff; break;}
+			if (clusters == 1) {tbl->cluster2 = END_OF_CHAIN; break;}
 					 else tbl->cluster2 = 5+ i*4;
 			clusters--;
-			if (clusters == 1) {tbl->cluster3 = 0xfff; break;}
+			if (clusters == 1) {tbl->cluster3 = END_OF_CHAIN; break;}
 					 else tbl->cluster3 = 6+ i*4;
 			clusters--;
 			i++;
 			tbl++;
 	}
  }
-	memcpy(&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x20], backup_fil, sizeof(backup_fil));
-  *(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+28+0x20] = flschip->total_size*1024;
+	
+ 
+#ifdef USE_LFN	   
+    // I use FatFS for long filename 
+    fs = (FATFS *)malloc(sizeof(FATFS));
+		FIL fil;
+    uint32_t bw;
+		char sd_path[4] = "0:/";
+    char filename[30] = {0};  
+    memcpy (filename, flschip->name, strlen(flschip->name));
+	  strcat (filename, ".bin");
+		check = f_mount(fs, sd_path, 0);
+		check = f_open(&fil, filename, FA_CREATE_ALWAYS);			
+	  memcpy(&FAT[0]+STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK ,fs->win, 0x80);
+		//check = f_write(&fil, "123456", 6, &bw);	
+		check = f_close(&fil);		
+		check = f_mount(NULL, sd_path, 0);
+		free(fs);
+		if (check) return -1;
+	  if (strlen(flschip->name) <= 8) {                                                       //SFN
+		 *(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x3c] = flschip->total_size*1024; //set  file size
+		 *(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x38] = 0x20000; //			
+	 }
+	  else if (strlen(flschip->name) > 8 && strlen(flschip->name) < sizeof(filename)-4) {     //LFN
+			*(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x7c] = flschip->total_size*1024; //set  file size
+		  *(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x78] = 0x20000; //
+		}
+		 else return -1;  //filename leght error
+		
+		//memset(&FAT[0]+26*STORAGE_BLK_SIZ, 0, STORAGE_BLK_SIZ);
+#else	
+    memcpy(&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x20], backup_fil, sizeof(backup_fil));
+		memset(&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x20], 0x20, 8);
+		memcpy(&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x20], flschip->name, strlen(flschip->name) <= 8 ? strlen(flschip->name) : 8);   //copy file name & etc.
+  	*(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+28+0x20] = flschip->total_size*1024; //set  file size
+#endif	 
+   return 0;
 }
 
 /**
@@ -265,25 +314,22 @@ int8_t STORAGE_Read(uint8_t lun, uint8_t * buf, uint32_t blk_addr,
                     uint16_t blk_len)
 {
 //  int8_t ret = -1;
-  uint16_t i,n;
+  uint16_t i,n=0;
 	uint32_t * buf32 = (uint32_t*)buf;
 	
   switch (lun)
   {
     case 0:
-  	  for(n = 0; n < blk_len; n++)
-			{ 
 				//for backup firmware mode
-				if (blk_addr>=FAT_FILE_DATA_BLK && backup_mode) ReadData((blk_addr-FAT_FILE_DATA_BLK)*STORAGE_BLK_SIZ, buf32, STORAGE_BLK_SIZ*blk_len);
+				if (blk_addr>=FAT_FILE_DATA_BLK && backup_mode) {
+					ReadData((blk_addr-FAT_FILE_DATA_BLK)*STORAGE_BLK_SIZ, buf32, STORAGE_BLK_SIZ*blk_len);
+				}
 				//fill zeros if blk_addr>sizeof(FAT)/STORAGE_BLK_SIZ
-				else if (blk_addr>sizeof(FAT)/STORAGE_BLK_SIZ ) memset (buf, 0, STORAGE_BLK_SIZ);
+				else if (blk_addr>sizeof(FAT)/STORAGE_BLK_SIZ ) memset (buf, 0, STORAGE_BLK_SIZ*blk_len);
 					else {
-						for(i = 0; i < STORAGE_BLK_SIZ; i+=4) {
-								*buf32 = *(__IO uint32_t*)(&FAT[0] + (blk_addr+n)*STORAGE_BLK_SIZ+i);  
-								buf32++;
-						}
+						memcpy(buf, &FAT[0] + (blk_addr+n)*STORAGE_BLK_SIZ, STORAGE_BLK_SIZ*blk_len);
 			   }
-			}
+					
 			USBD_UsrLog("\n\r RD blk_addr-> %d blk_len-> %d", blk_addr,blk_len);
       break;
     case 1:
@@ -317,8 +363,14 @@ int8_t Sector_Erase(void)
 		ret |= Write_LL((uint32_t)&FAT[0]+(STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK)    , &Label_disk[0], sizeof(Label_disk));	    //+0x1E00
 	
 	  if (backup_mode){ 
-		 memcpy(&FAT[0]+STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+4, "BACKUP", 6);
-		 create_fs(); 	
+			memcpy(&FAT[0]+STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+4, "BACKUP", 6);		
+			if (create_fs()) return -1; 
+			//fatfs вешает spi
+#ifdef USE_LFN				
+			Initialize(NULL);	
+			PowerControl(ARM_POWER_FULL);		
+			ptrSPI->Control(ARM_SPI_SET_BUS_SPEED, spi_speed);
+#endif			
 		}
 
 		//if (ret) Error_Handler();				
@@ -334,9 +386,7 @@ int8_t Sector_Erase(void)
   * @retval Status (0 : Ok / 1 : Error)
   */
 static int8_t Write_LL(uint32_t  dest, uint8_t * src, uint16_t len)
-{	
-	//indicate writing
-	if ((dest & 0x0fff)  == 0) BSP_LED_Toggle(LED3);                         
+{	                   
 	//if the file size is not a multiple of the sector size
 	if ((modulo) && ((dest - FAT_OFFSET) == (file_size-modulo))) {	
 		len = modulo; 
@@ -344,14 +394,13 @@ static int8_t Write_LL(uint32_t  dest, uint8_t * src, uint16_t len)
 	
 	//if writing data
 	if (dest < (flschip->total_size*1024+FAT_OFFSET))	{   
-		  //if (Wr_Protect) return -1;
+		  if (backup_mode) return 0;
 			if (ProgramData (dest - FAT_OFFSET, src, len) != ARM_DRIVER_OK) return ARM_DRIVER_ERROR;							
 	}				 				 			 
 	 //else writing  FAT
 	 else  if ((dest <= ((uint32_t)&FAT[0] + sizeof(FAT))) && (dest >= ((uint32_t)&FAT[0]))) memcpy ((uint8_t*)dest, src, len);
 		   else return 1;
-	
-  BSP_LED_Off(LED3); 	 
+		 
 	return ARM_DRIVER_OK;
  
 }
@@ -384,20 +433,14 @@ int8_t STORAGE_Write(uint8_t lun, uint8_t * buf, uint32_t blk_addr,
 				 }
          if (blk_addr < FAT_FILE_DATA_BLK) {
            if (blk_addr == FAT_DIRECTORY_BLK)  {
-             //write_started =1;						 
-//						 if (*(uint8_t*)(buf+0x20)) {
-//						 if (((*(uint8_t*)(buf+0x20) == 0x46)) | ((*(uint8_t*)(buf+0x20) == 0x66))) {
-//								 if (memcmp(( char*)(buf+0x20), "FIRMWAREBIN", 11)) {error = 1; Wr_Protect = 1;return -1;}
-//								    else Wr_Protect = 0;
-//							 }
-//							  else {error = 1; Wr_Protect = 1;return -1;}
-//						 }
-						 //28- file_size offset 
-						 if (*(uint32_t*)(buf+28+0x20)) {
-							 //0x20 - offset for 1 file, 0x00 - offset for disk label, +0x40 for long filename
-							 file_size  = (*(uint32_t*)(buf+28+0x20)== 0xFFFFFFFF)?  *(uint32_t*)(buf+28+0x20+0x40):\
-																																			 *(uint32_t*)(buf+28+0x20);
-								 if (file_size) {
+						 //0x1C- file_size offset 
+						 if (*(uint32_t*)(buf+0x1C+0x20)) {
+							 if (*(uint32_t*)(buf+0x40)) {
+								 //0x20 - offset for 1 file, 0x00 - offset for disk label, +0x40 for long filename
+								 file_size  = *(uint32_t*)(buf+0x1C+0x20+0x40); //LFN
+							 }
+							   else file_size = *(uint32_t*)(buf+0x1C+0x20);  //SFN
+							 if (file_size) {
 									 if (file_size > flschip->total_size*1024) {
 										 USBD_UsrLog("\n\r ERROR, file size > flash size!!!");
 										 return -1;
@@ -405,11 +448,10 @@ int8_t STORAGE_Write(uint8_t lun, uint8_t * buf, uint32_t blk_addr,
 									 modulo = 	file_size % STORAGE_BLK_SIZ;	//chunk of file
 									 if (modulo) mod=1;
 									}					
-								//printf ("\n\r F_size -> %x", file_size);		
+//								printf ("\n\r F_size -> %x", file_size);		
 					    }						 
 					   }
-					 }
-//        if (!(write_started))  	{Wr_Protect = 1;return -1;}			 
+					 } 
 				if (blk_addr < FAT_FILE_DATA_BLK) adr = (uint32_t)&FAT[0];            //writing FAT
 					  else adr = FLASH_DISK_START_ADDRESS;                              //else writing data
 				//if block number >FAT_DIRECTORY_BLK & <FAT_FILE_DATA_BLK -> skip writing 	 
@@ -424,7 +466,7 @@ int8_t STORAGE_Write(uint8_t lun, uint8_t * buf, uint32_t blk_addr,
 	      if (blk_addr == (29-1) + mod + file_size/STORAGE_BLK_SIZ){       //If the file is recorded fully
 				  Wr_Protect = 1;
 					complet = 1;
-					//backup_mode = true;
+//					backup_mode = true;
 				 } 
 			 }
 

@@ -627,6 +627,16 @@
               <FileType>1</FileType>
               <FilePath>..\Src\spi.c</FilePath>
             </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ffunicode.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1343,6 +1353,16 @@
               <FileType>1</FileType>
               <FilePath>..\Src\spi.c</FilePath>
             </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ffunicode.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1792,7 +1812,7 @@
             </VariousControls>
           </Aads>
           <LDads>
-            <umfTarg>1</umfTarg>
+            <umfTarg>0</umfTarg>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
             <noStLib>0</noStLib>
@@ -1801,7 +1821,7 @@
             <TextAddressRange>0x08000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>.\binary\spi_prog_RAM_cmsis_mod.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -2058,6 +2078,16 @@
               <FileName>spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2508,7 +2538,7 @@
             </VariousControls>
           </Aads>
           <LDads>
-            <umfTarg>1</umfTarg>
+            <umfTarg>0</umfTarg>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
             <noStLib>0</noStLib>
@@ -2517,7 +2547,7 @@
             <TextAddressRange>0x08000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>.\binary\spi_prog_RAM_clang_mod.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -2774,6 +2804,16 @@
               <FileName>spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3611,6 +3651,16 @@
               <FileType>1</FileType>
               <FilePath>..\Src\spi.c</FilePath>
             </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ffunicode.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4105,7 +4155,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_HAL_DRIVER,STM32F407xx,  DRIVER_SPI_NUM =  2, DRIVER_SPI_BUS_SPEED =  657000</Define>
+              <Define>USE_HAL_DRIVER,STM32F407xx,  DRIVER_SPI_NUM =  2, DRIVER_SPI_BUS_SPEED =  657000, USE_LFN</Define>
               <Undefine></Undefine>
               <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Drivers\BSP\STM32F4-Discovery</IncludePath>
             </VariousControls>
@@ -4516,6 +4566,16 @@
               <FileType>1</FileType>
               <FilePath>..\Src\spi.c</FilePath>
             </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ffunicode.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4861,7 +4921,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\binary\</OutputDirectory>
-          <OutputName>spi_prog_RAM_clang</OutputName>
+          <OutputName>spi_prog_RAM</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -5124,7 +5184,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>2</Optim>
+            <Optim>3</Optim>
             <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -5148,7 +5208,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_HAL_DRIVER,STM32F407xx,  DRIVER_SPI_NUM =  2, DRIVER_SPI_BUS_SPEED =  657000, VECT_TAB_SRAM</Define>
+              <Define>USE_HAL_DRIVER,STM32F407xx,  DRIVER_SPI_NUM =  2, DRIVER_SPI_BUS_SPEED =  657000, USE_LFN,  VECT_TAB_SRAM</Define>
               <Undefine></Undefine>
               <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Drivers\BSP\STM32F4-Discovery</IncludePath>
             </VariousControls>
@@ -5181,7 +5241,7 @@
             <TextAddressRange>0x08000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>.\binary\spi_prog_RAM_cmsis.sct</ScatterFile>
+            <ScatterFile>.\binary\spi_prog_RAM_cmsis_mod.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -5558,6 +5618,16 @@
               <FileName>spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6043,7 +6113,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>1</useUlib>
+            <useUlib>0</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -6191,7 +6261,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_HAL_DRIVER,STM32F407xx,  DRIVER_SPI_NUM =  2, DRIVER_SPI_BUS_SPEED =  657000, VECT_TAB_SRAM</Define>
+              <Define>USE_HAL_DRIVER,STM32F407xx,  DRIVER_SPI_NUM =  2, DRIVER_SPI_BUS_SPEED =  657000, USE_LFN, VECT_TAB_SRAM</Define>
               <Undefine></Undefine>
               <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Drivers\BSP\STM32F4-Discovery</IncludePath>
             </VariousControls>
@@ -6224,7 +6294,7 @@
             <TextAddressRange>0x08000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>.\binary\spi_prog_RAM_clang.sct</ScatterFile>
+            <ScatterFile>.\binary\spi_prog_RAM_clang_mod.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -6601,6 +6671,16 @@
               <FileName>spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>
