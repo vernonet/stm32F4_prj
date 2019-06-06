@@ -172,7 +172,7 @@ int8_t create_fs(void) {   //create fat for backup  flash
 	i=0;
 	tbl	= (FAT12_FAT_TABLE*)&FAT[0x203+k*SECTOR_PER_FAT*STORAGE_BLK_SIZ];
 	clusters = (*(uint32_t*)&FAT[0x20])/(*(uint8_t*)&FAT[0x0d]);	//cluster cnt;
-	while (clusters>0){			
+	while (clusters>1){			
 			if (clusters == 1) {tbl->cluster0 = END_OF_CHAIN; break;}
 					 else tbl->cluster0 = 3+ i*4;
 			clusters--;
@@ -367,9 +367,9 @@ int8_t Sector_Erase(void)
 			if (create_fs()) return -1; 
 			//fatfs вешает spi
 #ifdef USE_LFN				
-			Initialize(NULL);	
-			PowerControl(ARM_POWER_FULL);		
-			ptrSPI->Control(ARM_SPI_SET_BUS_SPEED, spi_speed);
+//			Initialize(NULL);	
+//			PowerControl(ARM_POWER_FULL);		
+//			ptrSPI->Control(ARM_SPI_SET_BUS_SPEED, spi_speed);
 #endif			
 		}
 

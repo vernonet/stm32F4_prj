@@ -4746,7 +4746,42 @@ const struct flashchip flashchips[] = {
 //		.voltage	= {2700, 3600},
 //	},
 
-//	
+{
+		.vendor		= "NextFlash",
+		.name		= "NX25B40",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= NF_ID,
+		.model_id	= NF_NX25B40,
+		.total_size	= 512,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = {
+					{4 * 1024, 2},
+					{8 * 1024, 1},
+					{16 * 1024, 1},
+					{32 * 1024, 1},
+					{64 * 1024, 7}
+				},
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_plain, /* TODO: improve */
+		.unlock		= spi_disable_blockprotect,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
+
 //	{
 //		.vendor		= "Numonyx",
 //		.name		= "M25PE10",

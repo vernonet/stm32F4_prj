@@ -322,6 +322,9 @@
 #define MACRONIX_MX25L6495F	0x9517
 
 #define MACRONIX_MX25R6435F	0x2817
+
+#define NF_ID			    0xEF	/* NextFlash */
+#define NF_NX25B40 	  0x32
 /*
  * Programmable Micro Corp is listed in JEP106W in bank 2, so it should
  * have a 0x7F continuation code prefix.
