@@ -159,7 +159,7 @@ DWORD get_fattime (void)
 			| (9UL << 16)	      // Day = 9
 			| (22U << 11)	      // Hour = 22
 			| (30U << 5)	      // Min = 30
-			| (0U >> 1)	      // Sec = 0
+			| (0U >> 1)	        // Sec = 0
 			;
 }
 

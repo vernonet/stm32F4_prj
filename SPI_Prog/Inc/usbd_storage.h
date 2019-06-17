@@ -61,6 +61,7 @@
 #define MAX_ROOT_DIR_ENTRIES             0x0EU   //boot_sec[17]
 #define FAT_FILE_DATA_BLK                29U //FAT_DIRECTORY_BLK + MAX_ROOT_DIR_ENTRIES/0x10
 #define FAT_OFFSET                       FAT_FILE_DATA_BLK*STORAGE_BLK_SIZ  //0A 0x1400   1B 3600
+#define END_OF_CHAIN                     (0xfff)
 
 
 
@@ -70,6 +71,14 @@
 //#define FLASH_PAGE_SIZE                     0x200                            /* 2K per page */
 #define WAIT_TIMEOUT                		      100000 
 #define FLASH_TIMEOUT                         50000U                           /* 50 s */
+
+
+typedef  struct FAT12_FAT_TABLE {  //struct size  6 bytes for 4 clusters
+	uint32_t cluster0:12;
+	uint32_t cluster1:12;
+	uint32_t cluster2:12;
+	uint32_t cluster3:12;
+} __attribute__((packed)) FAT12_FAT_TABLE;
 
 
 /* Exported types ------------------------------------------------------------*/
@@ -84,7 +93,7 @@ int8_t STORAGE_Read (uint8_t lun, uint8_t * buf, uint32_t blk_addr, uint16_t blk
 int8_t STORAGE_Write(uint8_t lun, uint8_t * buf, uint32_t blk_addr, uint16_t blk_len);
 int8_t STORAGE_GetMaxLun(void);
 int8_t Prepare_FAT(void);
-void create_fs(void);
+int8_t create_fs(void);
 
 extern USBD_StorageTypeDef  USBD_DISK_fops;
 

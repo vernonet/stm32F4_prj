@@ -354,6 +354,16 @@ int32_t spi_disable_blockprotect_at25f(void)
 	return spi_disable_blockprotect_generic(0x0C, 1 << 7, 0, 0xFF);
 }
 
+int32_t spi_disable_blockprotect_at25fs010(void)
+{
+	return spi_disable_blockprotect_generic(0x6C, 1 << 7, 0, 0xFF);
+ }
+
+int32_t spi_disable_blockprotect_at25fs040(void)
+{
+	return spi_disable_blockprotect_generic(0x7C, 1 << 7, 0, 0xFF);
+}
+
 static int spi_write_extended_address_register(const uint8_t regdata)
 {
 	int32_t status;
@@ -412,4 +422,4 @@ int spi_exit_4ba(void)
 {
 	return spi_enter_exit_4ba(false);
 }
-/************************ END************************/
+/************************************************END************************************************/
