@@ -7756,7 +7756,7 @@ const struct flashchip flashchips[] = {
 
 	{
 		.vendor		= "Winbond",
-		.name		= "W25Q128B", //W25Q128.V
+		.name		= "W25Q128BV", //W25Q128.V
 		.bustype	= BUS_SPI,
 		.manufacture_id	= WINBOND_NEX_ID,
 		.model_id	= WINBOND_NEX_W25Q128_V,
