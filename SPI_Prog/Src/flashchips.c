@@ -3061,6 +3061,40 @@ const struct flashchip flashchips[] = {
 		.read		= spi_chip_read,
 		.erase    = spi_erase_bulk,
 	},
+	
+//	{  //analog EN25Q32(A)(B)
+//		.vendor		= "cFeon",   
+//		.name		= "Q32B104",
+//		.bustype	= BUS_SPI,
+//		.manufacture_id	= EON_ID_NOPREFIX,
+//		.model_id	= EON_EN25Q32,
+//		.total_size	= 4096,
+//		.page_size	= 256,
+//		.feature_bits	= FEATURE_WRSR_WREN,
+////		.tested		= TEST_UNTESTED,
+////		.probe		= probe_spi_rdid,
+////		.probe_timing	= TIMING_ZERO,
+//		.block_erasers	=
+//		{
+//			{
+//				.eraseblocks = { {4 * 1024, 1024} },
+//				.block_erase = SPI_BLOCK_ERASE_20,
+//			}, {
+//				.eraseblocks = { {64 * 1024, 64} },
+//				.block_erase = SPI_BLOCK_ERASE_D8,
+//			}, {
+//				.eraseblocks = { {4 * 1024 * 1024, 1} },
+//				.block_erase = SPI_BLOCK_ERASE_60,
+//			}, {
+//				.eraseblocks = { {4 * 1024 * 1024, 1} },
+//				.block_erase = SPI_BLOCK_ERASE_C7,
+//			}
+//		},
+//		.unlock		= spi_disable_blockprotect,
+//		.write		= spi_chip_write_256,
+//		.read		= spi_chip_read,
+//		.erase    = spi_erase_bulk,
+//	},
 
 	{
 		.vendor		= "Eon",
@@ -3955,6 +3989,56 @@ const struct flashchip flashchips[] = {
 //			.read		= spi_chip_read,
 //			.wp		= &wp_generic,
 //		},
+
+{
+		.vendor		= "Macronix",
+		.name		= "MX25L25645G",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= MACRONIX_ID,
+		.model_id	= MACRONIX_MX25L25645G,  //==MACRONIX_MX25L25635F
+		.total_size	= 32768,
+		.page_size	= 256,
+		/* OTP: 512B total; enter 0xB1, exit 0xC1 */
+		.feature_bits	= FEATURE_WRSR_WREN | FEATURE_OTP | FEATURE_4BA,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	=
+		{
+			{
+				.eraseblocks = { {4 * 1024, 8192} },
+				.block_erase = SPI_BLOCK_ERASE_21,
+			}, {
+				.eraseblocks = { {4 * 1024, 8192} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {32 * 1024, 1024} },
+				.block_erase = SPI_BLOCK_ERASE_5C,
+			}, {
+				.eraseblocks = { {32 * 1024, 1024} },
+				.block_erase = SPI_BLOCK_ERASE_52,
+			}, {
+				.eraseblocks = { {64 * 1024, 512} },
+				.block_erase = SPI_BLOCK_ERASE_DC,
+			}, {
+				.eraseblocks = { {64 * 1024, 512} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {32 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {32 * 1024 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+		/* TODO: security register and SBLK/SBULK; MX25L12835F: configuration register */
+//		.printlock	= spi_prettyprint_status_register_bp3_srwd, /* bit6 is quad enable */
+		.unlock		= spi_disable_blockprotect_bp3_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B) supported */
+		.erase    = spi_erase_bulk,
+		.voltage	= {2700, 3600},
+	},
 
 {
 		.vendor		= "Macronix",
@@ -7352,7 +7436,7 @@ const struct flashchip flashchips[] = {
 
 {
 		.vendor		= "Winbond",
-		.name		= "W25Q256.V",
+		.name		= "W25Q256BV",
 		.bustype	= BUS_SPI,
 		.manufacture_id	= WINBOND_NEX_ID,
 		.model_id	= WINBOND_NEX_W25Q256_V,
@@ -7672,7 +7756,7 @@ const struct flashchip flashchips[] = {
 
 	{
 		.vendor		= "Winbond",
-		.name		= "W25Q128.V",
+		.name		= "W25Q128B", //W25Q128.V
 		.bustype	= BUS_SPI,
 		.manufacture_id	= WINBOND_NEX_ID,
 		.model_id	= WINBOND_NEX_W25Q128_V,

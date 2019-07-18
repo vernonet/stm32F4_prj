@@ -41,7 +41,7 @@
  * How many different erase functions do we have per chip?
  * Atmel AT25FS010 has 6 different functions.
  */
-#define NUM_ERASEFUNCTIONS 6
+#define NUM_ERASEFUNCTIONS 8
 
 
 /* Feature bits used for SPI only */
@@ -68,15 +68,19 @@
 
 
 
+#define SPI_BLOCK_ERASE_21      (0x21U)
 #define SPI_BLOCK_ERASE_81      (0x81U)
 #define SPI_BLOCK_ERASE_50      (0x50U)
 #define SPI_BLOCK_ERASE_20      (0x20U)
 #define SPI_BLOCK_ERASE_52      (0x52U)
+#define SPI_BLOCK_ERASE_5C      (0x5CU)
 #define SPI_BLOCK_ERASE_62      (0x62U)
 #define SPI_BLOCK_ERASE_D8      (0xD8U)
 #define SPI_BLOCK_ERASE_60      (0x60U)
 #define SPI_BLOCK_ERASE_C7      (0xC7U)
 #define SPI_BLOCK_ERASE_D7      (0xD7U)
+#define SPI_BLOCK_ERASE_DC      (0xDCU)
+
 
 
 
@@ -308,6 +312,7 @@
 #define MACRONIX_MX25L6405	0x2017	/* MX25L6405, MX25L6405D (64k 0x20); MX25L6406E/MX25L6408E (4k 0x20); MX25L6436E/MX25L6445E/MX25L6465E/MX25L6473E (4k 0x20, 32k 0x52) */
 #define MACRONIX_MX25L12805D	0x2018	/* MX25L12805D (no 32k); MX25L12865E, MX25L12835F, MX25L12845E (32k 0x52) */
 #define MACRONIX_MX25L25635F	0x2019	/* Same as MX25L25639F, but the latter seems to not support REMS */
+#define MACRONIX_MX25L25645G	0x2019	
 #define MACRONIX_MX25L1635D	0x2415
 #define MACRONIX_MX25L1635E	0x2515	/* MX25L1635{E} */
 #define MACRONIX_MX66L51235F	0x201a	/* MX66L51235F */

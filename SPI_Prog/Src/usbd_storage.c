@@ -85,11 +85,11 @@ int8_t Sector_Erase(void);
 //static void MX_TIM6_Init(void);
 
 uint32_t FirstSector = 0, NbOfSectors = 0, Address = 0, Sector = 0;
-uint32_t SectorError = 0, last_wr_adr=0xffffffff;
+uint32_t SectorError = 0, last_wr_adr=0xffffffff, modulo=0;
 /*Variable used for Erase procedure*/
 uint8_t flash_eraset = 0, temp=0,Wr_Protect, mod=0;
 uint8_t write_started =0;
-uint16_t block_num_cnt=0, modulo=0;
+uint16_t block_num_cnt=0;
 IWDG_HandleTypeDef hiwdg;
 extern uint8_t complet, error;
 //TIM_HandleTypeDef htim6;
@@ -159,7 +159,7 @@ DWORD get_fattime (void)
 			| (9UL << 16)	      // Day = 9
 			| (22U << 11)	      // Hour = 22
 			| (30U << 5)	      // Min = 30
-			| (0U >> 1)	        // Sec = 0
+			| (0U >> 1)	      // Sec = 0
 			;
 }
 
@@ -213,8 +213,15 @@ int8_t create_fs(void) {   //create fat for backup  flash
 		 *(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x38] = 0x20000; //			
 	 }
 	  else if (strlen(flschip->name) > 8 && strlen(flschip->name) < sizeof(filename)-4) {     //LFN
-			*(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x7c] = flschip->total_size*1024; //set  file size
-		  *(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x78] = 0x20000; //
+			if (*(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x5c] == 0) { 
+        //for file names consisting of 9 chars				
+				*(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x5c] = flschip->total_size*1024; //set  file size
+				*(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x58] = 0x20000; 
+			}
+			   else {     // >9 chars
+					 *(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x7c] = flschip->total_size*1024; //set  file size
+		       *(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x78] = 0x20000; //
+				 }
 		}
 		 else return -1;  //filename leght error
 		
@@ -432,12 +439,15 @@ int8_t STORAGE_Write(uint8_t lun, uint8_t * buf, uint32_t blk_addr,
 					 else CRCValue_nominal = CalcCRC32(buf, blk_len*STORAGE_BLK_SIZ, CRCValue_nominal);							
 				 }
          if (blk_addr < FAT_FILE_DATA_BLK) {
-           if (blk_addr == FAT_DIRECTORY_BLK)  {
+           if (blk_addr == FAT_DIRECTORY_BLK && !(backup_mode))  {
 						 //0x1C- file_size offset 
 						 if (*(uint32_t*)(buf+0x1C+0x20)) {
 							 if (*(uint32_t*)(buf+0x40)) {
 								 //0x20 - offset for 1 file, 0x00 - offset for disk label, +0x40 for long filename
 								 file_size  = *(uint32_t*)(buf+0x1C+0x20+0x40); //LFN
+								 if (!(file_size)) {
+									 file_size  = *(uint32_t*)(buf+0x1C+0x20+0x20) ; //for 9-character file names
+								 }
 							 }
 							   else file_size = *(uint32_t*)(buf+0x1C+0x20);  //SFN
 							 if (file_size) {
@@ -447,6 +457,7 @@ int8_t STORAGE_Write(uint8_t lun, uint8_t * buf, uint32_t blk_addr,
 									 }
 									 modulo = 	file_size % STORAGE_BLK_SIZ;	//chunk of file
 									 if (modulo) mod=1;
+									   else mod = 0;
 									}					
 //								printf ("\n\r F_size -> %x", file_size);		
 					    }						 
