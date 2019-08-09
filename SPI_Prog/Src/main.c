@@ -83,6 +83,7 @@ uint32_t spi_spd[6] = {0,1313,2625,5250,10500,21000};  //spi speed in KHz for SP
 uint32_t spi_speed;
 extern bool backup_mode;  //backup firmware first
 
+
 #define DUR_PULSE       (200/10)                     //200ms
 /* USER CODE END PV */
 

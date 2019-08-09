@@ -133,8 +133,8 @@ const int8_t STORAGE_Inquirydata_FS[] = {/* 36 */
   0x00,	
   0x00,
   'S', 'T', 'M', ' ', ' ', ' ', ' ', ' ', /* Manufacturer : 8 bytes */
-  'F', '4', ' ', 'f', 'l', 'a', 's', 'h', /* Product      : 16 Bytes */
-  ' ', 'd', 'i', 's', 'k', ' ', ' ', ' ',
+  'S', 'P', 'I', ' ', 'P', 'r', 'o', 'g', /* Product      : 16 Bytes */
+  'r', 'a', 'm', 'm', 'e', 'r', ' ', ' ',
   '0', '.', '0' ,'1'                      /* Version      : 4 Bytes */
 }; 
 /* USER CODE END INQUIRY_DATA_FS */

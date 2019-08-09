@@ -118,7 +118,7 @@ static const ARM_FLASH_CAPABILITIES DriverCapabilities = {
 const struct flashchip * flschip = NULL; //&flashchips[0];
 JEDEC_ID jdc_id_ = {0};
 bool first = true;
-
+extern bool in_4ba_mode;
 
 
 //attempt to read chip id by different methods
@@ -383,6 +383,7 @@ int32_t Uninitialize (void) {
 */
  int32_t PowerControl (ARM_POWER_STATE state) {
   int32_t status;
+	uint8_t buf;
 
   switch ((int32_t)state) {
     case ARM_POWER_OFF:
@@ -419,6 +420,31 @@ int32_t Uninitialize (void) {
 				
 //-----------------------------------------------------------------------------------				
 			  flschip = ReadId();
+				if (flschip != NULL) {
+				/* Enable 4-byte addressing mode if flash chip supports it */
+				if (flschip->total_size > 16384) { //size > 128Mbit
+				if (flschip->feature_bits & (FEATURE_4BA_ENTER | FEATURE_4BA_ENTER_WREN | FEATURE_4BA_ENTER_EAR7) ) {
+					  int ret;
+					  ret = ReadConfigReg(CMD_READ_CONF_REG, &buf);  //
+            if (ret != ARM_DRIVER_OK) return ret;    
+						/* Check Flags Config register value */
+						if (!(buf & (1<<5))) {  //5 - 4BA mode flag
+							SPI_UsrLog("Enter to 4BA mode!\n");					
+							ret = spi_enter_4ba();
+							if (ret) {
+							SPI_UsrLog("Failed to set correct 4BA mode! Aborting.\n");
+							return ARM_DRIVER_ERROR;
+		          }
+						}
+						else {
+							SPI_UsrLog("4BA mode already enabled!\n");
+							in_4ba_mode = true;
+						}
+            
+	       }
+				  //else spi_exit_4ba();
+			   }
+				}
 //-----------------------------------------------------------------------------------				
       }
       return ARM_DRIVER_OK;
@@ -456,8 +482,9 @@ int32_t Uninitialize (void) {
   \return      number of data items read or \ref execution_status
 */
   int32_t spi_chip_read (uint32_t addr, void *data, uint32_t cnt) {
-  uint8_t  buf[8];
+  uint8_t  buf[9];
   int32_t  status;
+	uint8_t bytes=0;	
 
   if ((addr > (flschip->total_size*1024)) || (data == NULL)) {
     return ARM_DRIVER_ERROR_PARAMETER;
@@ -465,21 +492,35 @@ int32_t Uninitialize (void) {
 	
 	if ((addr & 0x3fff)  == 0) BSP_LED_Toggle(LED3);                //indicate reading
 
+
   /* Prepare Command with address */
-  buf[0] = CMD_READ_DATA;
-  buf[1] = (uint8_t)(addr >> 16);
-  buf[2] = (uint8_t)(addr >>  8);
-  buf[3] = (uint8_t)(addr >>  0);
+	
+	if (in_4ba_mode == false) {
+		buf[0] = CMD_READ_DATA;
+		buf[1] = (uint8_t)(addr >> 16);
+		buf[2] = (uint8_t)(addr >>  8);
+		buf[3] = (uint8_t)(addr >>  0);
+		bytes = 4;
+	}
+	 else	 {
+		buf[0] = CMD_READ_DATA;
+		buf[1] = (uint8_t)(addr >> 24);
+		buf[2] = (uint8_t)(addr >> 16);
+		buf[3] = (uint8_t)(addr >>  8);
+		buf[4] = (uint8_t)(addr >>  0);
+		bytes = 5;
+
+	}
 
   /* Select Slave */
   status = ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE);
 
   if (status == ARM_DRIVER_OK) {
     /* Send Command with Address */
-    status = ptrSPI->Send(buf, 4U);
+    status = ptrSPI->Send(buf, bytes);
 
     if (status == ARM_DRIVER_OK) {
-      while (ptrSPI->GetDataCount() != 4U) {
+      while (ptrSPI->GetDataCount() != bytes) {
 				__asm("nop");
 			};
 
@@ -526,16 +567,16 @@ int32_t Uninitialize (void) {
 	 
 	 SPI_UsrLog ("\n wr_addr -> 0x%05x   cnt -> 0x%03x", addr, cnt);
 		
-	 /* Enable/disable 4-byte addressing mode if flash chip supports it */
-	 if (flschip->feature_bits & (FEATURE_4BA_ENTER | FEATURE_4BA_ENTER_WREN | FEATURE_4BA_ENTER_EAR7)) {
-		
-		status = spi_enter_4ba();
-		
-		if (status) {
-			SPI_UsrLog ("Failed to set correct 4BA mode! Aborting.\n");
-			return 1;
-		}
-	}	
+//	 /* Enable/disable 4-byte addressing mode if flash chip supports it */
+//	 if (flschip->feature_bits & (FEATURE_4BA_ENTER | FEATURE_4BA_ENTER_WREN | FEATURE_4BA_ENTER_EAR7)) {
+//		
+//		if (in_4ba_mode == false) status = spi_enter_4ba();
+//		
+//		if (status) {
+//			SPI_UsrLog ("Failed to set correct 4BA mode! Aborting.\n");
+//			return 1;
+//		}
+//	}	
 	 if ((addr & 0x1fff)  == 0) BSP_LED_Toggle(LED3);                //indicate writing
 	
 	 status = flschip->write(addr, data, cnt);
@@ -559,9 +600,10 @@ int32_t Uninitialize (void) {
 */
  int32_t spi_chip_write_256 (uint32_t addr, const void *data, uint32_t cnt) {
   const uint8_t *buf;
-        uint8_t  cmd[4];
+        uint8_t  cmd[5];
         int32_t  status;
         uint32_t num, n;
+	      uint8_t bytes=0;
 	      uint16_t flash_page_size = flschip->page_size;
 
   if ((addr > (flschip->total_size*1024)) || (data == NULL)) {
@@ -582,17 +624,29 @@ int32_t Uninitialize (void) {
       status = ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE);
       
       if (status == ARM_DRIVER_OK) {
+				     
         /* Prepare command with address */
+				if (in_4ba_mode == false) {
         cmd[0] = CMD_PAGE_PROGRAM;
         cmd[1] = (uint8_t)(addr >> 16U);
         cmd[2] = (uint8_t)(addr >>  8U);
         cmd[3] = (uint8_t)(addr >>  0U);
+				bytes = 4;
+				}	
+				else	 {
+					cmd[0] = CMD_PAGE_PROGRAM;
+					cmd[1] = (uint8_t)(addr >> 24);
+					cmd[2] = (uint8_t)(addr >> 16);
+					cmd[3] = (uint8_t)(addr >>  8);
+					cmd[4] = (uint8_t)(addr >>  0);
+					bytes = 5;
+	}
 
-        status = ptrSPI->Send(cmd, 4U);
+        status = ptrSPI->Send(cmd, bytes);
 
         if (status == ARM_DRIVER_OK) {
           /* Wait until command and address are sent */
-          while (ptrSPI->GetDataCount() != 4U){
+          while (ptrSPI->GetDataCount() != bytes){
 				  __asm("nop");
 			    };
 

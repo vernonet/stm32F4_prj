@@ -2514,7 +2514,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_HAL_DRIVER,STM32F407xx,  DRIVER_SPI_NUM =  2, DRIVER_SPI_BUS_SPEED = 657000, VECT_TAB_SRAM</Define>
+              <Define>USE_HAL_DRIVER,STM32F407xx,  DRIVER_SPI_NUM =  2, DRIVER_SPI_BUS_SPEED = 657000, USE_LFN, VECT_TAB_SRAM</Define>
               <Undefine></Undefine>
               <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Drivers\BSP\STM32F4-Discovery;.\RTE\Device\STM32F407VGTx\</IncludePath>
             </VariousControls>
@@ -2956,7 +2956,7 @@
           <OutputName>spi_prog_RAM_clang</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
+          <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>0</BrowseInformation>
           <ListingPath></ListingPath>
@@ -3874,7 +3874,7 @@
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>0</DebugInformation>
           <BrowseInformation>0</BrowseInformation>
-          <ListingPath></ListingPath>
+          <ListingPath>.\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -4179,7 +4179,7 @@
             </VariousControls>
           </Aads>
           <LDads>
-            <umfTarg>1</umfTarg>
+            <umfTarg>0</umfTarg>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
             <noStLib>0</noStLib>
@@ -4188,7 +4188,7 @@
             <TextAddressRange>0x08000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>.\binary\spi_prog_Flash_clang_cmsis.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -6113,7 +6113,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -6253,7 +6253,7 @@
             <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>4</v6Lang>
-            <v6LangP>3</v6LangP>
+            <v6LangP>4</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>1</v6Lto>

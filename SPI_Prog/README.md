@@ -15,7 +15,7 @@ Hardware full-duplex SPI with DMA, multiple clock speeds available (SPI2), selec
 
  Verified flash memory chips :
  
-  - AT26DF041, SST25LF040A, EN25F80, W25Q80, W25Q64, W25X80, W25X40, SST25VF512A, AT25F512A, M25P10-A, Pm25LD010(C), Pm25LV512(A), W25Q16, AT25F1024(A), MX25L6406E, NX25B40,  cFeon Q32b-104Hip (chips of the same series but of a different size will also work).
+  - AT26DF041, SST25LF040A, EN25F80, W25Q80, W25Q64, W25X80, W25X40, SST25VF512A, AT25F512A, M25P10-A, Pm25LD010(C), Pm25LV512(A), W25Q16, AT25F1024(A), MX25L6406E, NX25B40,  cFeon Q32b-104Hip, MX25L25645G (chips of the same series but of a different size will also work).
     Any other chips need to be added to files "flashchips.c", "chip_drv.c", "spi.c".
 
 
@@ -39,7 +39,7 @@ To display debug information set in file "usbd_conf.h" :
 
 Only for the target without the cmsis suffix:
 the github change the file attributes, file "RTE_Components.h" must have read-only attributes.  So that these targets are successfully compiled, 
-you need to unzip the RTE.7z file in the "SPI_Prog\MDK-ARM\RTE" folder.
+you need to unzip the RTE.7z file in the "SPI_Prog\MDK-ARM\RTE" folder.  My version STM32F4xx_DFP - 2.13.0
   
 # License
 

@@ -28,6 +28,7 @@ extern ARM_DRIVER_SPI     SPI_Driver_(DRIVER_SPI_NUM);
 #define CMD_READ_RDID_PMC       (0xABU)
 #define CMD_EWSR                (0x50U)
 #define CMD_WRSR                (0x01U)
+#define CMD_READ_CONF_REG       (0x15U)
 
 /* Enter 4-byte Address Mode */
 #define JEDEC_ENTER_4_BYTE_ADDR_MODE	0xB7
@@ -41,9 +42,11 @@ extern ARM_DRIVER_SPI     SPI_Driver_(DRIVER_SPI_NUM);
 void delay_mic(void);
 int32_t SendCmd (uint8_t * cmd, uint8_t bytes);
 int32_t ReadStatusReg (uint8_t cmd, uint8_t *stat);
+int32_t ReadConfigReg (uint8_t cmd, uint8_t *stat);
 int32_t SetWriteEnable (void);
 int32_t SetWriteDisable (void);
 int spi_enter_4ba(void);
+int spi_exit_4ba(void);
 int32_t spi_disable_blockprotect (void);
 int32_t spi_disable_blockprotect_at2x_global_unprotect(void);
 int32_t spi_disable_blockprotect_at25f512a(void);

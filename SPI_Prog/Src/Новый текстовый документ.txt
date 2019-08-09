@@ -1,0 +1,4 @@
+http://www.avislab.com/blog/stm32-pmsm_ru/
+http://microtechnics.ru/stm32-i-usb-mass-storage-device/
+https://habrahabr.ru/post/309218/
+http://amberclan.clan.su/publ/uroki_po_programmirovaniju_stm32fxxx/uroki_po_programmirovaniju_stm32f4xx/urok_4_rabota_s_flash_dlja_stm32f4/11-1-0-121

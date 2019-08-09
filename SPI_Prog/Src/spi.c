@@ -125,6 +125,36 @@ int32_t ReadStatusReg (uint8_t cmd, uint8_t *stat) {
   return (status);
 }
 
+/* Read  flag config register */
+int32_t ReadConfigReg (uint8_t cmd, uint8_t *stat) {
+  int32_t status; /* driver execution status */
+  uint8_t buf[4];
+
+  /* Select Slave */
+  status = ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_ACTIVE);
+
+  if (status == ARM_DRIVER_OK) {
+    /* Set command */
+    buf[0] = cmd;
+
+    /* Send command and receive register value */
+    status = ptrSPI->Transfer (&buf[0], &buf[2], 2U);
+
+    if (status == ARM_DRIVER_OK) {
+      /* Wait till transfer done */
+      while (ptrSPI->GetDataCount() != 2U) {
+				__asm("nop");
+			};
+
+      *stat = buf[3];
+    }
+  }
+  /* Deselect Slave */
+  ptrSPI->Control(ARM_SPI_CONTROL_SS, ARM_SPI_SS_INACTIVE);
+  
+  return (status);
+}
+
 /* Write status or flag status register */
 static int32_t WriteStatusReg (uint8_t sr) {
   int32_t status; /* driver execution status */
@@ -408,18 +438,42 @@ static int spi_enter_exit_4ba(const bool enter)
 	}
 	else if (flschip->feature_bits & FEATURE_4BA_ENTER_EAR7) status = spi_set_extended_address(enter ? 0x80 : 0x00);
 
-	if (!status)
-		in_4ba_mode = enter;
 	return status;
 }
 
 int spi_enter_4ba(void)
 {
-	return spi_enter_exit_4ba(true);
+	int32_t status;
+	uint8_t buf = 0xff;
+	
+	status = spi_enter_exit_4ba(true);
+	if (!status) status = ReadConfigReg(CMD_READ_CONF_REG, &buf); 
+	if (status != ARM_DRIVER_OK) return status;    
+	/* Check Flags Config register value */
+	if (buf & (1<<5)) {
+		SPI_UsrLog("4BA mode enter OK!\n");	
+		in_4ba_mode = true;
+	}
+	 else return ARM_DRIVER_ERROR;
+			
+	return status;
 }
 
 int spi_exit_4ba(void)
 {
-	return spi_enter_exit_4ba(false);
+	int32_t status;
+	uint8_t buf = 0xff;
+	
+	status = spi_enter_exit_4ba(false);
+	if (!status) status = ReadConfigReg(CMD_READ_CONF_REG, &buf); 
+	if (status != ARM_DRIVER_OK) return status;    
+	/* Check Flags Config register value */
+	if (!(buf & (1<<5))) {
+		SPI_UsrLog("4BA mode exit OK!\n");
+    in_4ba_mode = false;		
+	}
+	 else return ARM_DRIVER_ERROR;
+					
+	return status;
 }
 /************************************************END************************************************/

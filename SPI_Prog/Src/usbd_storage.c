@@ -195,7 +195,7 @@ int8_t create_fs(void) {   //create fat for backup  flash
     // I use FatFS for long filename 
     fs = (FATFS *)malloc(sizeof(FATFS));
 		FIL fil;
-    uint32_t bw;
+//    uint32_t bw;
 		char sd_path[4] = "0:/";
     char filename[30] = {0};  
     memcpy (filename, flschip->name, strlen(flschip->name));
@@ -321,7 +321,7 @@ int8_t STORAGE_Read(uint8_t lun, uint8_t * buf, uint32_t blk_addr,
                     uint16_t blk_len)
 {
 //  int8_t ret = -1;
-  uint16_t i,n=0;
+  uint16_t n=0;
 	uint32_t * buf32 = (uint32_t*)buf;
 	
   switch (lun)
