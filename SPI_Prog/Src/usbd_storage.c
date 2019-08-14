@@ -90,7 +90,7 @@ uint32_t SectorError = 0, last_wr_adr=0xffffffff, modulo=0;
 uint8_t flash_eraset = 0, temp=0,Wr_Protect, mod=0;
 uint8_t write_started =0;
 uint16_t block_num_cnt=0;
-IWDG_HandleTypeDef hiwdg;
+//IWDG_HandleTypeDef hiwdg;
 extern uint8_t complet, error;
 //TIM_HandleTypeDef htim6;
 extern uint8_t inter;

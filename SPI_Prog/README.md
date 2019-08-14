@@ -39,9 +39,9 @@ To display debug information set in file "usbd_conf.h" :
 
 # Remarks
 
-Only for the target without the cmsis suffix:
+Only for the target without the RTE suffix:
 the github change the file attributes, file "RTE_Components.h" must have read-only attributes.  So that these targets are successfully compiled, 
-you need to unzip the RTE.7z file in the "SPI_Prog\MDK-ARM\RTE" folder.  My version STM32F4xx_DFP - 2.13.0
+you need to unzip the RTE.7z file in the "SPI_Prog\MDK-ARM\RTE" folder.
   
 # License
 

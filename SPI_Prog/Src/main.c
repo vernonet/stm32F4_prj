@@ -73,7 +73,7 @@ __IO uint32_t CRCValue_actual =  0;  //calculated after write flash
 __IO uint32_t CRCValue_nominal = 0;  //calculated before write flash
 extern int32_t file_size;
 //extern IWDG_HandleTypeDef hiwdg;
-extern TIM_HandleTypeDef htim6;
+//extern TIM_HandleTypeDef htim6;
 uint8_t crc_buf[0x200] __attribute__ ((aligned (4)));
 extern const struct flashchip * flschip;
 extern unsigned char boot_sec[]; 
