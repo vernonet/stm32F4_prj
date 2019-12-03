@@ -3,6 +3,7 @@ Projects  for STM32F4 Discovery
 
 1. STM32F4 Discovery MP3 player (ported to keil mdk)
 2. STM32F4 Discovery SPI Programmer
+3. STM32F4 Discovery Internet Radio Player (rndis)
 
 # License
 
