@@ -13,6 +13,8 @@ HEX-file for stm32f4-Discovery: <a href="https://github.com/vernonet/stm32F4_prj
 # Remarks
 To display debug information set in file "lwipopts.h" :
  - DBG_LVL             1
+ 
+On Windows 10, the driver is installed manually: Microsoft->Adapter USB RNDIS.
 
   
 # License
