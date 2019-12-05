@@ -132,10 +132,12 @@ void InitializeAudio(int plln, int pllr, int i2sdiv, int i2sodd) {
 
 	// Disable I2S.
 	SPI3 ->I2SCFGR = 0;
+	
+	// Disable PLLI2S, doesn’t work without it!!!
+	RCC ->CR ^= RCC_CR_PLLI2SON;
 
 	// I2S clock configuration
 	RCC ->CFGR &= ~RCC_CFGR_I2SSRC; // PLLI2S clock used as I2S clock source.
-	//pllr = 384; //I2S clock 192MHz////////////////////////////////////////////////////////////////////////////////////
 	RCC ->PLLI2SCFGR = (pllr << 28) | (plln << 6);
 
 	// Enable PLLI2S and wait until it is ready.
