@@ -364,6 +364,13 @@ int32_t spi_disable_blockprotect_at25f512b(void)
 	return spi_disable_blockprotect_generic(0x04, 1 << 7, 1 << 4, 0xFF);
 }
 
+/* A common block protection disable that tries to unset the status register bits masked by 0x0C (BP0-1) and
+ * protected/locked by bit #7. Useful when bits 4-5 may be non-0). */
+int32_t spi_disable_blockprotect_bp1_srwd(void)
+{
+	return spi_disable_blockprotect_generic(0x0C, 1 << 7, 0, 0xFF);
+}
+
 /* A common block protection disable that tries to unset the status register bits masked by 0x1C (BP0-2) and
  * protected/locked by bit #7. Useful when bit #5 is neither a protection bit nor reserved (and hence possibly
  * non-0). */

@@ -5708,6 +5708,179 @@ const struct flashchip flashchips[] = {
 //		.read		= spi_chip_read,
 //	},
 
+{
+		.vendor		= "Sanyo",
+		.name		= "LE25FU106B",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= SANYO_ID,
+		.model_id	= SANYO_LE25FU106B,
+		.total_size	= 128,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_res2,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	= {
+			/* FIXME: Is this correct?
+			{
+				.eraseblocks = { {2 * 1024, 64} },
+				.block_erase = spi_block_erase_d7,
+			},*/
+			{
+				.eraseblocks = { {32 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {128 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp1_srwd,
+		.unlock		= spi_disable_blockprotect_bp1_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2300, 3600},
+	},
+
+	{
+		.vendor		= "Sanyo",
+		.name		= "LE25FU206",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= SANYO_ID,
+		.model_id	= SANYO_LE25FU206,
+		.total_size	= 256,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_res2,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	= {
+			{
+				.eraseblocks = { {4 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_D7,
+			}, {
+				.eraseblocks = { {64 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {256 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp1_srwd,
+		.unlock		= spi_disable_blockprotect_bp1_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2300, 3600},
+	},
+	
+	{
+		.vendor		= "Sanyo",
+		.name		= "LE25FU206A",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= SANYO_ID,
+		.model_id	= SANYO_LE25FU206A,
+		.total_size	= 256,
+		.page_size	= 256,
+		.tested		= TEST_UNTESTED,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	= {
+			{
+				.eraseblocks = { {4 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {4 * 1024, 64} },
+				.block_erase = SPI_BLOCK_ERASE_D7,
+			}, {
+				.eraseblocks = { {64 * 1024, 4} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {256 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {256 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+			}
+		},
+//		.printlock	= spi_prettyprint_status_register_bp2_srwd,
+		.unlock		= spi_disable_blockprotect, /* #WP pin write-protects SRWP bit. */
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,
+		.voltage	= {2300, 3600},
+	},
+
+	{
+		.vendor		= "Sanyo",
+		.name		= "LE25FU406B",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= SANYO_ID,
+		.model_id	= SANYO_LE25FU406B,
+		.total_size	= 512,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_res2,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	= {
+			{
+				.eraseblocks = { {4 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_D7,
+			}, {
+				.eraseblocks = { {64 * 1024, 8} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+				}
+			},
+//		.printlock	= spi_prettyprint_status_register_bp2_srwd,
+		.unlock		= spi_disable_blockprotect, /* #WP pin write-protects SRWP bit. */
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read,
+		.erase    = spi_erase_bulk,	
+		.voltage	= {2300, 3600},
+	},
+
+	{
+		.vendor		= "Sanyo",
+		.name		= "LE25FU406C/LE25U40CMC",
+		.bustype	= BUS_SPI,
+		.manufacture_id	= SANYO_ID,
+		.model_id	= SANYO_LE25FU406C,
+		.total_size	= 512,
+		.page_size	= 256,
+		.feature_bits	= FEATURE_WRSR_WREN,
+		.tested		= TEST_OK_PREW,
+//		.probe		= probe_spi_rdid,
+//		.probe_timing	= TIMING_ZERO,
+		.block_erasers	= {
+			{
+				.eraseblocks = { {4 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_20,
+			}, {
+				.eraseblocks = { {4 * 1024, 128} },
+				.block_erase = SPI_BLOCK_ERASE_D7,
+			}, {
+				.eraseblocks = { {64 * 1024, 8} },
+				.block_erase = SPI_BLOCK_ERASE_D8,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_60,
+			}, {
+				.eraseblocks = { {512 * 1024, 1} },
+				.block_erase = SPI_BLOCK_ERASE_C7,
+				}
+			},
+//		.printlock	= spi_prettyprint_status_register_bp2_srwd,
+		.unlock		= spi_disable_blockprotect_bp2_srwd,
+		.write		= spi_chip_write_256,
+		.read		= spi_chip_read, /* Fast read (0x0B), dual read (0x3B) and dual I/O (0xBB) supported */
+		.erase    = spi_erase_bulk,	
+		.voltage	= {2300, 3600},
+	},
+
 //	
 //	{
 //		.vendor		= "Spansion",

@@ -50,6 +50,7 @@ int spi_exit_4ba(void);
 int32_t spi_disable_blockprotect (void);
 int32_t spi_disable_blockprotect_at2x_global_unprotect(void);
 int32_t spi_disable_blockprotect_at25f512a(void);
+int32_t spi_disable_blockprotect_bp1_srwd(void);
 int32_t spi_disable_blockprotect_bp3_srwd(void);
 int32_t spi_disable_blockprotect_bp4_srwd(void);
 int32_t spi_disable_blockprotect_at25f512b(void);
