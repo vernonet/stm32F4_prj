@@ -9,7 +9,7 @@ typedef int  AudioCallbackFunction(void *context,int buffer);
 #define Audio8000HzSettings 256,5,12,1
 #define Audio16000HzSettings 213,2,13,0
 #define Audio32000HzSettings 213,2,6,1
-#define Audio48000HzSettings 258,3,3,1
+#define Audio48000HzSettings 344,2,7,0//258,3,3,1
 #define Audio96000HzSettings 344,2,3,1
 #define Audio22050HzSettings 429,4,9,1
 #define Audio44100HzSettings 271,2,6,0
