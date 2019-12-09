@@ -54,7 +54,7 @@ To display debug information set in file "usbd_conf.h" :
    safe  reboot.
    
    Step 3:
-   In addition, disable the service - StorSvc (Service storage or  Служба хранилища).
+   In addition, disable or stop the service - StorSvc (Service storage or  Служба хранилища), and disable "Autoplay".
 
 # Remarks
 
