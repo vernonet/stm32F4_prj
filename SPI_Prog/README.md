@@ -37,9 +37,24 @@ To display debug information set in file "usbd_conf.h" :
  - USBD_DEBUG_LEVEL             1
  - SPI_DEBUG_LEVEL              1
  
- Problems with Windows 10 - windows 10 creates a folder on the disk - "System Volume Information". To fix this, follow the 
- <a href="https://www.getusb.info/how-to-delete-and-keep-system-volume-information-folder-off-flash-drives" rel="nofollow">link.</a>
- In addition, disable the service - StorSvc (Service storage or  Служба хранилища).
+ Problems with Windows 10 - windows 10 creates a folder on the disk - "System Volume Information". To fix this:
+   
+   Step 1:
+   Using GPEDIT to modify Do not allow locations on removable drives to be added to libraries setting:
+   In Windows 10 / 8.1 Pro & Enterprise Editions, press Windows Key + R combination, type put gpedit.msc in Run dialog box 
+   and  hit Enter to open the Local Group Policy Editor.
+   Navigate here: Computer Configuration -> Administrative Templates -> Windows Components -> Search
+   In the right pane, look for the setting named Do not allow locations on removable drives to be added to libraries and 
+   double  click it.
+   Click on Enabled and then click Apply followed by OK. Close the Local Group Policy Editor.
+   
+   Step 2:
+   For Windows 10 this additional step is necessary. Go back to Run, type services.msc, click OK. In the right pane scroll 
+   down  to Windows Search, double click it and in Startup type: select Disabled. Click OK and then close. Just to be 
+   safe  reboot.
+   
+   Step 3:
+   In addition, disable the service - StorSvc (Service storage or  Служба хранилища).
 
 # Remarks
 
