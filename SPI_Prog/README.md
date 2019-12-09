@@ -38,7 +38,7 @@ To display debug information set in file "usbd_conf.h" :
  - SPI_DEBUG_LEVEL              1
  
  Problems with Windows 10 - windows 10 creates a folder on the disk - "System Volume Information". To fix this, follow the 
- <a href="https://www.getusb.info/how-to-delete-and-keep-system-volume-information-folder-off-flash-drives" rel="nofollow">link</a>
+ <a href="https://www.getusb.info/how-to-delete-and-keep-system-volume-information-folder-off-flash-drives" rel="nofollow">link.</a>
  In addition, disable the service - StorSvc (Service storage or  Служба хранилища).
 
 # Remarks
