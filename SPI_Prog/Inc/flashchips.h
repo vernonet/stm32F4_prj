@@ -363,14 +363,14 @@
 #define SANYO_ID		0x62	/* Sanyo */
 #define SANYO_LE25FW203A	0x1600
 #define SANYO_LE25FW403A	0x1100
-#define SANYO_LE25FW106		0x15
-#define SANYO_LE25FW406		0x07	/* RES2 */
+#define SANYO_LE25FW106		0x1562                            //orig 0x15
+#define SANYO_LE25FW406		0x0762	/* RES2 */                //orig 0x07
 #define SANYO_LE25FW418A	0x10	/* RES2 and some weird 1 byte RDID variant */
 #define SANYO_LE25FW406A	0x1A62	/* RES2, no datasheet */  //orig 0x1A
-#define SANYO_LE25FU106B	0x1D
+#define SANYO_LE25FU106B	0x1D62                            //orig 0x1D
 #define SANYO_LE25FU206		0x4462                            //orig 0x44
 #define SANYO_LE25FU206A	0x0612
-#define SANYO_LE25FU406B	0x1E	/* LE25FW418A without HD_READ mode option variant */
+#define SANYO_LE25FU406B	0x1E62	/* LE25FW418A without HD_READ mode option variant */ //orig 0x1E
 #define SANYO_LE25FU406C	0x0613	/* Also known as LE25U40CMC apparently */
 #define SANYO_LE25FW806		0x26	/* RES2 and some weird 1 byte RDID variant */
 #define SANYO_LE25FW808		0x20	/* RES2 and some weird 1 byte RDID variant */
