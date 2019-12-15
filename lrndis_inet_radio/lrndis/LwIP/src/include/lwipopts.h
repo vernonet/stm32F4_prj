@@ -71,11 +71,14 @@
 #define LWIP_SOCKET                     0
 #define LWIP_DHCP                       0
 #define LWIP_ICMP                       1
-#define LWIP_UDP                        0
+#define LWIP_UDP                        1
+#define LWIP_DNS                        1
 #define LWIP_TCP                        1
 #define TCP_TTL                         255
 #define ETH_PAD_SIZE                    0
 //#define LWIP_IP_ACCEPT_UDP_PORT(p)      ((p) == PP_NTOHS(67))
+#define DNS_SERVER_ADDRESS(a)          ip_addr_set_ip4_u32(a, ipaddr_addr("8.8.8.8")) /* google-public-dns-a.google.com */
+
 
 #define MEM_SIZE                        0x2000//10000
 /* MEMP_NUM_PBUF: the number of memp struct pbufs. If the application

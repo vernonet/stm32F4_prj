@@ -16,6 +16,7 @@
 #include "netif/etharp.h"
 #include "time.h"
 #include "lwip/priv/tcp_priv.h"
+#include "lwip/dns.h"
 
 #include "usb_bsp.h"
 #include "mp3dec.h"
@@ -61,6 +62,7 @@ typedef struct {                 //internet  radio stations
 	 bool     constant_frame_sze; 
    uint8_t  ipaddr[4];
 	 uint16_t port;
+	 char     *host;
 	 char     *get;
 }station;
 
@@ -72,6 +74,7 @@ typedef struct {                 //internet  radio stations
 	   .constant_frame_sze = true,
      .ipaddr     =  {173,239,76,149},
 		 .port       =  80,
+		 .host       =  "ice2.somafm.com",
 		 .get        =  "GET /thetrip-128-mp3 HTTP/1.1\r\nHost: ice2.somafm.com\r\nCache-Control: no-cache\r\n\r\n",
 
 		},
@@ -82,6 +85,7 @@ typedef struct {                 //internet  radio stations
 	   .constant_frame_sze = false,
      .ipaddr     =  {195,95,206,14},
 		 .port       =  80,
+		 .host       =  "online-kissfm2.tavrmedia.ua",
      .get        =  "GET /KissFM_Digital HTTP/1.1\r\nhost: online-kissfm2.tavrmedia.ua\r\nCache-Control: no-cache\r\n\r\n ",
 		},
  
@@ -91,6 +95,7 @@ typedef struct {                 //internet  radio stations
 	   .constant_frame_sze = false,
      .ipaddr     =  {178,32,111,41},
 		 .port       =  8020,
+		 .host       =  "ip41.ip-178-32-111.eu",
      .get        =  "GET /stream-mp3-Chill_autodj HTTP/1.1\r\nUser-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.6) Gecko/20040413 Epiphany/1.2.1\\r\nhost: radio.cdm-radio.com\r\nCache-Control: no-cache\r\n\r\n ",
 		},
  
@@ -100,6 +105,7 @@ typedef struct {                 //internet  radio stations
 		 .constant_frame_sze = false,
      .ipaddr     =  {194,97,151,129},
 		 .port       =  80,
+		 .host       =  "mp3channels.webradio.de",
      .get        =  "GET /rockantenne HTTP/1.0\r\nHost: mp3channels.webradio.de\r\nUser-Agent: VLC/3.0.8 LibVLC/3.0.8\r\nIcy-MetaData: 0\r\nCache-Control: no-cache\r\n\r\n ",
 		},	
 	
@@ -109,6 +115,7 @@ typedef struct {                 //internet  radio stations
 		 .constant_frame_sze = true, 
      .ipaddr     =  {174,36,206,197},
 		 .port       =  8000,
+		 //.host       =  "",
      .get        =  "GET /stream HTTP/1.1\r\nhost: 174.36.206.197\r\nCache-Control: no-cache\r\n\r\n ",
 		},
 	
@@ -118,6 +125,7 @@ typedef struct {                 //internet  radio stations
 		 .constant_frame_sze = true,
      .ipaddr     =  {37,187,79,93},
 		 .port       =  8031,
+		 .host       =  "andromeda.shoutca.st",
      .get        =  "GET /stream HTTP/1.1\r\nhost: 37.187.79.93\r\nCache-Control: no-cache\r\n\r\n ",
 		},
 		
@@ -127,6 +135,7 @@ typedef struct {                 //internet  radio stations
 		 .constant_frame_sze = true,
      .ipaddr     =  {50,7,71,219},
 		 .port       =  7201,
+		 //.host       =  "ice2.somafm.com",
      .get        =  "GET /stream HTTP/1.1\r\nhost: 50.7.71.219\r\nCache-Control: no-cache\r\n\r\n ",
 		},
 		{                        //128kbit  
@@ -135,6 +144,7 @@ typedef struct {                 //internet  radio stations
 		 .constant_frame_sze = false,
      .ipaddr     =  {46,28,53,118},
 		 .port       =  7062,
+//		 .host       =  "",
      .get        =  "GET /stream HTTP/1.1\r\nhost: 46.28.53.118\r\nCache-Control: no-cache\r\n\r\n ",
 		},
 		{                        //192kbit  
@@ -143,12 +153,13 @@ typedef struct {                 //internet  radio stations
 		 .constant_frame_sze = false,
      .ipaddr     =  {139,162,245,57},
 		 .port       =  8347,
+		 .host       =  "uk5.internet-radio.com",
      .get        =  "GET /stream HTTP/1.1\r\nhost: 139.162.245.57\r\nCache-Control: no-cache\r\n\r\n ",
 		}
 	};	 
  
- const station * cur_st;
-
+ const station * cur_st, *next_st;
+ ip_addr_t      station_ip; 
 
 	
 //***********************************************************************		
@@ -160,6 +171,7 @@ typedef struct {                 //internet  radio stations
 #define LOW_TRES               70       //treshold             60
 #define HIGH_TRES		           85       //treshold            80
 #define NUMSTATIONS            9	
+#define AUDIO_VOL              0x8d	
 //***********************************************************************		
 //                          SETTINGS		
 //***********************************************************************			
@@ -169,14 +181,14 @@ typedef struct {                 //internet  radio stations
 //int32_t p_XYZ[3];
 unsigned char AudioVol = 0x8b, AudioVol_old = 0x8b;		
 bool first=true, buf_full=false, two = false, busy = false, frame_ready = false;
-bool stop_recv = false, decode_err = false; 		
+bool stop_recv = false, decode_err = false, dns_found_flag = true; 		
 uint32_t num_packet=0;
 
 struct pbuf *temp_p;
 struct tcp_pcb *temp_tpcb;		
 		
 // MP3 Variables            
-#define FILE_READ_BUFFER_SIZE (0x80*0x240)//(0x5B4*40)
+#define FILE_READ_BUFFER_SIZE (0x7A*0x240)//(0x5B4*40)     //0x80
 #define PERCENT               (FILE_READ_BUFFER_SIZE/100)
 MP3FrameInfo			mp3FrameInfo;
 HMP3Decoder				hMP3Decoder;
@@ -204,6 +216,8 @@ struct tcp_pcb *testpcb;
 
 void tcp_setup(void);
 err_t tcpRecvCallback(void *arg, struct tcp_pcb *tpcb, struct pbuf *p, err_t err);
+void dns_found(const char *name, const ip_addr_t *ipaddr, void *arg);
+err_t get_station_ip(void);
 
 static uint8_t received[RNDIS_MTU + 14];
 static int recvSize = 0;
@@ -688,14 +702,46 @@ err_t connectCallback(void *arg, struct tcp_pcb *tpcb, err_t err)
 		
 }
 
+void dns_found(const char *name, const ip_addr_t *ipaddr, void *arg)
+
+{
+ LWIP_UNUSED_ARG(arg);
+ printf("  next_st_host %s: %s\n", name, ipaddr ? ip_ntoa(ipaddr) : "<not found>");
+ if ((ipaddr) && (ipaddr->addr)) {	
+   station_ip = *ipaddr;	
+   dns_found_flag = true;
+ }	 
+}
+
+err_t get_station_ip(void){
+	ip_addr_t ip;
+	
+	switch(dns_gethostbyname(next_st->host, &ip, dns_found, NULL)){
+  case ERR_OK:
+    // numeric or cached, returned in resolved
+    station_ip = ip;
+    dns_found_flag = true;
+    return ERR_OK;
+  case ERR_INPROGRESS:
+    // need to ask, will return data via callback
+    dns_found_flag = false;
+    return ERR_INPROGRESS;
+  default:
+    // bad arguments in function call
+   return ERR_ARG;
+  }
+}	
+
+
 void tcp_setup(void)
 {
     uint32_t data = 0xdeadbeef;
 	  err_t error;
 
     /* create an ip */
-    ip_addr_t ip;
-    IP4_ADDR(&ip, cur_st->ipaddr[0],cur_st->ipaddr[1],cur_st->ipaddr[2],cur_st->ipaddr[3]);    //IP of my PHP server   somafm  //static uint8_t ipaddr[4] = {195,95,206,14};
+//    ip_addr_t ip;
+	
+    if (!dns_found_flag) IP4_ADDR(&station_ip, cur_st->ipaddr[0],cur_st->ipaddr[1],cur_st->ipaddr[2],cur_st->ipaddr[3]);     
 
     /* create the control block */
     testpcb = tcp_new();    //testpcb is a global struct tcp_pcb
@@ -712,7 +758,7 @@ void tcp_setup(void)
     tcp_sent(testpcb, NULL);
 
     /* now connect */
-    error = tcp_connect(testpcb, &ip, cur_st->port, connectCallback);
+    error = tcp_connect(testpcb, &station_ip, cur_st->port, connectCallback);  //tcp_connect(testpcb, &ip, cur_st->port, connectCallback)
 		if (error != ERR_OK)  {UsrLog ("connect ERROR"); while(1){};}
 
 }
@@ -840,7 +886,8 @@ int main(void)
 	  STM_EVAL_PBInit(BUTTON_USER, BUTTON_MODE_EXTI);  
     init_lwip();
     while (!netif_is_up(&netif_data)) {__asm("nop");}
-		USB_OTG_BSP_mDelay(10);		
+		USB_OTG_BSP_mDelay(10);	
+    dns_init();		
 //	  while(1){
 //	  if ((STM_EVAL_PBGetState(BUTTON_USER)) == 1) {break;}
 //		USB_OTG_BSP_mDelay(10);
@@ -848,7 +895,8 @@ int main(void)
 
 		UsrLog("\033[2J");                           //clear screen
     station_id = 0 ;
-		cur_st =  &radio_st[station_id];
+		cur_st  =  &radio_st[station_id];
+		next_st =  &radio_st[station_id+1];
 		USB_OTG_BSP_mDelay(6000);
 		printf("\n Connect to - ");
 		printf("%s",cur_st->name);
@@ -856,7 +904,9 @@ int main(void)
 		temp_bytes_left = sizeof temp_read_buffer;
 		file_write_buffer_poz = 0;
 		
+		IP4_ADDR(&station_ip, cur_st->ipaddr[0],cur_st->ipaddr[1],cur_st->ipaddr[2],cur_st->ipaddr[3]);
 		tcp_setup();
+
 		
     while (1)
     {
@@ -887,34 +937,41 @@ int main(void)
 						printf(" (%iHz", ((MP3DecInfo *)hMP3Decoder)->samprate);  
 						printf("  %ikbps)", ((MP3DecInfo *)hMP3Decoder)->bitrate/1000); 										
 						printf("\n\r");
-						AudioVol = 0x8d;
-						AudioVol_old = AudioVol;
+						AudioVol = AUDIO_VOL;
+						//AudioVol_old = AudioVol;
 						SetAudioVolume(AudioVol);  //0xAF  0x8a  0x9c
 						//__disable_irq();
-						PlayAudioWithCallback(AudioCallback, 0);				  
+						PlayAudioWithCallback(AudioCallback, 0);	
+            
+            dns_found_flag = false;
+				    if (next_st->host == NULL || get_station_ip() == ERR_ARG)	{
+			        IP4_ADDR(&station_ip, next_st->ipaddr[0],next_st->ipaddr[1],next_st->ipaddr[2],next_st->ipaddr[3]); 
+					    dns_found_flag = true;
+		        }						
 				}
 				
-	   if (button_pres) {                //next station
-			   StopAudioDMA();
-     		 // Re-initialize and set volume to avoid noise
-		     InitializeAudio(Audio44100HzSettings);
-		     SetAudioVolume(0);
-				 buf_full = 0;
-				 first = 1;
-			   stop_recv = false;
-			   station_id++;
-			   if (station_id>NUMSTATIONS-1) station_id=0;
-				 cur_st =  &radio_st[station_id];		
-				 syncbyte[0] = 0;//
-				 syncbyte[1] = 0;
-				 printf("\n\r Connect to - ");
-				 printf("%s",cur_st->name);
-				 temp_bytes_left = sizeof temp_read_buffer;
-				 file_write_buffer_poz = 0;		
-			   num_packet = 0;
-				 tcp_setup();
-				 button_pres = false;			 
-		 }
+	      if (button_pres) {                //next station		 
+					 StopAudioDMA();
+					 // Re-initialize and set volume to avoid noise
+					 InitializeAudio(Audio44100HzSettings);
+					 SetAudioVolume(0);
+					 buf_full = 0;
+					 first = 1;
+					 stop_recv = false;
+					 station_id++;
+					 if (station_id>NUMSTATIONS-1) station_id=0;
+					 cur_st  =  &radio_st[station_id];	
+					 next_st = 	(station_id == NUMSTATIONS-1) ? &radio_st[0] : &radio_st[station_id+1];
+					 syncbyte[0] = 0;//
+					 syncbyte[1] = 0;
+					 printf("\n\r Connect to - ");
+					 printf("%s",cur_st->name);
+					 temp_bytes_left = sizeof temp_read_buffer;
+					 file_write_buffer_poz = 0;		
+					 num_packet = 0;	 
+					 tcp_setup();			 
+					 button_pres = false;			 
+		    }
 				
 				
 
