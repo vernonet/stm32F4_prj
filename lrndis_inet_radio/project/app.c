@@ -159,7 +159,7 @@ typedef struct {                 //internet  radio stations
 	};	 
  
  const station * cur_st, *next_st;
- ip_addr_t      station_ip; 
+ ip_addr_t      station_ip = {0}; 
 
 	
 //***********************************************************************		
@@ -181,7 +181,7 @@ typedef struct {                 //internet  radio stations
 //int32_t p_XYZ[3];
 unsigned char AudioVol = 0x8b, AudioVol_old = 0x8b;		
 bool first=true, buf_full=false, two = false, busy = false, frame_ready = false;
-bool stop_recv = false, decode_err = false, dns_found_flag = true; 		
+bool stop_recv = false, decode_err = false, dns_found_flag = false; 		
 uint32_t num_packet=0;
 
 struct pbuf *temp_p;
@@ -760,6 +760,7 @@ void tcp_setup(void)
     /* now connect */
     error = tcp_connect(testpcb, &station_ip, cur_st->port, connectCallback);  //tcp_connect(testpcb, &ip, cur_st->port, connectCallback)
 		if (error != ERR_OK)  {UsrLog ("connect ERROR"); while(1){};}
+		dns_found_flag = false;	
 
 }
 
@@ -904,7 +905,7 @@ int main(void)
 		temp_bytes_left = sizeof temp_read_buffer;
 		file_write_buffer_poz = 0;
 		
-		IP4_ADDR(&station_ip, cur_st->ipaddr[0],cur_st->ipaddr[1],cur_st->ipaddr[2],cur_st->ipaddr[3]);
+		//IP4_ADDR(&station_ip, cur_st->ipaddr[0],cur_st->ipaddr[1],cur_st->ipaddr[2],cur_st->ipaddr[3]);
 		tcp_setup();
 
 		
@@ -943,7 +944,7 @@ int main(void)
 						//__disable_irq();
 						PlayAudioWithCallback(AudioCallback, 0);	
             
-            dns_found_flag = false;
+            //dns_found_flag = false;
 				    if (next_st->host == NULL || get_station_ip() == ERR_ARG)	{
 			        IP4_ADDR(&station_ip, next_st->ipaddr[0],next_st->ipaddr[1],next_st->ipaddr[2],next_st->ipaddr[3]); 
 					    dns_found_flag = true;
