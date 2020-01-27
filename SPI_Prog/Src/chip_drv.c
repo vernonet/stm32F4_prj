@@ -819,7 +819,7 @@ int32_t Uninitialize (void) {
 	
   while (cnt) {
     /* Enable data write */
-    if (first) status = SetWriteEnable();
+    if (first_) status = SetWriteEnable();
 		   else status = ARM_DRIVER_OK;
     
     if (status == ARM_DRIVER_OK) {
@@ -833,7 +833,7 @@ int32_t Uninitialize (void) {
         cmd[2] = (uint8_t)(addr >>  8U);
         cmd[3] = (uint8_t)(addr >>  0U);
 
-        if (first) bytes = 4;
+        if (first_) bytes = 4;
 				    else bytes = 1;
 				status = ptrSPI->Send(cmd, bytes);
 
