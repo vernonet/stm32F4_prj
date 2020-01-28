@@ -5,6 +5,7 @@
 #include "usbd_desc.h"
 #include "usb_conf.h"
 #include "stm32f4_discovery.h"
+#include "stm32f4xx_tim.h"
 #include "stm32f4_discovery_lis302dl.h"
 #include "lwip/init.h"
 #include "lwip/tcp.h"
@@ -70,7 +71,7 @@ typedef struct {                 //internet  radio stations
  const station radio_st[] = {
 	  {
 	   .name       =  "<SomaFM - The Trip>",         //slow speed from server
-     .frame_sze =  0x1a1,
+     .frame_sze  =  0x1a1,
 	   .constant_frame_sze = true,
      .ipaddr     =  {173,239,76,149},
 		 .port       =  80,
@@ -81,7 +82,7 @@ typedef struct {                 //internet  radio stations
  
     {
 	   .name       =  "<KissFM>",
-     .frame_sze =  0x1a2,      //or 0x1a1
+     .frame_sze  =  0x1a2,      //or 0x1a1
 	   .constant_frame_sze = false,
      .ipaddr     =  {195,95,206,14},
 		 .port       =  80,
@@ -91,7 +92,7 @@ typedef struct {                 //internet  radio stations
  
     {  
 	   .name       =  "<Costa Del Mar - Chillout>",
-     .frame_sze =  0x13a,//or 0x139
+     .frame_sze  =  0x13a,//or 0x139
 	   .constant_frame_sze = false,
      .ipaddr     =  {178,32,111,41},
 		 .port       =  8020,
@@ -101,7 +102,7 @@ typedef struct {                 //internet  radio stations
  
 	  {
 	   .name       =  "<Rockantenne>",
-     .frame_sze =  0x1a2,   //or 0x1a1
+     .frame_sze  =  0x1a2,   //or 0x1a1
 		 .constant_frame_sze = false,
      .ipaddr     =  {194,97,151,129},
 		 .port       =  80,
@@ -111,7 +112,7 @@ typedef struct {                 //internet  radio stations
 	
 	  {                           //128kbit  Classic
 	   .name       =  "<Venice Classic Radio Italia>",
-     .frame_sze =  0x1a1,
+     .frame_sze  =  0x1a1,
 		 .constant_frame_sze = true, 
      .ipaddr     =  {174,36,206,197},
 		 .port       =  8000,
@@ -121,17 +122,17 @@ typedef struct {                 //internet  radio stations
 	
 		{                        //192kbit  DNB
 	   .name       =  "<Different Drumz DnB Radio>",
-     .frame_sze =  0x240,
+     .frame_sze  =  0x240,
 		 .constant_frame_sze = true,
      .ipaddr     =  {37,187,79,93},
 		 .port       =  8031,
 		 .host       =  "andromeda.shoutca.st",
-     .get        =  "GET /stream HTTP/1.1\r\nhost: 37.187.79.93\r\nCache-Control: no-cache\r\n\r\n ",
+     .get        =  "GET /stream HTTP/1.1\r\nhost: andromeda.shoutca.st\r\nCache-Control: no-cache\r\n\r\n ",
 		},
 		
 		{                        //128kbit  DNB
 	   .name       =  "<www.innersenceradio.com>",
-     .frame_sze =  0x1a1,
+     .frame_sze  =  0x1a1,
 		 .constant_frame_sze = true,
      .ipaddr     =  {50,7,71,219},
 		 .port       =  7201,
@@ -140,7 +141,7 @@ typedef struct {                 //internet  radio stations
 		},
 		{                        //128kbit  
 	   .name       =  "<OFFRadio>",
-     .frame_sze =  0x1a2,
+     .frame_sze  =  0x1a2,
 		 .constant_frame_sze = false,
      .ipaddr     =  {46,28,53,118},
 		 .port       =  7062,
@@ -149,7 +150,7 @@ typedef struct {                 //internet  radio stations
 		},
 		{                        //192kbit  
 	   .name       =  "<Ambiesphere>",
-     .frame_sze =  0x273,
+     .frame_sze  =  0x273,
 		 .constant_frame_sze = false,
      .ipaddr     =  {139,162,245,57},
 		 .port       =  8347,
@@ -180,7 +181,7 @@ typedef struct {                 //internet  radio stations
 
 //int32_t p_XYZ[3];
 unsigned char AudioVol = 0x8b, AudioVol_old = 0x8b;		
-bool first=true, buf_full=false, two = false, busy = false, frame_ready = false;
+bool first=true, buf_full=false, two = false, busy = false, frame_ready = false,  receive_timeout = false;
 bool stop_recv = false, decode_err = false, dns_found_flag = false; 		
 uint32_t num_packet=0;
 
@@ -214,6 +215,7 @@ struct netif netif_data;
 
 struct tcp_pcb *testpcb;
 
+void init_timer_TIM6(void);
 void tcp_setup(void);
 err_t tcpRecvCallback(void *arg, struct tcp_pcb *tpcb, struct pbuf *p, err_t err);
 void dns_found(const char *name, const ip_addr_t *ipaddr, void *arg);
@@ -389,6 +391,8 @@ void init_periph(void)
 		
 		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
 		GPIO_Init(GPIOD, &GPIO_InitStructure);
+		
+		init_timer_TIM6();
 }
 
 
@@ -627,6 +631,7 @@ err_t tcpRecvCallback(void *arg, struct tcp_pcb *tpcb, struct pbuf *p, err_t err
 							  if (stop_recv) {
 									 UsrLog("\n\r TCP ZeroWindow  delta %x ", file_read_buffer_poz-file_write_buffer_poz);
 								}
+								TIM6->CNT = 0;
                 while (DMA2_Stream0->NDTR != 0) {}	  // wait while  last transfer												 							
 								if (file_write_buffer_poz + p->len > FILE_READ_BUFFER_SIZE) {  // last packet in buffer 								
 									  uint32_t temp_bytes = FILE_READ_BUFFER_SIZE - file_write_buffer_poz ;								
@@ -875,6 +880,29 @@ void DMA2_Stream0_IRQHandler (void)              //end of copy on tcpRecvCallbac
 	  STM_EVAL_LEDOff(LED4);
 }
 
+void init_timer_TIM6(void) {  //receive timeout 5000 msec
+
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE);
+		TIM_TimeBaseInitTypeDef base_timer;
+		TIM_TimeBaseStructInit(&base_timer);
+	  //APB1Periph clock -> 42000000 MHz, 1000 -> 1 msec   
+		base_timer.TIM_Prescaler = 42000000/(1000-1);  
+		base_timer.TIM_Period = 5000;          //5000msec   
+		TIM_TimeBaseInit(TIM6, &base_timer);
+		TIM_ITConfig(TIM6, TIM_IT_Update, ENABLE);
+		TIM_Cmd(TIM6, ENABLE);
+		//NVIC_EnableIRQ(TIM6_DAC_IRQn);
+	
+}
+
+void TIM6_DAC_IRQHandler(void){  //receive timeout 5000 msec
+
+if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET) {
+     TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
+	   receive_timeout = true;
+     //STM_EVAL_LEDToggle(LED5);
+   }
+}
 
 int main(void)
 {
@@ -888,7 +916,7 @@ int main(void)
     init_lwip();
     while (!netif_is_up(&netif_data)) {__asm("nop");}
 		USB_OTG_BSP_mDelay(10);	
-    dns_init();		
+//    dns_init();		
 //	  while(1){
 //	  if ((STM_EVAL_PBGetState(BUTTON_USER)) == 1) {break;}
 //		USB_OTG_BSP_mDelay(10);
@@ -948,10 +976,18 @@ int main(void)
 				    if (next_st->host == NULL || get_station_ip() == ERR_ARG)	{
 			        IP4_ADDR(&station_ip, next_st->ipaddr[0],next_st->ipaddr[1],next_st->ipaddr[2],next_st->ipaddr[3]); 
 					    dns_found_flag = true;
-		        }						
+		        }
+						
+						if (!(NVIC->ISER[(uint32_t)((int32_t)TIM6_DAC_IRQn) >> 5] &(uint32_t)(1 << ((uint32_t)((int32_t)TIM6_DAC_IRQn) & (uint32_t)0x1F))))
+								{  // if TIM6_DAC_IRQn not enabled
+									 if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET) TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
+									 NVIC_SetPriority(TIM6_DAC_IRQn, 15);	
+									 NVIC_EnableIRQ(TIM6_DAC_IRQn);		
+								}
+           				
 				}
 				
-	      if (button_pres) {                //next station		 
+	      if (button_pres || receive_timeout) {    //next station	or receive timeout	 
 					 StopAudioDMA();
 					 // Re-initialize and set volume to avoid noise
 					 InitializeAudio(Audio44100HzSettings);
@@ -959,7 +995,7 @@ int main(void)
 					 buf_full = 0;
 					 first = 1;
 					 stop_recv = false;
-					 station_id++;
+					 if (button_pres) station_id++;
 					 if (station_id>NUMSTATIONS-1) station_id=0;
 					 cur_st  =  &radio_st[station_id];	
 					 next_st = 	(station_id == NUMSTATIONS-1) ? &radio_st[0] : &radio_st[station_id+1];
@@ -971,7 +1007,7 @@ int main(void)
 					 file_write_buffer_poz = 0;		
 					 num_packet = 0;	 
 					 tcp_setup();			 
-					 button_pres = false;			 
+					 button_pres = false;	receive_timeout = false; 
 		    }
 				
 				
