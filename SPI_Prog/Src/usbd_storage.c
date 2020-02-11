@@ -199,6 +199,13 @@ int8_t create_fs(void) {   //create fat for backup  flash
 		char sd_path[4] = "0:/";
     char filename[30] = {0};  
     memcpy (filename, flschip->name, strlen(flschip->name));
+	while (strchr (filename, '/') != NULL) {
+			*strchr (filename, '/') = '_';
+		}
+	while (strlen(filename) > 22) {
+			if (strrchr (filename, '_') > strrchr (filename, ')')) *strrchr (filename, '_') = '\0';
+			   else *(strrchr (filename, ')') + 1) = '\0';
+		}
 	  strcat (filename, ".bin");
 		check = f_mount(fs, sd_path, 0);
 		check = f_open(&fil, filename, FA_CREATE_ALWAYS);			
