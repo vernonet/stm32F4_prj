@@ -198,7 +198,8 @@ int8_t create_fs(void) {   //create fat for backup  flash
 //    uint32_t bw;
 		char sd_path[4] = "0:/";
     char filename[30] = {0};  
-    memcpy (filename, flschip->name, strlen(flschip->name));
+    if (strlen(flschip->name) <= 22) memcpy (filename, flschip->name, strlen(flschip->name));
+		   else memcpy (filename, flschip->name, (uint8_t)((strchr (flschip->name, '_'))-&flschip->name[0]));
 	  strcat (filename, ".bin");
 		check = f_mount(fs, sd_path, 0);
 		check = f_open(&fil, filename, FA_CREATE_ALWAYS);			
