@@ -154,13 +154,19 @@ USBD_StorageTypeDef USBD_DISK_fops = {
 
 DWORD get_fattime (void)
 {
-	return	((2019UL-1980) << 25)	      // Year = 2006
-			| (5UL << 21)	      // Month = Feb
-			| (9UL << 16)	      // Day = 9
-			| (22U << 11)	      // Hour = 22
-			| (30U << 5)	      // Min = 30
-			| (0U >> 1)	      // Sec = 0
-			;
+	//use the project compilation date
+	char  year[5] = {BUILD_YEAR_CH0, BUILD_YEAR_CH1, BUILD_YEAR_CH2, BUILD_YEAR_CH3, 0};
+	char month[3] = {BUILD_MONTH_CH0, BUILD_MONTH_CH1, 0};
+	char   day[3] = {BUILD_DAY_CH0, BUILD_DAY_CH1, 0};
+	
+	
+	return	 ((atoi(year)-1980) << 25)	// Year = 2006   return	((2019UL-1980) << 25)	   
+					| (atoi(month)<< 21)	      // Month = Feb     (5UL << 21)	
+					| (atoi(day) << 16)	        // Day = 9         (9UL << 16)	
+					| (22U << 11)	              // Hour = 22       (22U << 11)	   
+					| (30U << 5)	              // Min = 30        (30U << 5)	
+					| (0U >> 1)	                // Sec = 0         (0U >> 1)	
+					;
 }
 
 int8_t create_fs(void) {   //create fat for backup  flash
