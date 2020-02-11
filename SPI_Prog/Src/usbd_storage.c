@@ -199,7 +199,7 @@ int8_t create_fs(void) {   //create fat for backup  flash
 		char sd_path[4] = "0:/";
     char filename[30] = {0};  
     memcpy (filename, flschip->name, strlen(flschip->name));
-	while (strchr (filename, '/') != NULL) {
+	while (strchr (filename, '/') != NULL) {               //replace '/' on '_'
 			*strchr (filename, '/') = '_';
 		}
 	while (strlen(filename) > 22) {
