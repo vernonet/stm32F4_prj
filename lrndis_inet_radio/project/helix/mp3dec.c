@@ -44,6 +44,7 @@
 #include "string.h"
 //#include "hlxclib/string.h"		/* for memmove, memcpy (can replace with different implementations if desired) */
 #include "mp3common.h"	/* includes mp3dec.h (public API) and internal, platform-independent API */
+#include "stm32f4_discovery.h"
 
 extern unsigned char syncbyte[];
 
@@ -115,7 +116,7 @@ int MP3FindSyncWord(unsigned char *buf, int nBytes)
 	/* find byte-aligned syncword - need 12 (MPEG 1,2) or 11 (MPEG 2.5) matching bits */
 	for (i = 0; i < nBytes - 1; i++) {
 	//	if ( (buf[i+0] & SYNCWORDH) == SYNCWORDH && (buf[i+1] & SYNCWORDL) == SYNCWORDL )
-		  if ( (buf[i+0] == SYNCWORDH) && (buf[i+1]  == SYNCWORDL) ) {
+		  if ( (buf[i+0] == SYNCWORDH) && (buf[i+1]  == SYNCWORDL || buf[i+1]  == SYNCWORDL_FA) ) {
 				if (syncbyte[0] != 0) {
 					  if (buf[i+2]  == syncbyte[0]) return i;
 				}
@@ -396,6 +397,8 @@ int MP3Decode(HMP3Decoder hMP3Decoder, unsigned char **inbuf, int *bytesLeft, sh
 	bitOffset = 0;
 	mainBits = mp3DecInfo->mainDataBytes * 8;
 
+	STM_EVAL_LEDOff(LED3);
+	
 	/* decode one complete frame */
 	for (gr = 0; gr < mp3DecInfo->nGrans; gr++) {
 		for (ch = 0; ch < mp3DecInfo->nChans; ch++) {

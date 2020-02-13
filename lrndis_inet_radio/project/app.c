@@ -148,6 +148,15 @@ typedef struct {                 //internet  radio stations
 //		 .host       =  "",
      .get        =  "GET /stream HTTP/1.1\r\nhost: 46.28.53.118\r\nCache-Control: no-cache\r\n\r\n ",
 		},
+		{                        //128kbit  
+	   .name       =  "<Ibiza Global Radio>",
+     .frame_sze  =  0x1a2,
+		 .constant_frame_sze = false,
+     .ipaddr     =  {37,59,254,26},
+		 .port       =  8024,
+		 .host       =  "ibizaglobalradio.streaming-pro.com",
+     .get        =  "GET /stream HTTP/1.1\r\nHost: ibizaglobalradio.streaming-pro.com:8024\r\nAccept: */*\r\nAccept-Language: uk\r\nUser-Agent: VLC/3.0.8 LibVLC/3.0.8\r\nIcy-MetaData: 0\r\n\r\n ",
+		},
 		{                        //192kbit  
 	   .name       =  "<Ambiesphere>",
      .frame_sze  =  0x273,
@@ -157,6 +166,7 @@ typedef struct {                 //internet  radio stations
 		 .host       =  "uk5.internet-radio.com",
      .get        =  "GET /stream HTTP/1.1\r\nhost: 139.162.245.57\r\nCache-Control: no-cache\r\n\r\n ",
 		}
+		
 	};	 
  
  const station * cur_st, *next_st;
@@ -171,7 +181,7 @@ typedef struct {                 //internet  radio stations
 //#define FRAME_SZE              0x1a2 		//station.frame_sze
 #define LOW_TRES               70       //treshold             60
 #define HIGH_TRES		           85       //treshold            80
-#define NUMSTATIONS            9	
+#define NUMSTATIONS            10	
 #define AUDIO_VOL              0x8d	
 //***********************************************************************		
 //                          SETTINGS		
@@ -309,7 +319,7 @@ err_t linkoutput_fn(struct netif *netif, struct pbuf *p)
     {
         if (rndis_can_send()) break;
 //        msleep(1);
-			  time=0xffff;
+			  time=0xfffff;
 			  while(time-->1) {}// {__asm("nop");}			  
     }
     for(q = p; q != NULL; q = q->next)
@@ -430,7 +440,7 @@ static int  AudioCallback(void *context, int buffer) {
 
 	int16_t *samples;
 	
-	if (tgl++>3) {
+	if (tgl++>4) {
 	    STM_EVAL_LEDOn(LED3);
 	    tgl=0; 
 	}
@@ -464,7 +474,7 @@ static int  AudioCallback(void *context, int buffer) {
 	UsrLog(" MP3Dec ERR ");
 
 	err = MP3Decode(hMP3Decoder, (unsigned char**)&temp_read_ptr, (int*)&temp_bytes_left, samples, 0);
-	STM_EVAL_LEDOff(LED3);
+	//STM_EVAL_LEDOff(LED3);
 	if (!syncbyte[0] && !err && (temp_bytes_left_old-temp_bytes_left) == cur_st->frame_sze) {  //find the third byte in the header of frame
 		syncbyte[0] = *(temp_read_ptr_old+2);
 		if (!cur_st->constant_frame_sze) syncbyte[1] = syncbyte[0] - 2;
@@ -887,7 +897,7 @@ void init_timer_TIM6(void) {  //receive timeout 5000 msec
 		TIM_TimeBaseStructInit(&base_timer);
 	  //APB1Periph clock -> 42000000 MHz, 1000 -> 1 msec   
 		base_timer.TIM_Prescaler = 42000000/(1000-1);  
-		base_timer.TIM_Period = 5000;          //5000msec   
+		base_timer.TIM_Period = 5000;          //5000 msec   
 		TIM_TimeBaseInit(TIM6, &base_timer);
 		TIM_ITConfig(TIM6, TIM_IT_Update, ENABLE);
 		TIM_Cmd(TIM6, ENABLE);
@@ -903,6 +913,8 @@ if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET) {
      //STM_EVAL_LEDToggle(LED5);
    }
 }
+
+
 
 int main(void)
 {
@@ -939,53 +951,53 @@ int main(void)
 		
     while (1)
     {
-        usb_polling();     /* usb device polling */
-				if (buf_full && first) { 
-					  first = false;				
-					  hMP3Decoder = MP3InitDecoder();		
-						InitializeAudio(Audio44100HzSettings);
-						SetAudioVolume(0);
-					  memcpy(temp_read_buffer, file_read_buffer, sizeof temp_read_buffer);
-						//read_ptr = file_read_buffer;
-					  temp_read_ptr = &temp_read_buffer[0];
-					  file_read_buffer_poz = sizeof temp_read_buffer;
-					  //read_ptr_old = file_read_buffer;
-					  temp_bytes_left = sizeof temp_read_buffer;
-					  //bytes_left_old = FILE_READ_BUFFER_SIZE;
-						test = sizeof temp_buffer;
-						offs = MP3FindSyncWord((unsigned char*)temp_read_ptr, test);
-						temp_read_ptr += offs;
-						MP3Decode(hMP3Decoder, (unsigned char**)&temp_read_ptr, (int*)&test, &temp_buffer[0], 0); //detect samplerate 
-						StopAudio();
-					  read_ptr = &file_read_buffer[sizeof temp_read_buffer];
-					  file_read_buffer_poz = sizeof temp_read_buffer;
-					  temp_read_ptr = &temp_read_buffer[0];
-						MP3GetLastFrameInfo(hMP3Decoder, &mp3FrameInfo);
-						_InitializeAudio(((MP3DecInfo *)hMP3Decoder)->samprate);  
-					  //printf("\n\r");
-						printf(" (%iHz", ((MP3DecInfo *)hMP3Decoder)->samprate);  
-						printf("  %ikbps)", ((MP3DecInfo *)hMP3Decoder)->bitrate/1000); 										
-						printf("\n\r");
-						AudioVol = AUDIO_VOL;
-						//AudioVol_old = AudioVol;
-						SetAudioVolume(AudioVol);  //0xAF  0x8a  0x9c
-						//__disable_irq();
-						PlayAudioWithCallback(AudioCallback, 0);	
-            
-            //dns_found_flag = false;
-				    if (next_st->host == NULL || get_station_ip() == ERR_ARG)	{
-			        IP4_ADDR(&station_ip, next_st->ipaddr[0],next_st->ipaddr[1],next_st->ipaddr[2],next_st->ipaddr[3]); 
-					    dns_found_flag = true;
-		        }
-						
-						if (!(NVIC->ISER[(uint32_t)((int32_t)TIM6_DAC_IRQn) >> 5] &(uint32_t)(1 << ((uint32_t)((int32_t)TIM6_DAC_IRQn) & (uint32_t)0x1F))))
-								{  // if TIM6_DAC_IRQn not enabled
-									 if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET) TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
-									 NVIC_SetPriority(TIM6_DAC_IRQn, 15);	
-									 NVIC_EnableIRQ(TIM6_DAC_IRQn);		
-								}
-           				
-				}
+			usb_polling();     /* usb device polling */
+			if (buf_full && first) { 
+					first = false;				
+					hMP3Decoder = MP3InitDecoder();		
+					InitializeAudio(Audio44100HzSettings);
+					SetAudioVolume(0);
+					memcpy(temp_read_buffer, file_read_buffer, sizeof temp_read_buffer);
+					//read_ptr = file_read_buffer;
+					temp_read_ptr = &temp_read_buffer[0];
+					file_read_buffer_poz = sizeof temp_read_buffer;
+					//read_ptr_old = file_read_buffer;
+					temp_bytes_left = sizeof temp_read_buffer;
+					//bytes_left_old = FILE_READ_BUFFER_SIZE;
+					test = sizeof temp_buffer;
+					offs = MP3FindSyncWord((unsigned char*)temp_read_ptr, test);
+					temp_read_ptr += offs;
+					MP3Decode(hMP3Decoder, (unsigned char**)&temp_read_ptr, (int*)&test, &temp_buffer[0], 0); //detect samplerate 
+					StopAudio();
+					read_ptr = &file_read_buffer[sizeof temp_read_buffer];
+					file_read_buffer_poz = sizeof temp_read_buffer;
+					temp_read_ptr = &temp_read_buffer[0];
+					MP3GetLastFrameInfo(hMP3Decoder, &mp3FrameInfo);
+					_InitializeAudio(((MP3DecInfo *)hMP3Decoder)->samprate);  
+					//printf("\n\r");
+					printf(" (%iHz", ((MP3DecInfo *)hMP3Decoder)->samprate);  
+					printf("  %ikbps)", ((MP3DecInfo *)hMP3Decoder)->bitrate/1000); 										
+					printf("\n\r");
+					AudioVol = AUDIO_VOL;
+					//AudioVol_old = AudioVol;
+					SetAudioVolume(AudioVol);  //0xAF  0x8a  0x9c
+					//__disable_irq();
+					PlayAudioWithCallback(AudioCallback, 0);	
+					
+					//dns_found_flag = false;
+					if (next_st->host == NULL || get_station_ip() == ERR_ARG)	{
+						IP4_ADDR(&station_ip, next_st->ipaddr[0],next_st->ipaddr[1],next_st->ipaddr[2],next_st->ipaddr[3]); 
+						dns_found_flag = true;
+					}
+					
+					if (!(NVIC->ISER[(uint32_t)((int32_t)TIM6_DAC_IRQn) >> 5] &(uint32_t)(1 << ((uint32_t)((int32_t)TIM6_DAC_IRQn) & (uint32_t)0x1F))))
+							{  // if TIM6_DAC_IRQn not enabled
+								 if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET) TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
+								 NVIC_SetPriority(TIM6_DAC_IRQn, 15);	
+								 NVIC_EnableIRQ(TIM6_DAC_IRQn);		
+							}
+								
+			}
 				
 	      if (button_pres || receive_timeout) {    //next station	or receive timeout	 
 					 StopAudioDMA();

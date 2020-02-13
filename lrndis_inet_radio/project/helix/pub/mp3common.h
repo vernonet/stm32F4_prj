@@ -54,6 +54,7 @@
 /* 11-bit syncword if MPEG 2.5 extensions are enabled */
 #define	SYNCWORDH		0xff
 #define	SYNCWORDL		0xfb//0xe0
+#define	SYNCWORDL_FA		0xfa
 
 /* 12-bit syncword if MPEG 1,2 only are supported 
  * #define	SYNCWORDH		0xff
