@@ -46,6 +46,8 @@ static uint8_t gateway[4] = {192, 168, 137, 1};  //{0, 0, 0, 0};
 #define OTHER_WORK_IS_COMPL  GPIOD->BSRRH  = GPIO_BSRR_BS_2
 
 #define NUMELEMENTS(x)           (sizeof(x) / sizeof((x)[0]))         //wrong
+	
+#define RADIO_STATION_ADR                         0x8030000
 
 #define RCC_DMA2_CLK_ENABLE()     do { \
                                         __IO uint32_t tmpreg = 0x00U; \
@@ -58,17 +60,17 @@ static uint8_t gateway[4] = {192, 168, 137, 1};  //{0, 0, 0, 0};
 
 
 typedef struct {                 //internet  radio stations
-	 char     *name;
+	 char    *name;
    uint16_t frame_sze;
 	 bool     constant_frame_sze; 
    uint8_t  ipaddr[4];
 	 uint16_t port;
-	 char     *host;
-	 char     *get;
-}station;
+	 char    *host;
+	 char    *get;
+}  station;   //__attribute__((packed)) station
 
 
- const station radio_st[] = {
+ const station radio_st[]  = {  //__attribute__((at(RADIO_STATION_ADR)))   __attribute__((section ("RADIO_ST_SECTION")))  __attribute__((section(".ARM.__at_0x8000")))
 	  {
 	   .name       =  "<SomaFM - The Trip>",         //slow speed from server
      .frame_sze  =  0x1a1,
@@ -77,7 +79,6 @@ typedef struct {                 //internet  radio stations
 		 .port       =  80,
 		 .host       =  "ice2.somafm.com",
 		 .get        =  "GET /thetrip-128-mp3 HTTP/1.1\r\nHost: ice2.somafm.com\r\nCache-Control: no-cache\r\n\r\n",
-
 		},
  
     {
@@ -97,7 +98,8 @@ typedef struct {                 //internet  radio stations
      .ipaddr     =  {178,32,111,41},
 		 .port       =  8020,
 		 .host       =  "ip41.ip-178-32-111.eu",
-     .get        =  "GET /stream-mp3-Chill_autodj HTTP/1.1\r\nUser-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.6) Gecko/20040413 Epiphany/1.2.1\\r\nhost: radio.cdm-radio.com\r\nCache-Control: no-cache\r\n\r\n ",
+     .get        =  "GET /stream-mp3-Chill_autodj HTTP/1.1\r\nhost: radio.cdm-radio.com\r\nCache-Control: no-cache\r\n\r\n ",
+		 //.get        =  "GET /stream-mp3-Chill_autodj HTTP/1.1\r\nUser-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.6) Gecko/20040413 Epiphany/1.2.1\\r\nhost: radio.cdm-radio.com\r\nCache-Control: no-cache\r\n\r\n ",
 		},
  
 	  {
@@ -107,7 +109,9 @@ typedef struct {                 //internet  radio stations
      .ipaddr     =  {194,97,151,129},
 		 .port       =  80,
 		 .host       =  "mp3channels.webradio.de",
-     .get        =  "GET /rockantenne HTTP/1.0\r\nHost: mp3channels.webradio.de\r\nUser-Agent: VLC/3.0.8 LibVLC/3.0.8\r\nIcy-MetaData: 0\r\nCache-Control: no-cache\r\n\r\n ",
+     .get        =  "GET /rockantenne HTTP/1.0\r\nHost: mp3channels.webradio.de\r\nCache-Control: no-cache\r\n\r\n ",
+		 //.get        =  "GET /rockantenne HTTP/1.0\r\nHost: mp3channels.webradio.de\r\nUser-Agent: VLC/3.0.8 LibVLC/3.0.8\r\nIcy-MetaData: 0\r\nCache-Control: no-cache\r\n\r\n ",
+
 		},	
 	
 	  {                           //128kbit  Classic
@@ -137,7 +141,7 @@ typedef struct {                 //internet  radio stations
      .ipaddr     =  {50,7,71,219},
 		 .port       =  7201,
 		 //.host       =  "ice2.somafm.com",
-     .get        =  "GET /stream HTTP/1.1\r\nhost: 50.7.71.219\r\nCache-Control: no-cache\r\n\r\n ",
+     .get        =  "GET /stream HTTP/1.1\r\nhost: 50.7.71.219\r\nCache-Control: no-cache\r\n\r\n",
 		},
 		{                        //128kbit  
 	   .name       =  "<OFFRadio>",
@@ -146,7 +150,7 @@ typedef struct {                 //internet  radio stations
      .ipaddr     =  {46,28,53,118},
 		 .port       =  7062,
 //		 .host       =  "",
-     .get        =  "GET /stream HTTP/1.1\r\nhost: 46.28.53.118\r\nCache-Control: no-cache\r\n\r\n ",
+     .get        =  "GET /stream HTTP/1.1\r\nhost: 46.28.53.118\r\nCache-Control: no-cache\r\n\r\n",
 		},
 		{                        //128kbit  
 	   .name       =  "<Ibiza Global Radio>",
@@ -155,7 +159,9 @@ typedef struct {                 //internet  radio stations
      .ipaddr     =  {37,59,254,26},
 		 .port       =  8024,
 		 .host       =  "ibizaglobalradio.streaming-pro.com",
-     .get        =  "GET /stream HTTP/1.1\r\nHost: ibizaglobalradio.streaming-pro.com:8024\r\nAccept: */*\r\nAccept-Language: uk\r\nUser-Agent: VLC/3.0.8 LibVLC/3.0.8\r\nIcy-MetaData: 0\r\n\r\n ",
+     .get        =  "GET /stream HTTP/1.1\r\nHost: ibizaglobalradio.streaming-pro.com\r\nCache-Control: no-cache\r\n\r\n",
+		 //.get        =  "GET /stream HTTP/1.1\r\nHost: ibizaglobalradio.streaming-pro.com:8024\r\nAccept: */*\r\nAccept-Language: uk\r\nUser-Agent: VLC/3.0.8 LibVLC/3.0.8\r\nIcy-MetaData: 0\r\n\r\n ",
+
 		},
 		{                        //192kbit  
 	   .name       =  "<Ambiesphere>",
@@ -167,7 +173,8 @@ typedef struct {                 //internet  radio stations
      .get        =  "GET /stream HTTP/1.1\r\nhost: 139.162.245.57\r\nCache-Control: no-cache\r\n\r\n ",
 		}
 		
-	};	 
+	}	 ;
+	
  
  const station * cur_st, *next_st;
  ip_addr_t      station_ip = {0}; 
@@ -319,8 +326,9 @@ err_t linkoutput_fn(struct netif *netif, struct pbuf *p)
     {
         if (rndis_can_send()) break;
 //        msleep(1);
+//        USB_OTG_BSP_mDelay(3);
 			  time=0xfffff;
-			  while(time-->1) {}// {__asm("nop");}			  
+			  while(time-->1) {};//{__asm("nop"); }				
     }
     for(q = p; q != NULL; q = q->next)
     {
@@ -582,7 +590,7 @@ int fputc(int ch, FILE *f)
   return(ch);
 }
 
-int fgetc( FILE *f) {                /* blocking */
+int fgetc( FILE *f) {               /* blocking */
   while (ITM_CheckChar() != 1);
   return (ITM_ReceiveChar());
 }
@@ -938,7 +946,7 @@ int main(void)
     station_id = 0 ;
 		cur_st  =  &radio_st[station_id];
 		next_st =  &radio_st[station_id+1];
-		USB_OTG_BSP_mDelay(6000);
+		USB_OTG_BSP_mDelay(10000);
 		printf("\n Connect to - ");
 		printf("%s",cur_st->name);
 		//printf("\n\r");
