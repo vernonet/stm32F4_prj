@@ -42,6 +42,7 @@
 #else
 #error "::Device:STM32Cube Framework: not selected in RTE"
 #endif
+//#include "RTE_Device.h"   /////////////////////////////////
 
 #ifdef RTE_DEVICE_FRAMEWORK_CLASSIC
   #if ((defined(RTE_Drivers_SPI1) || \

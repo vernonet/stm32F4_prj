@@ -56,11 +56,7 @@ To display debug information set in file "usbd_conf.h" :
    Step 3:
      In addition, disable or stop the service - StorSvc (Service storage or  Служба хранилища), and disable "Autoplay".
 
-# Remarks
 
-Only for the target without the RTE suffix:
-the github change the file attributes, file "RTE_Components.h" must have read-only attributes.  So that these targets are successfully compiled, 
-you need to unzip the RTE.7z file in the "SPI_Prog\RTE" folder.
   
 # License
 
