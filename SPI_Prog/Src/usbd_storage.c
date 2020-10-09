@@ -225,7 +225,7 @@ int8_t create_fs(void) {   //create fat for backup  flash
 		 *(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x3c] = flschip->total_size*1024; //set  file size
 		 *(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x38] = 0x20000; //			
 	 }
-	  else if (strlen(flschip->name) > 8 && strlen(flschip->name) < sizeof(filename)-4) {     //LFN
+	  else if ((sizeof(filename)-4) > 8) {     //LFN  (strlen(flschip->name) > 8 && strlen(flschip->name) < sizeof(filename)-4)
 			if (*(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x5c] == 0) { 
         //for file names consisting of 9 chars				
 				*(uint32_t*)&FAT[STORAGE_BLK_SIZ*FAT_DIRECTORY_BLK+0x5c] = flschip->total_size*1024; //set  file size
